@@ -1,0 +1,368 @@
+/*
+ Localizable.strings
+ SwellPro
+ 
+ Created by LCHK on 17/6/21.
+ Copyright © 2017年 MM. All rights reserved.
+ */
+
+//首页
+"HOMEShebeiweilianjie" = "Disconnected";
+"HOMEShebeiyilianjie" = "Connected";
+"HomeJinru" = "Enter";
+//个人
+"MINELogin" = "Log In";
+"MINELogout" = "Log out";
+"MINERegister" = "Register";
+"MINEFeixingjilu" = "Flight Record";
+"MINEFeixingxueyuan" = "Flight Academy";
+"MINEDitu" = "Map";
+"MINEShangcheng" = "Online Store";
+"MINELianxigoutong" = "Contact";
+"MINEJiancegengxin" = "Check for Updates";
+"MINEZuobiao" = "Last coordinates";
+"MINEWeb" = "Official website";
+"MINESet" = "Setting";
+"MINEUserSet" = "User Settings";
+"MINEName" = "user name";
+"MINEFlyID" = "Vehicle ID";
+"MINEDate" = "Total flight time";
+"MINEUpLoadImage" = "Click upload avatar";
+"MINEUpLoadCamera" = "Camera";
+"MINEUpLoadAlbum" = "Album";
+"MINESetUp" = "Set up";
+"MINEOpenCameraPermissions" = "You do not have camera permissions on. Please turn on the access switch in Settings - privacy - camera";
+"MINEOpenAlbumPermissions" = "You do not have permission to open the album, please turn on the access switch in Settings - privacy - photo";
+"MINEUpLoad" = "Submit";
+"MINEUserName" = "User name";
+"MINECountry" = "Country";
+"MINECity" = "City";
+"MINETittle" = "Tittle";
+"MINEContent" = "Content";
+//个人信息
+"MineInfoChangeSuccess" = "Amend the success";
+"MineInfoChangeFail" = "Amend the fail";
+//官方网站
+"MineQiyeWeb" = "Corporate websites";
+"MineShangcheng" = "official mall";
+"MineTuiguang" = "Alliance to promote";
+//飞行记录
+"MINEZuji" = "Footprint";
+"MINEMaxlicheng" = "Max Course Distance";
+"MINEMaxspeed" = "Max Speed";
+"MINEJingweidu" = "Latitude And Longitude";
+//飞行学院
+"MINEShipin" = "Video Academy";
+"MINEBaodian" = "Flight Treasury";
+"MINEShuomingshu" = "Manual/Help";
+//联系沟通
+"MINEHuanhuo" = "Repair & Replacement Policy";
+"MINEZhichi" = "Tech. Support";
+"MINEFankiu" = "Help & Feedback";
+//飞机经纬度
+"MineJingdu" = "Longitude";
+"MineWeidu" = "Latitude";
+//飞行宝典
+"MINEXinshouJiaocheng" = "Tutorial courses";
+"MINERemenjiqiao" = "Skills/Tips";
+"MINEChangjianwenti" = "FAQ";
+"MINERemenwentiTittle" = "Hot issue";
+"MINERemenwenti1" = "Compass Calibration ?";
+"MINERemenwenti2" = "Accelerometer Calibration ?";
+"MINERemenwenti3" = "Propeller Installation ?";
+"MINERemenwenti4" = "Gimbal Installation ?";
+"MINERemenwenti5" = "Payload Release/Installation ?";
+"MINERemenwenti6" = "Tutorial Videos";
+"MINERemenwenti7" = "Smart return home operation ?";
+"MINERemenwenti" = "Photo/Video capture using radio controller ?";
+//登录注册
+"LOGINYouxiang" = "Email";
+"LOGINMima" = "Password";
+"LOGINWangjimima" = "Forgot password?";
+"LOGINFuwutiaokuan" = "Click the login button, indicate that you agree to The terms of service";
+"REGISTERSurepassword" = "Comfirm Password";
+"REGISTERName" = "name";
+"REGISTERPhone" = "phone";
+"REGISTERConfirm" = "Please login to email to confirm your registration";
+//忘记密码
+"FORGETPASSWORDMimazhaohui" = "Retrieve Password";
+"FORGETPASSWORDShuruyouxiang" = "Please enter your email address";
+"FORGETPASSWORDShuruzhengqueyouxiang" = "Please enter the correct email address";
+"FORGETPASSWORDShuruxingming" = "Please enter your name";
+"FORGETPASSWORDShurumima" = "Please enter the password";
+"FORGETPASSWORDShuruquerenmima" = "Please enter the password again";
+"FORGETPASSWORDShurubuyizhi" = "The two passwords differ";
+"FORGETPASSWORDTijiao" = "submit";
+"FORGETPASSWORDYifasong" = "Already send confirmation email to";
+"FORGETPASSWORDQingchongxinlogin" = "Please log in the email immediately to retrieve your password";
+"FORGETPASSWORDChongxinLogin" = "restart login";
+//航拍页面
+"HANGPAIWufaJiesuo" = "Not Armed";
+"HANGPAIKeyiJiesuo" = "Ready";
+"HANGPAIWufaqifei" = "Can't take off";
+"HANGPAIKeyiqifei" = "Take off";
+"HANGPAIFanhang" = "Return home";
+//环绕
+"AroundHeight" = "Height";
+"AroundRadius" = "Radius";
+"AroundSpeed" = "Speed";
+"AroundCycles" = "Cycles";
+"AroundMeter" = "m";
+"AroundMeter/sec" = "m/s";
+"AroundCycle" = "Cycle";
+//地图编辑相关
+"EditResidenceTime" = "Residence time";
+"EditNoseOrientation" = "Nose orientation";
+"EditHoveringRadius" = "Hovering radius";
+"EditSec" = "s";
+"EditGeneratingRule" = "Generating rule";
+"EditWaypointSpacing" = "Waypoint spacing";
+"EditFlightSpeed" = "Flight speed";
+"EditFlightAltitude" = "Flight altitude";
+"EditDefault" = "default";
+"EditChooseTheStartingPoint" = "Choose start point";
+"EditSelected" = "Selected";
+"EditPoints" = "waypoint";
+"EditAll" = "All";
+"EditCollectedWaypointName" = "Please edit the route name";
+"EditERegionalPlanning" = "Regional planning";
+"EditERoutePlanning" = "Route planning";
+//设置页面
+//飞控参数设置
+"SETFEIKONGTittle" = "Flight parameter settings";
+"SETFEIKONGJichushezhi" = "Basic Setting";
+"SETFEIKONGFanhanggaodu" = "Return Home Altitude";
+"SETFEIKONGGaoduQujian" = "10-100m";
+"SETFEIKONGGoduTip" = "Note: Correct Altitude adjustment is set to ensure a failsafe return home, or auto return home. The aircraft will ascend/descend to the preset altitude, then return to its home point, followed by descending and landing.";
+"SETFEIKONGYunxuHuanmoshi" = "Allow flight mode switch";
+"SETFEIKONGGPSmoshi" = "GPS mode";
+"SETFEIKONGGPSmoshiTip" = "GPS positioning to work properly, can hover accurately";
+"SETFEIKONGATTImoshi" = "ATTI mode";
+"SETFEIKONGATTImoshiTip" = "GPS positioning does not participate in the work, can't hover accurately";
+"SETFEIKONGFeixingxianzhi" = "Active Flight Restrictions";
+"SETFEIKONGXinshoumoshi" = "Beginner Mode";
+"SETFEIKONGXinshoumoshiTip" = "In beginner mode, when approaching the home position, within a radius of 30 meters, the aircraft's flying speed will be significantly reduced.";
+"SETFEIKONGZiudagaoduxianzhi" = "Ceiling Altitude";
+//"SETFEIKONGZiudagaoduxianzhiQujian" = "(20–500m 0 Stands for \"OFF\")";
+"SETFEIKONGJulixianzhi" = "Distance Limitation";
+//"SETFEIKONGJulixianzhiQujian" = "(10–1000m (Om means distance limitation is off))";
+"SETFEIKONGZiudagaoduxianzhiQujian" = "(20–500m)";
+"SETFEIKONGJulixianzhiQujian" = "(50–2000m)";
+"SETFEIKONGJiaozhun" = "Calibration";
+"SETFEIKONGJiaozhunIMU" = "IMU Calibration";
+"SETFEIKONGJiaozhunzhinan" = "Compass Calibration";
+"SETFEIKONGGaoji" = "Advanced";
+"SETFEIKONGGaojishezhi" = "Advanced Settings";
+//高级设置
+"GAOJISHEZHIShougan" = "Radio sensitivity settings";
+"GAOJISHEZHIJichugandu" = "Basic Sensitivity";
+"GAOJISHEZHIKongzhigandu" = "Advanced Sensitivity";
+"GAOJISHEZHIQita" = "More";
+"GAOJISHEZHIShikong" = "Failsafe action";
+"GAOJISHEZHIDidianliangfanhang" = "Smart return with low-battery";
+"GAOJISHEZHIDakaiQianbideng" = "Open the forearm lamp";
+"GAOJISHEZHIHuifu" = "Reset to default settings";
+//基础感度\控制感度
+"GANDUFuyang" = "Pitch";
+"GANDUHenggun" = "Roll";
+"GANDUPianhang" = "Yaw";
+"GANDUShengjiang" = "Ascend/ descend";
+"GANDUZitai" = "Altitude";
+"GANDUShache" = "Brake";
+//失控行为
+"SHIKONGFanhang" = "Return home";
+"SHIKONGYuandijiangluo" = "Land at current location";
+"SHIKONGXuanting" = "Hover";
+//遥控器功能设置
+"YAOKONGSETTittle" = "Remote function setting";
+"YAOKONGSETJiaozhun" = "Radio controller Calibration";
+"YAOKONGSETYaoganmoshi" = "Stick mode";
+"YAOKONGSETYaoganmoshiMeiguo" = "American";
+"YAOKONGSETYaoganmoshiRiben" = "Japanese";
+"YAOKONGSETYaoganmoshiOuzhou" = "European";
+"YAOKONGSETYaoganmoshiZhongguo" = "Chinese";
+"YAOKONGSETAnniuzidingyi" = "Buttons Self-definition";
+"YAOKONGSETYaokongqiduipin" = "Radio controller Patching";
+//通用设置
+"TONGYONGTittle" = "General Settings";
+"TONGYONGXianshihangxian" = "Course Display";
+"TONGYONGShipinHuancun" = "Video cache";
+"TONGYONGLuxianghuancun" = "Cache active while recording";
+"TONGYONGZidongqingli" = "Automatic cleaning cache";
+"TONGYONGHuancunMax" = "Maximum cache Settings";
+"TONGYONGGuanyu" = "About";
+"TONGYONGAppbanben" = "APP Ver";
+"TONGYONGyaokongqibanben" = "RC Firmware Ver";
+"TONGYONGFeikongbanben" = "FC Ver";
+"TONGYONGFeikongHao" = "FC Ser No";
+//云台
+"YUNTAITittle" = "Gimbal";
+"YUNTAIMoshi" = "Gimbal mode";
+"YUNTAISuotoumoshi" = "Lock mode";
+"YUNTAIGensiumoshi" = "Follow mode";
+"YUNTAIFuyangzhou" = "Pitch axial speed";
+"YUNTAIFuyangzuni" = "Pitch damping";
+"YUNTAIHuichong" = "Neutral";
+"YUNTAIShuipingjiaozhun" = "Accelerometer Calibration";
+"YUNTAIZidongjiaozhun" = "Auto-calibration";
+"YUNTAISure" = "Sure";
+"YUNTAICancel" = "Cancel";
+//相机设置
+"CAMERAZhaopianchicun" = "Photo size";
+"CAMERALianpaimoshi" = "Burst mode";
+"CAMERADingshipaizhao" = "Timer";
+"CAMERAChangshijianbaoguang" = "Long Exposure";
+"CAMERAShijianshuiyin" = "Time Stamp";
+"CAMERAGuanbi" = "OFF";
+"CAMERAKaiqi" = "ON";
+"CAMERAJiange" = "Interval photo";
+"CAMERAYanshi" = "Take time delay";
+"CAMERAPaizhaoMoshi" = "Picture mode";
+"CAMERASudu" = "The shutter speed";
+"CAMERAYejianmoshi" = "Night mode";
+"CAMERAAUTO" = "AUTO";
+"CAMERAShoudong" = "manual";
+"CAMERAZhuanye" = "major";
+//相机设置请求显示
+"SETTING_REQUEST" = "setting";
+"SETTING_Success" = "Success";
+"SETTING_Fail" = "Fail";
+//连拍
+"SETTING_BURST_HIGHEST_SPEED" = "The highest speed";
+"SETTING_BURST_OFF" = "Off";
+"SETTING_BURST_3_PHOTOS" = "3P";
+"SETTING_BURST_5_PHOTOS" = "5P";
+"SETTING_BURST_10_PHOTOS" = "10P";
+"SETTING_BURST_7_PHOTOS" = "7P";
+"SETTING_BURST_15_PHOTOS" = "15P";
+"SETTING_BURST_30_PHOTOS" = "30P";
+//时间水印
+"SETTING_DATESTAMP_OFF" = "OFF";
+"SETTING_DATESTAMP_DATE" = "date";
+"SETTING_DATESTAMP_DATE_TIME" = "Date and time";
+//白平衡
+"SETTING_AWB_AUTO"     ="Auto";
+"SETTING_AWB_CLOUDY"     ="Cloudy";
+"SETTING_AWB_DAYLIGHT"     ="Daylight";
+"SETTING_AWB_FLUORESECENT"     ="Fluoresecent";
+"SETTING_AWB_INCANDESCENT"     ="Incandescent";
+"SETTING_AWB_UNDERWATER"     ="Underwater";
+//光线频率
+"SETTING_POWER_SUPPLY_50" = "50Hertz";
+"SETTING_POWER_SUPPLY_60" = "60Hertz";
+"SETTING_POWER_SUPPLY_AUTO"     ="Auto";
+"SETTING_CAP_TL_INTERVAL_OFF" = "Off";
+//录像设置
+"VIDEOFenbianlv" = "Resolution";
+"VIDEOHuazhi" = "Quality";
+"VIDEOYanshipaishe" = "Time-lapse";
+"VIDEODianzifangke" = "EIS";
+"VIDEOShipinZhishi" = " Video starnard";
+"VIDEOShipinGeshi" = "video format";
+"VIDEOFenduanluxiang" = "Loop Recording";
+"VIDEOShijianshuiyin" = "Time Stamp";
+"VIDEOHenhao" = "Best";
+"VIDEOHao" = "High";
+"VIDEOZhengchang" = "Normal";
+//相机设置设置
+"SETCAMERAWSZP" = "Nondestructive photos";
+"SETCAMERAISO" = "ISO";
+"SETCAMERAEV" = "EV";
+"SETCAMERABaipingheng" = "White Balance";
+"SETCAMERASecai" = "colour";
+"SETCAMERAJibianjiaozheng" = "Distortion correction";
+"SETCAMERASuidu" = "Sharpness";
+"SETCAMERAChangjingmoshi" = "Scene Mode";
+"SETCAMERAShipinzhishi" = "Video Format";
+"SETCAMERAXiaoguo" = "Effect";
+"SETCAMERAGuanxianpinlv" = "Light source Frequency";
+"SETCAMERACeguangmoshi" = "Metering mode";
+"SETCAMERAQuanju" = "overall situation";
+"SETCAMERAShijianshezhi" = "Time settings";
+"SETCAMERAGuanyubenji" = "About This Mac";
+"SETCAMERAZhongyangzhongdian" = "center-weighted";
+"SETCAMERACeguangdian" = "Spot Metering";
+"SETCAMERAWIFImima" = "WIFI P/W";
+"SETCAMERAGeshihua" = "Format";
+"SETCAMERAHuifuchuchang" = "Reset to Default";
+"SETCAMERAZhengchang" = "Normal";
+"SETCAMERAShanguangdeng" = "Flash";
+"SETCAMERAFengjing" = "Landscape";
+"SETCAMERAYewan" = "Night";
+"SETCAMERAXiaoxiang" = "Portrait";
+"SETCAMERAYundong" = "Sport";
+"SETCAMERALuori" = "Sunset";
+"SETCAMERAGao" = "high";
+"SETCAMERADi" = "low";
+"SETCAMERAXianyan" = "bright";
+"SETCAMERARouhe" = "gentle";
+//下载和删除照片视频
+"SelectItem" = "Select Items";
+"SelectedItems" = "%d Items Selected";
+"SelectedOneVideo" = "1 Video Selected";
+"SelectedVideos" = "%d Videos Selected";
+"SelectedOnePhoto" = "1 Photo Selected";
+"SelectedPhotos" = "%d Photos Selected";
+
+"DownloadConfirmMessage" = "Total Files: %1\nDownload Time: %2 mins\n\nConfirm download?";
+"DownloadConfirmMessage1" = "Total Files: %1\nDownload Time: %2 seconds\n\nConfirm download?";
+"DownloadConfirmMessage2" = "Total Files: %1\nDownload Time: %2 minutes %3 seconds \n\nConfirm download?";
+"DownloadConfirmMessage3" = "Total Files: %1\nDownload Time: %2 hours %3 mintues %4 seconds\n\nConfirm download?";
+"DownloadingTitle" = "Downloading...";
+"DownloadingMessage" = "Downloading %1/%2\n%3%";
+"DownloadDoneMessage" = "Totally downloaded %1 photos, %2 videos";
+
+"Deleting" = "Deleting...";
+"DeleteDoneTitle" = "Delete File";
+"DeleteDoneMessage" = "Selected items has deleted";
+"Deleted" = "Deleted";
+"Delete" = "Delete";
+//格式化
+"SETTING_FORMAT_FINISH"     ="format finish.";
+"SETTING_FORMATTING"     ="formatting...";
+"SETTING_FORMAT_FAILED" = "format failed.";
+"SETTING_FORMAT_DESC"     ="Do you want to format SD, all your data will be lost?";
+"CARD_ERROR"     ="SD card read error!";
+//恢复出厂
+"SETTING_HFCC"     ="Are you sure you want to restore the factory?";
+"SETTING_HFCC_FINISH"     ="Factory finish";
+"SETTING_HFCC_FAILED"     ="Factory fail";
+//提示
+"TIP_WIFIConnected" = "Please check the wifi connection status";
+"TIP_ConnectingCamera" = "Connecting camera";
+"NoCard"="Please insert an SD card!";
+"CARD_FULL"     ="SD card is full";
+"TIP_SuccessfulTake-off" = "Successful Takeoff";
+"TIP_SuccessfulLanding" = "Successful Landing";
+"TIP_SuccessfulTurn-back" = "Successful Turn back";
+"TIP_SetAreaPoints" = "Please set the region vertex";
+"TIP_SetAreaPointsNotEnough" = "The point you select does not yet constitute an area";
+"TIP_NOTChoosePoint" = "You haven't chosen China point yet";
+"STREAM_CAPTURE_FAILED"     ="Capture failed, please retry";
+"TimelapseOff"="Timelapse Interval is OFF";
+"ActionTimeOut"="Time out";
+"TIP_AddPoints" = "Add waypoints";
+"ALERT_LOW_BATTERY"     ="Low battery, please recharge the device.";
+"TIP_WarmPrompt" = "Warm prompt";
+"TIP_SureLogout" = "Are you sure to log out?";
+"TIP_SureDelete" = "Are you sure to delete it?";
+"TIP_selectedShare" = "Please choose";
+"TIP_mapMaxPoints" = "You have too many sailing points, please increase the distance or reduce the area.";
+"TIP_RequestLoading" = "Loading•••";
+"TIP_Requesting" = "requesting•••";
+//分享
+"Share_import" = "import";
+"Share_importing" = "import•••";
+"Share_importCamera" = "Camera memory card import";
+"Share_importVideo" = "Local video import";
+"Share_importImage" = "Local picture import";
+"Share_importFail" = "Import failure";
+"Share_Video" = "Video";
+"Share_Image" = "Image";
+"Share_Info" = "Info";
+"Share_Date" = "Date";
+"Share_Size" = "Size";
+
+
+
+

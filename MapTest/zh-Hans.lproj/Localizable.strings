@@ -1,0 +1,373 @@
+/*
+ Localizable.strings
+ SwellPro
+ 
+ Created by LCHK on 17/6/21.
+ Copyright © 2017年 MM. All rights reserved.
+ */
+//首页
+"HOMEShebeiweilianjie" = "设备未连接";
+"HOMEShebeiyilianjie" = "设备已连接";
+"HomeJinru" = "进入设备";
+//个人
+"MINELogin" = "登录";
+"MINELogout" = "退出登录";
+"MINERegister" = "注册";
+"MINEFeixingjilu" = "飞行记录";
+"MINEFeixingxueyuan" = "飞行学院";
+"MINEDitu" = "地图";
+"MINEShangcheng" = "商城";
+"MINELianxigoutong" = "联系沟通";
+"MINEJiancegengxin" = "检测更新";
+"MINEZuobiao" = "最后坐标";
+"MINEWeb" = "官方网站";
+"MINESet" = "设置";
+"MINEUserSet" = "用户设置";
+"MINEName" = "用户名称";
+"MINEFlyID" = "飞行器ID";
+"MINEDate" = "飞行总时间";
+"MINEUpLoadImage" = "点击上传头像";
+"MINEUpLoadCamera" = "相机";
+"MINEUpLoadAlbum" = "相册";
+"MINESetUp" = "去设置";
+"MINEOpenCameraPermissions" = "您没有开启相机权限，请在设置-隐私-相机打开访问开关";
+"MINEOpenAlbumPermissions" = "您没有开启相册权限，请在设置-隐私-照片打开访问开关";
+"MINEUpLoad" = "提交";
+"MINEUserName" = "用户名";
+"MINECountry" = "国家";
+"MINECity" = "城市";
+"MINETittle" = "标题";
+"MINEContent" = "内容";
+//个人信息
+"MineInfoChangeSuccess" = "修改成功";
+"MineInfoChangeFail" = "修改失败";
+//官方网站
+"MineQiyeWeb" = "企业网站";
+"MineShangcheng" = "官方商城";
+"MineTuiguang" = "联盟推广";
+//飞行记录
+"MINEZuji" = "足迹";
+"MINEMaxlicheng" = "最长里程";
+"MINEMaxspeed" = "最大速度";
+"MINEJingweidu" = "飞机经纬";
+//飞行学院
+"MINEShipin" = "视频学院";
+"MINEBaodian" = "飞行宝典";
+"MINEShuomingshu" = "说明书";
+//联系沟通
+"MINEHuanhuo" = "维修换货";
+"MINEZhichi" = "技术支持";
+"MINEFankiu" = "用户反馈";
+//飞机经纬度
+"MineJingdu" = "经度";
+"MineWeidu" = "纬度";
+//飞行宝典
+"MINEXinshouJiaocheng" = "新手教程";
+"MINERemenjiqiao" = "热门技巧";
+"MINEChangjianwenti" = "常见问题";
+"MINERemenwentiTittle" = "热门问题";
+"MINERemenwenti1" = "飞行器如何进行指南针校准？";
+"MINERemenwenti2" = "飞行器如何进行加速度计校准？";
+"MINERemenwenti3" = "飞行器如何安装螺旋桨？";
+"MINERemenwenti4" = "飞行器如何安装云台？";
+"MINERemenwenti5" = "飞行器如何安装投放器？";
+"MINERemenwenti6" = "教学视频集合";
+"MINERemenwenti7" = "如果操作智能返航？";
+"MINERemenwenti8" = "如何用遥控器控制拍摄？";
+//登录注册
+"LOGINYouxiang" = "邮        箱";
+"LOGINMima" = "密        码";
+"LOGINWangjimima" = "忘记密码";
+"LOGINFuwutiaokuan" = "点击登录按钮，表示您同意服务条款";
+"REGISTERName" = "用户名称";
+"REGISTERPhone" = "电        话";
+"REGISTERConfirm" = "注册成功请登录邮箱确认";
+//忘记密码
+"FORGETPASSWORDMimazhaohui" = "密码找回";
+"FORGETPASSWORDShuruyouxiang" = "请输入邮箱地址";
+"FORGETPASSWORDShuruzhengqueyouxiang" = "请输入正确的邮箱地址";
+"FORGETPASSWORDShuruxingming" = "请输入姓名";
+"FORGETPASSWORDShurumima" = "请输入密码";
+"FORGETPASSWORDShuruquerenmima" = "请再次输入密码";
+"FORGETPASSWORDShurubuyizhi" = "两次密码输入不一致";
+"FORGETPASSWORDTijiao" = "提交";
+"FORGETPASSWORDYifasong" = "已发送确认邮件至";
+"FORGETPASSWORDQingchongxinlogin" = "请立即登录邮箱找回密码";
+"FORGETPASSWORDChongxinLogin" = "重新登录";
+//航拍页面
+"HANGPAIWufaJiesuo" = "可以解锁";
+"HANGPAIKeyiJiesuo" = "无法解锁";
+"HANGPAIWufaqifei" = "无法起飞";
+"HANGPAIKeyiqifei" = "可以起飞";
+"HANGPAIFanhang" = "返航";
+//环绕
+"AroundHeight" = "高度";
+"AroundRadius" = "半径";
+"AroundSpeed" = "速度";
+"AroundCycles" = "圈数";
+"AroundMeter" = "米";
+"AroundMeter/sec" = "米/秒";
+"AroundCycle" = "圈";
+//地图编辑相关
+"EditResidenceTime" = "停留时间";
+"EditNoseOrientation" = "机头朝向";
+"EditHoveringRadius" = "悬停半径";
+"EditSec" = "秒";
+"EditGeneratingRule" = "生成规则";
+"EditWaypointSpacing" = "航点间距";
+"EditFlightSpeed" = "飞行速度";
+"EditFlightAltitude" = "飞行高度";
+"EditDefault" = "默认";
+"EditChooseTheStartingPoint" = "选择起点";
+"EditSelected" = "选中";
+"EditPoints" = "航点";
+"EditAll" = "全选";
+"EditCollectedWaypointName" = "请您编辑航线名字";
+"EditERegionalPlanning" = "区域规划";
+"EditERoutePlanning" = "航线规划";
+//设置页面
+//飞控参数设置
+"SETFEIKONGTittle" = "飞控参数设置";
+"SETFEIKONGJichushezhi" = "基础设置";
+"SETFEIKONGFanhanggaodu" = "返航高度";
+"SETFEIKONGGaoduQujian" = "10-100米";
+"SETFEIKONGGoduTip" = "调整高度将作用于失控返航及主动返航，飞行器将上升到当前设置的最低安全返航高度。";
+"SETFEIKONGYunxuHuanmoshi" = "允许切换飞行模式";
+"SETFEIKONGGPSmoshi" = "GPS模式";
+"SETFEIKONGGPSmoshiTip" = "GPS定位正常工作,能精确悬停";
+"SETFEIKONGATTImoshi" = "ATTI模式";
+"SETFEIKONGATTImoshiTip" = "GPS定位不参与工作,不能精确悬停";
+"SETFEIKONGFeixingxianzhi" = "飞行限制";
+"SETFEIKONGXinshoumoshi" = "新手模式";
+"SETFEIKONGXinshoumoshiTip" = "新手模式下，飞行器智能在返航点的30米半径范围内飞行，飞行器飞行速度将显著变慢。";
+"SETFEIKONGZiudagaoduxianzhi" = "最大高度限制";
+"SETFEIKONGZiudagaoduxianzhiQujian" = "(20-500米,0表示关闭限高)";
+"SETFEIKONGJulixianzhi" = "距离限制";
+"SETFEIKONGJulixianzhiQujian" = "(50-2000米,0表示关闭限远)";
+"SETFEIKONGJiaozhun" = "校准";
+"SETFEIKONGJiaozhunIMU" = "校准IMU";
+"SETFEIKONGJiaozhunzhinan" = "校准指南针";
+"SETFEIKONGGaoji" = "高级";
+"SETFEIKONGGaojishezhi" = "高级设置";
+//高级设置
+"GAOJISHEZHIShougan" = "遥控手感设置";
+"GAOJISHEZHIJichugandu" = "基础感度";
+"GAOJISHEZHIKongzhigandu" = "控制感度";
+"GAOJISHEZHIQita" = "其他";
+"GAOJISHEZHIShikong" = "失控行为";
+"GAOJISHEZHIDidianliangfanhang" = "低电智能返航";
+"GAOJISHEZHIDakaiQianbideng" = "打开前臂灯";
+"GAOJISHEZHIHuifu" = "恢复默认设置";
+//基础感度\控制感度
+"GANDUFuyang" = "俯仰";
+"GANDUHenggun" = "横滚";
+"GANDUPianhang" = "偏航";
+"GANDUShengjiang" = "升降";
+"GANDUZitai" = "姿态";
+"GANDUShache" = "刹车";
+//失控行为
+"SHIKONGFanhang" =         "返      航";
+"SHIKONGYuandijiangluo" = "原地降落";
+"SHIKONGXuanting" =         "悬      停";
+//遥控器功能设置
+"YAOKONGSETTittle" = "遥控器功能设置";
+"YAOKONGSETJiaozhun" = "遥控器校准";
+"YAOKONGSETYaoganmoshi" = "遥杆模式";
+"YAOKONGSETYaoganmoshiMeiguo" = "美国手";
+"YAOKONGSETYaoganmoshiRiben" = "日本手";
+"YAOKONGSETYaoganmoshiOuzhou" = "欧洲手";
+"YAOKONGSETYaoganmoshiZhongguo" = "中国手";
+"YAOKONGSETAnniuzidingyi" = "按键自定义";
+"YAOKONGSETYaokongqiduipin" = "遥控器对频";
+//通用设置
+"TONGYONGTittle" = "通用设置";
+"TONGYONGXianshihangxian" = "显示航线";
+"TONGYONGShipinHuancun" = "视频缓存";
+"TONGYONGLuxianghuancun" = "录像时进行缓存";
+"TONGYONGZidongqingli" = "自动清理缓存";
+"TONGYONGHuancunMax" = "最大缓存设置";
+"TONGYONGGuanyu" = "关于";
+"TONGYONGAppbanben" = "APP版本";
+"TONGYONGyaokongqibanben" = "遥控器固件版本";
+"TONGYONGFeikongbanben" = "飞控版本";
+"TONGYONGFeikongHao" = "飞控序列号";
+
+//云台
+"YUNTAITittle" = "云台";
+"YUNTAIMoshi" = "云台模式";
+"YUNTAISuotoumoshi" = "锁头模式";
+"YUNTAIGensiumoshi" = "跟随模式";
+"YUNTAIFuyangzhou" = "俯仰轴速度";
+"YUNTAIFuyangzuni" = "俯仰阻尼";
+"YUNTAIHuichong" = "回中";
+"YUNTAIShuipingjiaozhun" = "水平校准";
+"YUNTAIZidongjiaozhun" = "自动校准";
+"YUNTAISure" = "确定";
+"YUNTAICancel" = "取消";
+//相机设置
+"CAMERAZhaopianchicun" = "照片尺寸";
+"CAMERALianpaimoshi" = "连拍模式";
+"CAMERADingshipaizhao" = "定时拍照";
+"CAMERAChangshijianbaoguang" = "长时间曝光";
+"CAMERAShijianshuiyin" = "时间水印";
+"CAMERAGuanbi" = "关闭";
+"CAMERAKaiqi" = "开启";
+"CAMERAJiange" = "间隔拍照";
+"CAMERAYanshi" = "自拍延时";
+"CAMERAPaizhaoMoshi" = "拍照模式";
+"CAMERASudu" = "快门速度";
+"CAMERAYejianmoshi" = "夜间模式";
+"CAMERAAUTO" = "AUTO";
+"CAMERAShoudong" = "手动";
+"CAMERAZhuanye" = "专业";
+//相机设置请求显示
+"SETTING_REQUEST" = "设置中";
+"SETTING_Success" = "设置成功";
+"SETTING_Fail" = "设置失败";
+//连拍
+"SETTING_BURST_HIGHEST_SPEED" = "最高速度";
+"SETTING_BURST_OFF" = "关闭";
+"SETTING_BURST_3_PHOTOS" = "3P";
+"SETTING_BURST_5_PHOTOS" = "5P";
+"SETTING_BURST_10_PHOTOS" = "10P";
+"SETTING_BURST_7_PHOTOS" = "7P";
+"SETTING_BURST_15_PHOTOS" = "15P";
+"SETTING_BURST_30_PHOTOS" = "30P";
+//时间水印
+"SETTING_DATESTAMP_OFF" = "关闭";
+"SETTING_DATESTAMP_DATE" = "日期";
+"SETTING_DATESTAMP_DATE_TIME" = "日期和时间";
+//白平衡
+"SETTING_AWB_AUTO"     ="自动";
+"SETTING_AWB_CLOUDY"     ="多云";
+"SETTING_AWB_DAYLIGHT"     ="日光";
+"SETTING_AWB_FLUORESECENT"     ="荧光灯";
+"SETTING_AWB_INCANDESCENT"     ="白炽灯";
+"SETTING_AWB_UNDERWATER"     ="水下";
+//光线频率
+"SETTING_POWER_SUPPLY_50" = "50赫";
+"SETTING_POWER_SUPPLY_60" = "60赫";
+"SETTING_POWER_SUPPLY_AUTO"     ="自动";
+"SETTING_CAP_TL_INTERVAL_OFF" = "关闭";
+//录像设置
+"VIDEOFenbianlv" = "分辨率";
+"VIDEOHuazhi" = "画质";
+"VIDEOYanshipaishe" = "延时拍摄";
+"VIDEODianzifangke" = "EIS电子防抖";
+"VIDEOShipinZhishi" = "视频制式";
+"VIDEOShipinGeshi" = "视频格式";
+"VIDEOFenduanluxiang" = "分段录像";
+"VIDEOShijianshuiyin" = "时间水印";
+"VIDEOHenhao" = "很好";
+"VIDEOHao" = "好";
+"VIDEOZhengchang" = "正常";
+//相机设置设置
+"SETCAMERAWSZP" = "无损照片";
+"SETCAMERAISO" = "ISO";
+"SETCAMERAEV" = "EV";
+"SETCAMERABaipingheng" = "白平衡";
+"SETCAMERASecai" = "色彩";
+"SETCAMERAJibianjiaozheng" = "畸变矫正";
+"SETCAMERASuidu" = "锐度";
+"SETCAMERADuibidu" = "对比度";
+"SETCAMERABaohedu" = "饱和度";
+"SETCAMERAChangjingmoshi" = "场景模式";
+"SETCAMERAShipinzhishi" = "视频制式";
+"SETCAMERAXiaoguo" = "效果";
+"SETCAMERAGuanxianpinlv" = "光线频率";
+"SETCAMERACeguangmoshi" = "测光模式";
+"SETCAMERAQuanju" = "全局";
+"SETCAMERAZhongyangzhongdian" = "中央重点";
+"SETCAMERACeguangdian" = "点测光";
+"SETCAMERAGuanyubenji" = "关于本机";
+"SETCAMERAShijianshezhi" = "时间设置";
+"SETCAMERAWIFImima" = "WIFI密码";
+"SETCAMERAGeshihua" = "格式化";
+"SETCAMERAHuifuchuchang" = "恢复出厂";
+"SETCAMERAZhengchang" = "正常";
+"SETCAMERAShanguangdeng" = "闪光灯";
+"SETCAMERAFengjing" = "风景";
+"SETCAMERAYewan" = "夜晚";
+"SETCAMERAXiaoxiang" = "肖像";
+"SETCAMERAYundong" = "运动";
+"SETCAMERALuori" = "日落";
+"SETCAMERAGao" = "高";
+"SETCAMERADi" = "低";
+"SETCAMERARouhe" = "柔和";
+"SETCAMERAXianyan" = "鲜艳";
+//下载和删除照片视频
+"SelectItem" = "选择项目";
+"SelectedItems" = "已选择%d项";
+"SelectedOneVideo" = "已选择1个视频";
+"SelectedVideos" = "已选择%d个视频";
+"SelectedOnePhoto" = "已选择1张照片";
+"SelectedPhotos" = "已选择%d张照片";
+"DownloadConfirmMessage" = "文件总数: %1\n下载时间: %2 分钟\n\n确认下载吗?";
+"DownloadConfirmMessage1" = "文件总数: %1\n下载时间: %2 秒钟\n\n确认下载吗?";
+"DownloadConfirmMessage2" = "文件总数: %1\n下载时间: %2 分钟 %3 秒钟\n\n确认下载吗?";
+"DownloadConfirmMessage3" = "文件总数: %1\n下载时间: %2 小时 %3 分钟 %4 秒钟\n\n确认下载吗?";
+"DownloadingTitle" = "下载文件中...";
+"DownloadingMessage" = "下载 %1/%2\n%3%";
+"DownloadDoneMessage" = "已下载 %1 照片, %2 视频";
+"Deleting" = "删除中...";
+"DeleteDoneTitle" = "删除文件";
+"DeleteDoneMessage" = "选取的文件已删除";
+"Deleted" = "删除成功";
+"Delete" = "删除";
+//格式化
+"SETTING_FORMAT_FINISH"     ="格式化完成";
+"SETTING_FORMATTING"     ="正在格式化...";
+"SETTING_FORMAT_FAILED" = "格式化失败";
+"SETTING_FORMAT_DESC"     ="格式化SD ，你的所有数据都将丢失？";
+"CARD_ERROR"     ="存储卡读取错误!";
+//恢复出厂
+"SETTING_HFCC"     ="您确定要恢复出厂";
+"SETTING_HFCC_FINISH"     ="恢复出厂完成";
+"SETTING_HFCC_FAILED"     ="恢复出厂失败";
+//提示
+"TIP_WIFIConnected" = "请您检查wifi是否连接";
+"TIP_ConnectingCamera" = "正在连接相机";
+"NoCard"="未插入SD卡!";
+"CARD_FULL"     ="SD卡已满";
+"TIP_SuccessfulTake-off" = "起飞成功";
+"TIP_SuccessfulLanding" = "降落成功";
+"TIP_SuccessfulTurn-back" = "返航成功";
+"TIP_SetAreaPoints" = "请设置区域顶点";
+"TIP_SetAreaPointsNotEnough" = "您选取的点还构不成一个区域";
+"TIP_NOTChoosePoint" = "您还没选中航点";
+"STREAM_CAPTURE_FAILED"     ="拍照失败,请重试";
+"TimelapseOff"="请在设置中将间隔拍摄打开";
+"ActionTimeOut"="操作超时";
+"TIP_AddPoints" = "添加航点";
+"ALERT_LOW_BATTERY"     ="电池电量不足，请充电。";
+"TIP_WarmPrompt" = "温馨提示";
+"TIP_SureDelete" = "您确定删除?";
+"TIP_SureLogout" = "您确定退出登录?";
+"TIP_selectedShare" = "您还没有选中";
+"TIP_mapMaxPoints" = "您规划的航点过多,请增大间距，或者减小区域";
+"TIP_RequestLoading" = "加载中•••";
+"TIP_Requesting" = "请求中•••";
+//分享
+"Share_import" = "导入";
+"Share_importing" = "导入中•••";
+"Share_importCamera" = "相机存储卡导入";
+"Share_importVideo" = "本地视频导入";
+"Share_importImage" = "本地图片导入";
+"Share_importFail" = "导入失败";
+"Share_Video" = "视频";
+"Share_Image" = "图片";
+"Share_Info" = "信息";
+"Share_Date" = "时间";
+"Share_Size" = "尺寸";
+
+
+
+
+
+
+
+
+
+
+
+
