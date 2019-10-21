@@ -51,6 +51,14 @@
     }
     return _alphabetArr;
 }
+- (NSMutableArray<MMAnnotation *> *)annotations
+{
+    [_annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.index = idx+1;
+        obj.title = [NSString stringWithFormat:@"%lu",(unsigned long)idx+1];
+    }];
+    return _annotations;
+}
 - (NSMutableArray *)selectedAnnotations
 {
     NSMutableArray *array = [NSMutableArray array];
@@ -116,6 +124,17 @@
         [middleArr addObject:middlePoint];
     }];
     return [middleArr copy];
+}
+- (UIView *)shadeView
+{
+    if (!_shadeView) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ViewWidth, ViewHight)];
+        view.backgroundColor = RGBA(0, 0, 0, 0.6);
+        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:view];
+        _shadeView = view;
+    }
+    _shadeView.hidden = NO;
+    return _shadeView;
 }
 #pragma mark 判断某点是否在一个区域内
 - (BOOL)isInRange:(NSArray *)totalArr annotation:(MMAnnotation *)annotation
@@ -226,12 +245,9 @@
                 obj1.parameter.FK_speed = model.parameter.FK_speed;
                 obj1.parameter.FK_standingTime = model.parameter.FK_standingTime;
                 obj1.parameter.FK_headOrientation = model.parameter.FK_headOrientation;
-                obj1.coordinate = model.coordinate;
-                obj2.parameter.FK_height = model.parameter.FK_height;
-                obj2.parameter.FK_speed = model.parameter.FK_speed;
-                obj2.parameter.FK_standingTime = model.parameter.FK_standingTime;
-                obj2.parameter.FK_headOrientation = model.parameter.FK_headOrientation;
-                obj2.coordinate = model.coordinate;
+                if (model.coordinate.latitude != 0) {
+                    obj1.coordinate = model.coordinate;
+                }
             }
         }];
     }];
@@ -255,5 +271,21 @@
             return NO;
         }
     }
+}
+- (void)addPopopView:(UIView *)view
+{
+    CGFloat y = view.y;
+    view.y = ViewHight;
+    [self.shadeView addSubview:view];
+    [UIView animateWithDuration:0.3 animations:^{
+        view.y = y;
+    }];
+}
+- (void)clearShadeView
+{
+    [self.shadeView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj removeFromSuperview];
+    }];
+    self.shadeView.hidden = YES;
 }
 @end

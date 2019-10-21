@@ -33,6 +33,8 @@
 @property (nonatomic,strong) NSMutableArray *groupArray;
 /** 区域所有边的中点数组 */
 @property (nonatomic,strong) NSMutableArray <MMAnnotation *> *middleArray;
+/** 弹出视图的遮罩 */
+@property (nonatomic,strong) UIView *shadeView;
 
 + (instancetype) manager;
 
@@ -49,6 +51,14 @@
     是否超出飞行范围
  */
 - (BOOL)isOverFlightAtFlyCoordinate:(CLLocationCoordinate2D)flyCoordinate userCoordinate:(CLLocationCoordinate2D)userCoordinate;
+/**
+    往遮罩上加东西
+ */
+- (void)addPopopView:(UIView *)view;
+/**
+   清除遮罩
+*/
+- (void)clearShadeView;
 
 @end
 

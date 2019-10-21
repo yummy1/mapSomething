@@ -39,7 +39,7 @@
     _markArr = markArr;
     [[self.scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self.buttonArr removeAllObjects];
-    if (markArr) {
+    if (markArr.count != 0) {
         [self layoutMarks];
     }else{
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(25, 15, 35, 35)];
@@ -47,6 +47,7 @@
         [button.titleLabel setFont:[UIFont systemFontOfSize:10]];
         [button addTarget:self action:@selector(addAction) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:button];
+        _allBtn.selected = NO;
     }
 }
 - (void)layoutMarks
@@ -100,8 +101,6 @@
 #pragma mark 航点按钮点击事件
 - (void)clickSelectedBtn:(UIButton *)button
 {
-    MMAnnotation *annotation = [MMMapManager manager].annotations[button.tag];
-    annotation.isSelected = button.selected;
     //2航线规划、3区域航线
     if ([MMMapManager manager].mapFunction == MAP_pointTypeRoutePlanning) {
         if (button.selected) {
@@ -112,6 +111,8 @@
             button.selected = YES;
             button.layer.borderColor = [UIColor blackColor].CGColor;
         }
+        MMAnnotation *annotation = [MMMapManager manager].annotations[button.tag];
+        annotation.isSelected = button.selected;
         //所有选中点
         __block NSInteger index;
         __block NSMutableArray *selctedArr = [NSMutableArray array];
@@ -185,8 +186,14 @@
     }];
     if (_allBtn.selected) {
         _allBtn.selected = NO;
+        [[MMMapManager manager].annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj.isSelected = NO;
+        }];
     }else{
         _allBtn.selected = YES;
+        [[MMMapManager manager].annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj.isSelected = YES;
+        }];
     }
     if ([_delegate respondsToSelector:@selector(clickAllOnMapDuodianEditView:isYes:)]) {
         [_delegate clickAllOnMapDuodianEditView:self isYes:_allBtn.selected];

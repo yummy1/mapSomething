@@ -20,6 +20,7 @@
 #import "MMMapEditPolygonJWPopupView.h"
 #import "MMMapMyCollectViewController.h"
 #import "MMPolygonChooseStartView.h"
+#import "MMSingleTapAnnotationView.h"
 
 
 @interface MMMapView()<MMGDMapViewDelegate,MMGoogleMapViewDelegate,MMMapRightViewDelegate,MMMapPolyLineEditViewDelegate,MMMapPolygonEditViewDelegate,MMMapSelectedAnnotationEditViewDelegate,MMMapEditAnnotationsPopupViewDelegate,MMMapEditPolygonJWPopupViewDelegate,MMMapEditPolygonPopupViewDelegate,MMPolygonChooseStartViewDelegate,UITextFieldDelegate>
@@ -76,9 +77,6 @@
     [self addSubview:self.googleMapView];
     [self addSubview:self.mapRightView];
     [self addSubview:self.mapTopView];
-    [self addSubview:self.polyLineEditView];
-    [self addSubview:self.polygonEditView];
-    [self addSubview:self.selectedEditView];
     
     if ([MMMapManager manager].type == MapTypeGaoDe) {
         self.gdMapView.hidden = NO;
@@ -129,7 +127,6 @@
 {
     if (!_polyLineEditView) {
         _polyLineEditView = [[MMMapPolyLineEditView alloc] init];
-        _polyLineEditView.hidden = YES;
         _polyLineEditView.delegate = self;
     }
     return _polyLineEditView;
@@ -138,7 +135,6 @@
 {
     if (!_polygonEditView) {
         _polygonEditView = [[MMMapPolygonEditView alloc] init];
-        _polygonEditView.hidden = YES;
         _polygonEditView.delegate = self;
     }
     return _polygonEditView;
@@ -148,36 +144,8 @@
     if (!_selectedEditView) {
         _selectedEditView = [[MMMapSelectedAnnotationEditView alloc] init];
         _selectedEditView.delegate = self;
-        _selectedEditView.hidden = YES;
     }
     return _selectedEditView;
-}
-- (MMMapEditAnnotationsPopupView *)editAnnotationsView
-{
-    if (!_editAnnotationsView) {
-        _editAnnotationsView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditAnnotationsPopupView class]) owner:self options:nil][0];
-        _editAnnotationsView.delegate = self;
-        _editAnnotationsView.hidden = YES;
-    }
-    return _editAnnotationsView;
-}
-- (MMMapEditPolygonJWPopupView *)editPolygonJWView
-{
-    if (!_editPolygonJWView) {
-        _editPolygonJWView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditPolygonJWPopupView class]) owner:self options:nil][0];
-        _editPolygonJWView.delegate = self;
-        _editPolygonJWView.hidden = YES;
-    }
-    return _editPolygonJWView;
-}
-- (MMMapEditPolygonPopupView *)editPolygonView
-{
-    if (!_editPolygonView) {
-        _editPolygonView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditPolygonPopupView class]) owner:self options:nil][0];
-        _editPolygonView.delegate = self;
-        _editPolygonView.hidden = YES;
-    }
-    return _editPolygonView;
 }
 - (MMPolygonChooseStartView *)chooseStartView
 {
@@ -186,6 +154,33 @@
         _chooseStartView.delegate = self;
     }
     return _chooseStartView;
+}
+- (MMMapEditAnnotationsPopupView *)editAnnotationsView
+{
+    if (!_editAnnotationsView) {
+        _editAnnotationsView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditAnnotationsPopupView class]) owner:self options:nil][0];
+        _editAnnotationsView.frame = CGRectMake(ViewWidth*0.15, 30, ViewWidth*0.7, 326);
+        _editAnnotationsView.delegate = self;
+    }
+    return _editAnnotationsView;
+}
+- (MMMapEditPolygonJWPopupView *)editPolygonJWView
+{
+    if (!_editPolygonJWView) {
+        _editPolygonJWView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditPolygonJWPopupView class]) owner:self options:nil][0];
+        _editPolygonJWView.frame = CGRectMake(ViewWidth*0.15, 30, ViewWidth*0.7, 326);
+        _editPolygonJWView.delegate = self;
+    }
+    return _editPolygonJWView;
+}
+- (MMMapEditPolygonPopupView *)editPolygonView
+{
+    if (!_editPolygonView) {
+        _editPolygonView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditPolygonPopupView class]) owner:self options:nil][0];
+        _editPolygonView.frame = CGRectMake(ViewWidth*0.15, 30, ViewWidth*0.7, 326);
+        _editPolygonView.delegate = self;
+    }
+    return _editPolygonView;
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
@@ -208,43 +203,36 @@
         make.width.mas_equalTo(200);
         make.height.mas_equalTo(74);
     }];
-    [self.polyLineEditView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.right.mas_equalTo(self);
-        make.width.mas_equalTo(ViewWidth*0.67);
-        make.height.mas_equalTo(71);
-    }];
-    [self.polygonEditView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.right.mas_equalTo(self);
-        make.width.mas_equalTo(ViewWidth*0.67);
-        make.height.mas_equalTo(71);
-    }];
-    [self.selectedEditView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.polyLineEditView).with.offset(8);
-        make.right.mas_equalTo(self.polyLineEditView).with.offset(-90);
-        make.bottom.mas_equalTo(self.polyLineEditView.mas_top).with.offset(2);
-        make.height.mas_equalTo(73);
-    }];
-    [self.editAnnotationsView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self);
-        make.width.mas_equalTo(ViewWidth*0.7);
-        make.bottom.mas_equalTo(self).with.offset(-40);
-    }];
-    [self.editPolygonView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self);
-        make.width.mas_equalTo(ViewWidth*0.7);
-        make.bottom.mas_equalTo(self).with.offset(-40);
-    }];
-    [self.editPolygonJWView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self);
-        make.width.mas_equalTo(ViewWidth*0.7);
-        make.bottom.mas_equalTo(self).with.offset(-40);
-    }];
-    [self.chooseStartView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(@(-70.5-68.5-3));
-        make.centerX.mas_equalTo(self);
-        make.width.mas_equalTo(@(156));
-        make.height.mas_equalTo(68.5);
-    }];
+    if (_polyLineEditView) {
+        [self.polyLineEditView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.right.mas_equalTo(self);
+            make.width.mas_equalTo(ViewWidth*0.67);
+            make.height.mas_equalTo(71);
+        }];
+    }
+    if (_polygonEditView) {
+        [self.polygonEditView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.right.mas_equalTo(self);
+            make.width.mas_equalTo(ViewWidth*0.67);
+            make.height.mas_equalTo(71);
+        }];
+    }
+    if (_selectedEditView) {
+        [self.selectedEditView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.polyLineEditView).with.offset(8);
+            make.right.mas_equalTo(self.polyLineEditView).with.offset(-90);
+            make.bottom.mas_equalTo(self.polyLineEditView.mas_top).with.offset(2);
+            make.height.mas_equalTo(73);
+        }];
+    }
+    if (_chooseStartView) {
+        [self.chooseStartView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(@(-70.5-68.5-3));
+            make.centerX.mas_equalTo(self);
+            make.width.mas_equalTo(@(156));
+            make.height.mas_equalTo(68.5);
+        }];
+    }
     
 }
 - (void)mapChangeSmall:(BOOL)isSmall
@@ -265,15 +253,18 @@
             [_delegate MMMapViewPreviewClick:self];
         }
     }else{
+        //清除
+        [_gdMapView clear];
         switch ([MMMapManager manager].mapFunction) {
             case MAP_pointTypePointingFlight:
             {
-                //清除
-                [_gdMapView clear];
                 //加点
                 MMAnnotation *annotation = [[MMAnnotation alloc] init];
                 annotation.coordinate = coordinate;
-                [_gdMapView addAnnotation:annotation];
+                annotation.index = [MMMapManager manager].annotations.count+1;
+                [[MMMapManager manager].annotations addObject:annotation];
+                [_gdMapView addAnnotations:[MMMapManager manager].annotations];
+                [TheNotificationCenter postNotificationName:@"MMSingleTapAnnotationViewCoordinate" object:nil userInfo:@{@"lat":[NSString stringWithFormat:@"%.7f",coordinate.latitude],@"log":[NSString stringWithFormat:@"%.7f",coordinate.longitude]}];
                 //划线
                 [_gdMapView addPolyLines:@[mapView.userAnnotation,annotation] lineColor:MAPLineBlueColor];
             }
@@ -284,14 +275,30 @@
                 MMAnnotation *annotation = [[MMAnnotation alloc] init];
                 annotation.coordinate = coordinate;
                 annotation.index = [MMMapManager manager].annotations.count+1;
-                [_gdMapView addAnnotation:annotation];
+                [[MMMapManager manager].annotations addObject:annotation];
+                [_gdMapView addAnnotations:[MMMapManager manager].annotations];
                 _polyLineEditView.markArr = [MMMapManager manager].annotations;
                 //划线
                 [_gdMapView removePolyLines];
                 [_gdMapView addPolyLines:[MMMapManager manager].annotations lineColor:MAPLineBlueColor];
             }
                 break;
-                
+                case MAP_pointTypeRegionalRoute:
+                {
+                    //清除
+                    [_gdMapView clear];
+                    //加点
+                    MMAnnotation *annotation = [[MMAnnotation alloc] init];
+                    annotation.coordinate = coordinate;
+                    annotation.index = [MMMapManager manager].annotations.count+1;
+                    [[MMMapManager manager].annotations addObject:annotation];
+                    [_gdMapView addAnnotation:annotation];
+                    _polyLineEditView.markArr = [MMMapManager manager].annotations;
+                    //划线
+                    [_gdMapView removePolyLines];
+                    [_gdMapView addPolyLines:[MMMapManager manager].annotations lineColor:MAPLineBlueColor];
+                }
+                    break;
             default:
                 break;
         }
@@ -315,9 +322,12 @@
 #pragma mark - MMMapRightViewDelegate
 - (void)mapRightView:(MMMapRightView *)rightView index:(MAP_pointType)index
 {
-    
-    [MMMapManager manager].mapFunction = index;
-    
+    if (index != MAP_pointTypeHidden) {
+        [MMMapManager manager].mapFunction = index;
+    }
+    if (_selectedEditView) {
+        _selectedEditView.hidden = YES;
+    }
     CGFloat width = 20;
     if (index == MAP_pointTypeHidden) {
         width = 50;
@@ -327,9 +337,18 @@
         }else{
             [_googleMapView clear];
         }
+        [[MMMapManager manager].annotations removeAllObjects];
         if (index == MAP_pointTypeRoutePlanning || index == MAP_pointTypeRegionalRoute) {
-            self.polyLineEditView.hidden = NO;
+            if (!_polyLineEditView) {
+                [self addSubview:self.polyLineEditView];
+            }else{
+                self.polyLineEditView.hidden = NO;
+                [self bringSubviewToFront:self.polyLineEditView];
+            }
+            self.polyLineEditView.markArr = [MMMapManager manager].annotations;
             [self.polyLineEditView setUpButton];
+        }else{
+            self.polyLineEditView.hidden = YES;
         }
     }
     [_mapRightView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -345,14 +364,24 @@
 //index:若为一个时显示选中第几个
 - (void)selctedMarkOnMapDuodianEditView:(MMMapPolyLineEditView *)editView selectedMarkArr:(NSArray *)markArr oneIndex:(NSInteger)index
 {
-    _selectedEditView.hidden = NO;
+    if (!_selectedEditView) {
+        [self addSubview:self.selectedEditView];
+    }else{
+        _selectedEditView.hidden = NO;
+        [self bringSubviewToFront:_selectedEditView];
+    }
     _selectedEditView.selectedArr = [markArr copy];
 }
 //全选
 - (void)clickAllOnMapDuodianEditView:(MMMapPolyLineEditView *)editView isYes:(BOOL)yes
 {
     if (yes) {
-        _selectedEditView.hidden = NO;
+        if (!_selectedEditView) {
+            [self addSubview:self.selectedEditView];
+        }else{
+            _selectedEditView.hidden = NO;
+            [self bringSubviewToFront:_selectedEditView];
+        }
         _selectedEditView.selectedArr = [[MMMapManager manager].annotations copy];
     }else{
         _selectedEditView.hidden = YES;
@@ -420,24 +449,16 @@
     }else{
         if ([MMMapManager manager].mapFunction == MAP_pointTypeRoutePlanning) {
             //航线规划
-            if (_editAnnotationsView) {
-                [self addSubview:self.editAnnotationsView];
-                if (count == 1) {
-                    self.editAnnotationsView.model = [MMMapManager manager].selectedAnnotations[0];
-                }else{
-                    self.editAnnotationsView.model = nil;
-                }
+            [[MMMapManager manager] addPopopView:self.editAnnotationsView];
+            if (count == 1) {
+                self.editAnnotationsView.model = [MMMapManager manager].selectedAnnotations[0];
             }else{
-                self.editAnnotationsView.hidden = NO;
+                self.editAnnotationsView.model = nil;
             }
         }else{
             //区域航线
-            if (_editPolygonJWView) {
-                [self addSubview:self.editPolygonJWView];
-                self.editPolygonJWView.model = [MMMapManager manager].selectedAnnotations[0];
-            }else{
-                self.editPolygonJWView.hidden = NO;
-            }
+            [[MMMapManager manager] addPopopView:self.editPolygonJWView];
+            self.editPolygonJWView.model = [MMMapManager manager].selectedAnnotations[0];
         }
     }
 }
@@ -523,6 +544,7 @@
         [self addSubview:self.chooseStartView];
     }else{
         self.chooseStartView.hidden = NO;
+        [self bringSubviewToFront:self.chooseStartView];
         [self.chooseStartView setDefault];
     }
 
@@ -587,7 +609,7 @@
 - (void)deleteOnMMMapSelectedAnnotationEditView:(MMMapSelectedAnnotationEditView *)view
 {
     //1.重新整理数据
-    [[MMMapManager manager].annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [[[MMMapManager manager].annotations copy] enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj.isSelected == YES) {
             [[MMMapManager manager].annotations removeObject:obj];
         }
@@ -647,10 +669,25 @@
     [[MMMapManager manager] updateAnnotations:model];
     //用setter方法更新数据
     self.selectedEditView.selectedArr = [MMMapManager manager].selectedAnnotations;
+    //鉴于修改数据之后地图会变化
+    if ([MMMapManager manager].type == MapTypeGaoDe) {
+        [self.gdMapView clear];
+        [self.gdMapView addAnnotations:[MMMapManager manager].annotations];
+        //划线
+        [self.gdMapView addPolyLines:[MMMapManager manager].annotations lineColor:MAPLineBlueColor];
+    }else{
+        [self.googleMapView clear];
+        [self.googleMapView addAnnotations:[MMMapManager manager].annotations];
+        //划线
+        [self.googleMapView addPolyLines:[MMMapManager manager].annotations lineColor:MAPLineBlueColor lineType:MAPLineTypeSolid];
+    }
+    //清除弹框
+    [[MMMapManager manager] clearShadeView];
 }
 - (void)cancelOnMMMapEditAnnotationsPopupView:(MMMapEditAnnotationsPopupView *)view
 {
-    self.editAnnotationsView.hidden = YES;
+    //清除弹框
+    [[MMMapManager manager] clearShadeView];
 }
 
 #pragma mark - MMMapEditPolygonPopupViewDelegate

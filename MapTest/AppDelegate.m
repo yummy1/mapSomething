@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AppDelegate+MMMap.h"
+#import "IQKeyboardManager.h"
 
 @interface AppDelegate ()
 
@@ -18,9 +19,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self init_map_config];
+    [self setupIQKeyboard];
     return YES;
 }
-
+#pragma mark - 初始化键盘管理三方库IQKeyboardManager
+- (void)setupIQKeyboard{
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;
+    manager.shouldResignOnTouchOutside = YES;
+    manager.shouldToolbarUsesTextFieldTintColor = YES;
+    manager.enableAutoToolbar = YES;
+}
 -(UIInterfaceOrientationMask)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window{
     UIDevice *device = [UIDevice currentDevice];
     if (!_allowRotation || device.orientation == UIDeviceOrientationPortraitUpsideDown) {

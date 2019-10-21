@@ -46,13 +46,10 @@
 
 @end
 @implementation MMMapEditAnnotationsPopupView
-- (instancetype)init
+- (void)awakeFromNib
 {
-    self = [super init];
-    if (self) {
-        [self setupUI];
-    }
-    return self;
+    [super awakeFromNib];
+    [self setupUI];
 }
 - (void)setModel:(MMAnnotation *)model
 {
@@ -64,8 +61,10 @@
         _latitudeTextField.enabled = NO;
         _longitudeTextField.enabled = NO;
     }else{
-        _latitudeTextField.text = [NSString stringWithFormat:@"%.6f",model.coordinate.latitude];
-        _longitudeTextField.text = [NSString stringWithFormat:@"%.6f",model.coordinate.longitude];
+        _latitudeTextField.text = [NSString stringWithFormat:@"%.7f",model.coordinate.latitude];
+        _longitudeTextField.text = [NSString stringWithFormat:@"%.7f",model.coordinate.longitude];
+        _latitudeTextField.enabled = YES;
+        _longitudeTextField.enabled = YES;
     }
     _heightTextField.text = _model.parameter.FK_height;
     _speedTextField.text = _model.parameter.FK_speed;
@@ -74,6 +73,10 @@
     
 }
 - (void)setupUI {
+    self.layer.cornerRadius = 5;
+    self.clipsToBounds = YES;
+    //为了键盘弹出输入框不跟随问题
+    self.scrollView.contentSize = CGSizeMake(ViewWidth*0.7, 326);
     //中英文
     _heightTittle.text = Localized(@"AroundHeight");
     _speedTittle.text = Localized(@"AroundSpeed");
@@ -92,10 +95,10 @@
 }
 - (IBAction)saveAction:(UIButton *)sender {
     if ([_delegate respondsToSelector:@selector(editEndOnMMMapEditAnnotationsPopupView:editModel:)]) {
-        CLLocationCoordinate2D addCoordinate;
-        addCoordinate.latitude = [self.latitudeTextField.text doubleValue];
-        addCoordinate.longitude = [self.longitudeTextField.text doubleValue];
-        self.model.coordinate = addCoordinate;
+//        CLLocationCoordinate2D addCoordinate;
+//        addCoordinate.latitude = [self.latitudeTextField.text doubleValue];
+//        addCoordinate.longitude = [self.longitudeTextField.text doubleValue];
+//        self.model.coordinate = addCoordinate;
         [_delegate editEndOnMMMapEditAnnotationsPopupView:self editModel:self.model];
     }
 }

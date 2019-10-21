@@ -31,7 +31,7 @@
     _model = model;
     self.heightLabel.text = [NSString stringWithFormat:@"%@%@%@",Localized(@"AroundHeight"),model.parameter.FK_height,Localized(@"AroundMeter")];
     self.speedLabel.text = [NSString stringWithFormat:@"%@%@%@",Localized(@"AroundSpeed"),model.parameter.FK_speed,Localized(@"AroundMeter/sec")];
-    self.jwLabel.text = [NSString stringWithFormat:@"%@：%f   %@：%f",Localized(@"MineJingdu"),model.coordinate.longitude,Localized(@"MineWeidu"),model.coordinate.latitude];
+    self.jwLabel.text = [NSString stringWithFormat:@"%@：%.7f   %@：%.7f",Localized(@"MineJingdu"),model.coordinate.longitude,Localized(@"MineWeidu"),model.coordinate.latitude];
 }
 - (void)goAction
 {
@@ -119,6 +119,12 @@
     _btIcon.image = [UIImage imageNamed:@"location_blue"];
     [_bottom addSubview:_btIcon];
     
+    [TheNotificationCenter addObserver:self selector:@selector(addNotification:) name:@"MMSingleTapAnnotationViewCoordinate" object:nil];
+}
+- (void)addNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    self.jwLabel.text = [NSString stringWithFormat:@"%@：%@   %@：%@",Localized(@"MineJingdu"),userInfo[@"lat"],Localized(@"MineWeidu"),userInfo[@"log"]];
 }
 - (void)layoutSubviews
 {

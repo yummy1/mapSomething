@@ -15,6 +15,7 @@
 @property (nonatomic,strong) MMMapView *mapView;
 @property (nonatomic,strong) UITapGestureRecognizer *dituTap;
 @property (nonatomic,strong) UITapGestureRecognizer *hangpaiTap;
+
 @end
 
 @implementation VideoController
@@ -30,30 +31,34 @@
 {
     if (!_mapView) {
         _mapView = [MMMapView mapView];
-        _mapView.frame = CGRectMake(0, ViewHight*0.67, ViewWidth*0.33, ViewHight*0.33);
+        _mapView.frame = CGRectMake(0, ViewHight*0.66, ViewWidth*0.34, ViewHight*0.34);
 //        _dituTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeMapViewBig)];
 //        [_mapView addGestureRecognizer:_dituTap];
         _mapView.delegate = self;
     }
     return _mapView;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.videoView];
     [self.view addSubview:self.mapView];
-    
+
+
 }
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
 }
+
 - (void)changeMapViewBig
 {
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:.5 animations:^{
         weakSelf.mapView.frame = CGRectMake(0, 0, ViewWidth, ViewHight);
-        weakSelf.videoView.frame = CGRectMake(0, ViewHight*0.67, ViewWidth*0.33, ViewHight*0.33);
+        weakSelf.videoView.frame = CGRectMake(0, ViewHight*0.66, ViewWidth*0.34, ViewHight*0.34);
     } completion:^(BOOL finished) {
         [self.view bringSubviewToFront:weakSelf.videoView];
         weakSelf.hangpaiTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeVideoViewBig)];
@@ -68,7 +73,7 @@
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:.5 animations:^{
         weakSelf.videoView.frame = CGRectMake(0, 0, ViewWidth, ViewHight);
-        weakSelf.mapView.frame = CGRectMake(0, ViewHight*0.67, ViewWidth*0.33, ViewHight*0.33);
+        weakSelf.mapView.frame = CGRectMake(0, ViewHight*0.66, ViewWidth*0.34, ViewHight*0.34);
     } completion:^(BOOL finished) {
         [self.view bringSubviewToFront:weakSelf.mapView];
         weakSelf.hangpaiTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeVideoViewBig)];

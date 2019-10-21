@@ -34,7 +34,7 @@
         }else{
             _detailLabel.text = [NSString stringWithFormat:@"%@%@%@  %@%@%@  %@%@%@  %@%@° | %@%@%@",Localized(@"AroundHeight"),model.parameter.FK_height,Localized(@"AroundMeter"),Localized(@"AroundSpeed"),model.parameter.FK_speed,Localized(@"AroundMeter/sec"),Localized(@"EditResidenceTime"),model.parameter.FK_standingTime,Localized(@"EditSec"),Localized(@"EditNoseOrientation"),model.parameter.FK_headOrientation,Localized(@"EditHoveringRadius"),model.parameter.FK_hoveringRadius,Localized(@"AroundMeter")];
         }
-        _jwLabel.text = [NSString stringWithFormat:@"%@：%.6f   %@：%.6f",Localized(@"MineJingdu"),model.coordinate.longitude,Localized(@"MineWeidu"),model.coordinate.latitude];
+        _jwLabel.text = [NSString stringWithFormat:@"%@：%.7f   %@：%.7f",Localized(@"MineJingdu"),model.coordinate.longitude,Localized(@"MineWeidu"),model.coordinate.latitude];
     }else{
         _tittleLabel.text = [NSString stringWithFormat:@"%@%ld%@",Localized(@"EditSelected"),(long)selectedArr.count,Localized(@"EditPoints")];
         _jwLabel.text = @"";

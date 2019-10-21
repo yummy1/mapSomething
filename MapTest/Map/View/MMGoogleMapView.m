@@ -144,7 +144,6 @@
 {
     [annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self addAnnotation:obj];
-        [[MMMapManager manager].annotations addObject:obj];
     }];
 }
 
@@ -188,8 +187,6 @@
 -(void)clear
 {
     [_mapView clear];
-    
-    [[MMMapManager manager].annotations removeAllObjects];
     
 }
 

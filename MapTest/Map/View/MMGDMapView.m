@@ -13,6 +13,7 @@
 #import "MMGDPolyLine.h"
 #import "MMGDPolygon.h"
 #import "MMMapEditAnnotationsPopupView.h"
+#import "AppDelegate.h"
 
 @interface MMGDMapView()<MAMapViewDelegate,MMSingleTapAnnotationViewDelegate,MMMapEditAnnotationsPopupViewDelegate>
 @property (strong, nonatomic)MAMapView *mapView;
@@ -61,22 +62,12 @@
 {
     if (!_editAnnotationsView) {
         _editAnnotationsView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditAnnotationsPopupView class]) owner:self options:nil][0];
+        _editAnnotationsView.frame = CGRectMake(ViewWidth*0.15, 30, ViewWidth*0.7, 326);
         _editAnnotationsView.delegate = self;
-        _editAnnotationsView.hidden = YES;
     }
     return _editAnnotationsView;
 }
-- (void)layoutSubviews{
-    [super layoutSubviews];
-//    [self.mapView mas_remakeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
-//    }];
-    [self.editAnnotationsView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self);
-        make.width.mas_equalTo(ViewWidth*0.7);
-        make.bottom.mas_equalTo(self).with.offset(-40);
-    }];
-}
+
 - (void)setMapFunction:(MAP_function)mapFunction
 {
     _mapFunction = mapFunction;
@@ -126,12 +117,10 @@
 - (void)addAnnotation:(MMAnnotation *)annotation
 {
     [_mapView addAnnotation:annotation];
-    [[MMMapManager manager].annotations addObject:annotation];
 }
 - (void)addAnnotations:(NSArray<MMAnnotation *> *)annotations
 {
     [_mapView addAnnotations:annotations];
-    [[MMMapManager manager].annotations addObjectsFromArray:annotations];
 }
 -(void)removeAnnotation:(MMAnnotation *)annotation
 {
@@ -180,7 +169,7 @@
     [self.mapView removeOverlays:self.mapView.overlays];
     [self.mapView removeAnnotations:self.mapView.annotations];
     
-    [[MMMapManager manager].annotations removeAllObjects];
+    
 }
 #pragma mark - Map Delegate
 - (void)mapView:(MAMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate{
@@ -359,12 +348,8 @@
 #pragma mark - DDCustomAnnotationViewDelegate
 - (void)MMSingleTapAnnotationViewSingleTapEdit:(MMSingleTapAnnotationView *)annotationView
 {
-    if (_editAnnotationsView) {
-        [self addSubview:self.editAnnotationsView];
-        self.editAnnotationsView.model = [MMMapManager manager].selectedAnnotations[0];
-    }else{
-        self.editAnnotationsView.hidden = NO;
-    }
+    [[MMMapManager manager] addPopopView:self.editAnnotationsView];
+    self.editAnnotationsView.model = [MMMapManager manager].annotations[0];
 
 }
 - (void)MMSingleTapAnnotationViewSingleTapGo:(MMSingleTapAnnotationView *)annotationView
@@ -382,15 +367,18 @@
     [[MMMapManager manager].annotations addObject:model];
     //重绘
     [self.mapView removeAnnotations:self.mapView.annotations];
+    [self.mapView removeOverlays:self.mapView.overlays];
     [self.mapView addAnnotations:@[model]];
     //对应的View,赋值
     MMSingleTapAnnotationView *annView = (MMSingleTapAnnotationView *)[self.mapView viewForAnnotation:model];
     annView.calloutView.model = model;
     [self addPolyLines:@[self.userAnnotation,model] lineColor:MAPLineBlueColor];
+    //去除遮罩
+    [[MMMapManager manager] clearShadeView];
 }
 - (void)cancelOnMMMapEditAnnotationsPopupView:(MMMapEditAnnotationsPopupView *)view
 {
-    self.editAnnotationsView.hidden = YES;
+    [[MMMapManager manager] clearShadeView];
 }
 
 @end
