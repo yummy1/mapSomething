@@ -28,7 +28,7 @@
 /** 选中编辑的点 */
 @property (nonatomic,strong) NSMutableArray<MMAnnotation *> *selectedAnnotations;
 /** 区域航线时,计算区域边上的点（出掉区域内的点） */
-@property (nonatomic,strong) NSMutableArray<MMAnnotation *> *waiAnnotations;
+//@property (nonatomic,strong) NSMutableArray<MMAnnotation *> *waiAnnotations;
 /** 区域边点（两点为一条边进行分组） */
 @property (nonatomic,strong) NSMutableArray *groupArray;
 /** 区域所有边的中点数组 */
@@ -46,7 +46,10 @@
     编辑点之后更新点数据parameter
  */
 - (void)updateAnnotations:(MMAnnotation *)model;
-
+/**
+   新添加或者删除航点后，重新查看是否凹多边形、凸多边形
+*/
+- (void)changeConvexPolygon:(NSArray *)points;
 /**
     是否超出飞行范围
  */

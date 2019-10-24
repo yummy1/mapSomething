@@ -18,6 +18,8 @@
 @interface MMMapEditAnnotationsPopupView : UIView
 @property (nonatomic,strong) MMAnnotation *model;
 @property(nonatomic, weak) id<MMMapEditAnnotationsPopupViewDelegate> delegate;
+
+@property (nonatomic,strong) NSString *tittleText;
 @end
 
 

@@ -99,11 +99,8 @@
 		048B918223279A1300268A07 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048B917F23279A1300268A07 /* GoogleMaps.framework */; };
 		049881CF2338B253009FFA75 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049881CE2338B253009FFA75 /* HomeViewController.m */; };
 		049881D22338B860009FFA75 /* MMMapEditAnnotationsPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049881D12338B860009FFA75 /* MMMapEditAnnotationsPopupView.m */; };
-		049881D42338B876009FFA75 /* MMMapEditAnnotationsPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049881D32338B876009FFA75 /* MMMapEditAnnotationsPopupView.xib */; };
 		049881D72338BB3A009FFA75 /* MMMapEditPolygonPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049881D62338BB3A009FFA75 /* MMMapEditPolygonPopupView.m */; };
-		049881D92338BB4D009FFA75 /* MMMapEditPolygonPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049881D82338BB4D009FFA75 /* MMMapEditPolygonPopupView.xib */; };
 		049881DC2338BC75009FFA75 /* MMMapEditPolygonJWPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 049881DB2338BC75009FFA75 /* MMMapEditPolygonJWPopupView.m */; };
-		049881DE2338BC7F009FFA75 /* MMMapEditPolygonJWPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 049881DD2338BC7F009FFA75 /* MMMapEditPolygonJWPopupView.xib */; };
 		04A35711234F0AB10066F6D3 /* IQTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A356F0234F0AB10066F6D3 /* IQTextView.m */; };
 		04A35712234F0AB10066F6D3 /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A356F4234F0AB10066F6D3 /* IQToolbar.m */; };
 		04A35713234F0AB10066F6D3 /* IQTitleBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A356F6234F0AB10066F6D3 /* IQTitleBarButtonItem.m */; };
@@ -118,6 +115,9 @@
 		04A3571C234F0AB10066F6D3 /* IQUIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A3570A234F0AB10066F6D3 /* IQUIView+Hierarchy.m */; };
 		04A3571D234F0AB10066F6D3 /* IQUIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A3570E234F0AB10066F6D3 /* IQUIViewController+Additions.m */; };
 		04A3571E234F0AB10066F6D3 /* IQKeyboardReturnKeyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A35710234F0AB10066F6D3 /* IQKeyboardReturnKeyHandler.m */; };
+		04ABA068235FFACB00A3D01C /* MMMapEditAnnotationsPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04ABA06A235FFACB00A3D01C /* MMMapEditAnnotationsPopupView.xib */; };
+		04ABA06F235FFADE00A3D01C /* MMMapEditPolygonPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04ABA071235FFADE00A3D01C /* MMMapEditPolygonPopupView.xib */; };
+		04ABA076235FFAEC00A3D01C /* MMMapEditPolygonJWPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04ABA078235FFAEC00A3D01C /* MMMapEditPolygonJWPopupView.xib */; };
 		04ACA4C7233CA85D00ECBC07 /* MMPolygonChooseStartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACA4C6233CA85C00ECBC07 /* MMPolygonChooseStartView.m */; };
 /* End PBXBuildFile section */
 
@@ -224,6 +224,8 @@
 		042A162F23321F390039E56B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		042A163323321F7E0039E56B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		042A163523321F8D0039E56B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		044F7F95235FFB28001C6379 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MMMapEditPolygonJWPopupView.strings"; sourceTree = "<group>"; };
+		044F7F97235FFFEE001C6379 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MMMapEditPolygonJWPopupView.strings; sourceTree = "<group>"; };
 		04652BBA2329DB63002C1ECF /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		04652BBB2329DC5C002C1ECF /* MapStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapStructure.h; sourceTree = "<group>"; };
 		04652BBE2329DDC0002C1ECF /* MMSingleTapAnnotationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMSingleTapAnnotationView.h; sourceTree = "<group>"; };
@@ -316,13 +318,10 @@
 		049881CE2338B253009FFA75 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		049881D02338B860009FFA75 /* MMMapEditAnnotationsPopupView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMMapEditAnnotationsPopupView.h; sourceTree = "<group>"; };
 		049881D12338B860009FFA75 /* MMMapEditAnnotationsPopupView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMMapEditAnnotationsPopupView.m; sourceTree = "<group>"; };
-		049881D32338B876009FFA75 /* MMMapEditAnnotationsPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MMMapEditAnnotationsPopupView.xib; sourceTree = "<group>"; };
 		049881D52338BB3A009FFA75 /* MMMapEditPolygonPopupView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMMapEditPolygonPopupView.h; sourceTree = "<group>"; };
 		049881D62338BB3A009FFA75 /* MMMapEditPolygonPopupView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMMapEditPolygonPopupView.m; sourceTree = "<group>"; };
-		049881D82338BB4D009FFA75 /* MMMapEditPolygonPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MMMapEditPolygonPopupView.xib; sourceTree = "<group>"; };
 		049881DA2338BC75009FFA75 /* MMMapEditPolygonJWPopupView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMMapEditPolygonJWPopupView.h; sourceTree = "<group>"; };
 		049881DB2338BC75009FFA75 /* MMMapEditPolygonJWPopupView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMMapEditPolygonJWPopupView.m; sourceTree = "<group>"; };
-		049881DD2338BC7F009FFA75 /* MMMapEditPolygonJWPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MMMapEditPolygonJWPopupView.xib; sourceTree = "<group>"; };
 		04A356F0234F0AB10066F6D3 /* IQTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQTextView.m; sourceTree = "<group>"; };
 		04A356F1234F0AB10066F6D3 /* IQTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQTextView.h; sourceTree = "<group>"; };
 		04A356F3234F0AB10066F6D3 /* IQUIView+IQKeyboardToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+IQKeyboardToolbar.h"; sourceTree = "<group>"; };
@@ -352,6 +351,13 @@
 		04A3570E234F0AB10066F6D3 /* IQUIViewController+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIViewController+Additions.m"; sourceTree = "<group>"; };
 		04A3570F234F0AB10066F6D3 /* IQUIView+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+Hierarchy.h"; sourceTree = "<group>"; };
 		04A35710234F0AB10066F6D3 /* IQKeyboardReturnKeyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQKeyboardReturnKeyHandler.m; sourceTree = "<group>"; };
+		04ABA069235FFACB00A3D01C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MMMapEditAnnotationsPopupView.xib; sourceTree = "<group>"; };
+		04ABA06C235FFAD500A3D01C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MMMapEditAnnotationsPopupView.strings; sourceTree = "<group>"; };
+		04ABA06E235FFAD800A3D01C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MMMapEditAnnotationsPopupView.strings"; sourceTree = "<group>"; };
+		04ABA070235FFADE00A3D01C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MMMapEditPolygonPopupView.xib; sourceTree = "<group>"; };
+		04ABA073235FFAE400A3D01C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MMMapEditPolygonPopupView.strings; sourceTree = "<group>"; };
+		04ABA075235FFAE500A3D01C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MMMapEditPolygonPopupView.strings"; sourceTree = "<group>"; };
+		04ABA077235FFAEC00A3D01C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MMMapEditPolygonJWPopupView.xib; sourceTree = "<group>"; };
 		04ACA4C5233CA85C00ECBC07 /* MMPolygonChooseStartView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMPolygonChooseStartView.h; sourceTree = "<group>"; };
 		04ACA4C6233CA85C00ECBC07 /* MMPolygonChooseStartView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMPolygonChooseStartView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -502,13 +508,13 @@
 				042A1619233216F50039E56B /* MMMapMyCollectViewController.xib */,
 				049881D02338B860009FFA75 /* MMMapEditAnnotationsPopupView.h */,
 				049881D12338B860009FFA75 /* MMMapEditAnnotationsPopupView.m */,
-				049881D32338B876009FFA75 /* MMMapEditAnnotationsPopupView.xib */,
+				04ABA06A235FFACB00A3D01C /* MMMapEditAnnotationsPopupView.xib */,
 				049881D52338BB3A009FFA75 /* MMMapEditPolygonPopupView.h */,
 				049881D62338BB3A009FFA75 /* MMMapEditPolygonPopupView.m */,
-				049881D82338BB4D009FFA75 /* MMMapEditPolygonPopupView.xib */,
+				04ABA071235FFADE00A3D01C /* MMMapEditPolygonPopupView.xib */,
 				049881DA2338BC75009FFA75 /* MMMapEditPolygonJWPopupView.h */,
 				049881DB2338BC75009FFA75 /* MMMapEditPolygonJWPopupView.m */,
-				049881DD2338BC7F009FFA75 /* MMMapEditPolygonJWPopupView.xib */,
+				04ABA078235FFAEC00A3D01C /* MMMapEditPolygonJWPopupView.xib */,
 			);
 			path = EditPopupView;
 			sourceTree = "<group>";
@@ -919,11 +925,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				049881D92338BB4D009FFA75 /* MMMapEditPolygonPopupView.xib in Resources */,
-				049881D42338B876009FFA75 /* MMMapEditAnnotationsPopupView.xib in Resources */,
+				04ABA06F235FFADE00A3D01C /* MMMapEditPolygonPopupView.xib in Resources */,
+				04ABA068235FFACB00A3D01C /* MMMapEditAnnotationsPopupView.xib in Resources */,
 				04A35717234F0AB10066F6D3 /* IQKeyboardManager.bundle in Resources */,
 				048B9134232799B700268A07 /* LaunchScreen.storyboard in Resources */,
-				049881DE2338BC7F009FFA75 /* MMMapEditPolygonJWPopupView.xib in Resources */,
+				04ABA076235FFAEC00A3D01C /* MMMapEditPolygonJWPopupView.xib in Resources */,
 				048B9131232799B700268A07 /* Assets.xcassets in Resources */,
 				042A163223321F7E0039E56B /* Localizable.strings in Resources */,
 				042A15AB2331E3D30039E56B /* SVProgressHUD.bundle in Resources */,
@@ -1097,6 +1103,36 @@
 				042A162F23321F390039E56B /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		04ABA06A235FFACB00A3D01C /* MMMapEditAnnotationsPopupView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04ABA069235FFACB00A3D01C /* Base */,
+				04ABA06C235FFAD500A3D01C /* en */,
+				04ABA06E235FFAD800A3D01C /* zh-Hans */,
+			);
+			name = MMMapEditAnnotationsPopupView.xib;
+			sourceTree = "<group>";
+		};
+		04ABA071235FFADE00A3D01C /* MMMapEditPolygonPopupView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04ABA070235FFADE00A3D01C /* Base */,
+				04ABA073235FFAE400A3D01C /* en */,
+				04ABA075235FFAE500A3D01C /* zh-Hans */,
+			);
+			name = MMMapEditPolygonPopupView.xib;
+			sourceTree = "<group>";
+		};
+		04ABA078235FFAEC00A3D01C /* MMMapEditPolygonJWPopupView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04ABA077235FFAEC00A3D01C /* Base */,
+				044F7F95235FFB28001C6379 /* zh-Hans */,
+				044F7F97235FFFEE001C6379 /* en */,
+			);
+			name = MMMapEditPolygonJWPopupView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

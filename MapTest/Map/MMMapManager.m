@@ -70,32 +70,24 @@
     _selectedAnnotations = [NSMutableArray arrayWithArray:array];
     return _selectedAnnotations;
 }
-- (NSMutableArray<MMAnnotation *> *)waiAnnotations
-{
-    _waiAnnotations = [NSMutableArray arrayWithArray:self.annotations];
-    for (int i = 0; i < self.annotations.count-1; i++) {
-        MMAnnotation *annotation = self.annotations[i];
-        if([self isInRange:self.annotations annotation:annotation]){
-            NSLog(@"在区域内");
-            [_waiAnnotations removeObject:annotation];
-        }
-    }
-    if (_waiAnnotations.count != self.annotations.count) {
-        return _waiAnnotations;
-    }else{
-        _waiAnnotations = [[self reorder:_waiAnnotations] mutableCopy];
-        return _waiAnnotations;
-    }
-}
+//- (NSMutableArray<MMAnnotation *> *)waiAnnotations
+//{
+//    //去除区域内的点
+//    NSArray *shengArr = [self paixuX:self.annotations];
+//    //分两组排序
+//    NSArray *paixuArr = [self fenZu:shengArr];
+//    _waiAnnotations = [NSMutableArray arrayWithArray:[self changeConvexPolygon:paixuArr]];
+//    return _waiAnnotations;
+//}
 - (NSArray *)groupArray
 {
     NSMutableArray *fenzuArr = [NSMutableArray array];
-    [self.waiAnnotations enumerateObjectsUsingBlock:^(MMAnnotation *point, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.annotations enumerateObjectsUsingBlock:^(MMAnnotation *point, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        if (idx != self.waiAnnotations.count-1) {
-            [fenzuArr addObject:@[point,self.waiAnnotations[idx+1]]];
+        if (idx != self.annotations.count-1) {
+            [fenzuArr addObject:@[point,_annotations[idx+1]]];
         }else{
-            [fenzuArr addObject:@[point,self.waiAnnotations[0]]];
+            [fenzuArr addObject:@[point,_annotations[0]]];
         }
     }];
     return [fenzuArr copy];
@@ -177,7 +169,89 @@
         }
     }
 }
+#pragma mark - 区域点重新排序
+#pragma mark 升序
+- (NSArray *)paixuX:(NSArray *)array
+{
+    NSLog(@"排序前%@",array);
+    //升序
+    NSMutableArray *paixuArr = [array mutableCopy];
+    for (int i = 0; i < paixuArr.count; ++i) {
+        //遍历数组的每一个`索引`（不包括最后一个,因为比较的是j+1）
+        for (int j = 0; j < paixuArr.count-1; ++j) {
+            MMAnnotation *J = paixuArr[j];
+            MMAnnotation *J1 = paixuArr[j+1];
+            double X = J.coordinate.latitude;
+            double X1 = J1.coordinate.latitude;
+            //根据索引的`相邻两位`进行`比较`
+            if (X > X1) {
+                [paixuArr exchangeObjectAtIndex:j withObjectAtIndex:j+1];
+            }
+        }
+    }
+    NSLog(@"%@",paixuArr);
+    return [paixuArr copy];
+}
+- (NSArray *)fenZu:(NSArray *)array
+{
+    NSLog(@"排序后%@",array);
+    //    定义：平面上的三点P1(x1,y1),P2(x2,y2),P3(x3,y3)的面积量：
+    //    S(P1,P2,P3)=|y1 y2 y3|= (x1-x3)*(y2-y3)-(y1-y3)*(x2-x3)
+    //    当P1P2P3逆时针时S为正的，当P1P2P3顺时针时S为负的。
+    //    令矢量的起点为A，终点为B，判断的点为C，
+    //    如果S（A，B，C）为正数，则C在矢量AB的左侧；
+    //    如果S（A，B，C）为负数，则C在矢量AB的右侧；
+    //    如果S（A，B，C）为0，则C在直线AB上。
+    NSMutableArray *topArr = [NSMutableArray array];
+    NSMutableArray *bottomArr = [NSMutableArray array];
+    MMAnnotation *firstMark = array.firstObject;
+    MMAnnotation *lastMark = array.lastObject;
+    [array enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        double ji = (firstMark.coordinate.latitude-obj.coordinate.latitude)*(lastMark.coordinate.longitude-obj.coordinate.longitude)-(firstMark.coordinate.longitude-obj.coordinate.longitude)*(lastMark.coordinate.longitude-obj.coordinate.longitude);
+        if (ji>0) {
+            [topArr addObject:obj];
+        }else if (ji<0){
+            [bottomArr addObject:obj];
+        }
+    }];
+    NSLog(@"top%@",topArr);
+    NSLog(@"bottom%@",bottomArr);
+    NSArray *paixuTopArr = [self paixuX:topArr];
+    NSArray *paixuBottomArr = [[[self paixuX:bottomArr] reverseObjectEnumerator] allObjects];
+    
+    NSMutableArray *paixuTotalArr = [NSMutableArray array];
+    [paixuTotalArr addObject:firstMark];
+    [paixuTotalArr addObjectsFromArray:paixuTopArr];
+    [paixuTotalArr addObject:lastMark];
+    [paixuTotalArr addObjectsFromArray:paixuBottomArr];
+    return [paixuTotalArr copy];
+}
 #pragma mark 凹多边形边凸多边形
+- (void)changeConvexPolygon:(NSArray *)points
+{
+    //去除区域内的点
+    NSArray *shengArr = [self paixuX:points];
+    //分两组排序
+    NSArray *paixuArr = [self fenZu:shengArr];
+    NSMutableArray *totalArr = [NSMutableArray arrayWithArray:paixuArr];
+    __block NSArray *resultArr;
+    [paixuArr enumerateObjectsUsingBlock:^(MMAnnotation * obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSMutableArray *quyuArr = [NSMutableArray arrayWithArray:totalArr];
+        [quyuArr removeObject:obj];
+        if ([self isInRange:quyuArr annotation:obj]) {
+            //在区域内
+            [totalArr removeObject:obj];
+        }
+        if (idx == paixuArr.count-1) {
+            if (totalArr.count != paixuArr.count) {
+                [self changeConvexPolygon:totalArr];
+            }else{
+                resultArr = [self reorder:totalArr];
+            }
+        }
+    }];
+    _annotations = [resultArr mutableCopy];
+}
 - (NSArray *)reorder:(NSArray *)annotations
 {
     //鉴于最后点的顺序可能被打乱，所以在此重新找出1点然后排序
@@ -231,10 +305,9 @@
 #pragma mark - 对外方法
 - (void)clearDataArray
 {
-    [self.annotations removeAllObjects];
-    [self.waiAnnotations removeAllObjects];
-    [self.groupArray removeAllObjects];
-    [self.middleArray removeAllObjects];
+    [_annotations removeAllObjects];
+    [_groupArray removeAllObjects];
+    [_middleArray removeAllObjects];
 }
 - (void)updateAnnotations:(MMAnnotation *)model
 {

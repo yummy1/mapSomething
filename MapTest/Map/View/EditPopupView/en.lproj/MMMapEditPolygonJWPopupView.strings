@@ -1,0 +1,16 @@
+
+
+/* Class = "UILabel"; text = "经度"; ObjectID = "Ji8-aQ-oZ2"; */
+"Ji8-aQ-oZ2.text" = "Longitude";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "NUT-HD-LO9"; */
+"NUT-HD-LO9.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "纬度"; ObjectID = "Xe1-Jd-Efg"; */
+"Xe1-Jd-Efg.text" = "Latitude";
+
+/* Class = "UILabel"; text = "区域规划"; ObjectID = "hcS-Os-6Kq"; */
+"hcS-Os-6Kq.text" = "Regional planning";
+
+/* Class = "UIButton"; normalTitle = "确定"; ObjectID = "yQS-kw-xh6"; */
+"yQS-kw-xh6.normalTitle" = "Sure";

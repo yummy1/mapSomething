@@ -127,6 +127,8 @@
 "EditCollectedWaypointName" = "Please edit the route name";
 "EditERegionalPlanning" = "Regional planning";
 "EditERoutePlanning" = "Route planning";
+"EditSingleFlight" = "Single Flight";
+"EditEnterReasonableRange" = "Please enter reasonable range";
 //设置页面
 //飞控参数设置
 "SETFEIKONGTittle" = "Flight parameter settings";

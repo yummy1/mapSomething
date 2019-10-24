@@ -350,6 +350,7 @@
 {
     [[MMMapManager manager] addPopopView:self.editAnnotationsView];
     self.editAnnotationsView.model = [MMMapManager manager].annotations[0];
+    self.editAnnotationsView.tittleText = Localized(@"EditSingleFlight");
 
 }
 - (void)MMSingleTapAnnotationViewSingleTapGo:(MMSingleTapAnnotationView *)annotationView

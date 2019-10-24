@@ -159,7 +159,7 @@
 {
     if (!_editAnnotationsView) {
         _editAnnotationsView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditAnnotationsPopupView class]) owner:self options:nil][0];
-        _editAnnotationsView.frame = CGRectMake(ViewWidth*0.15, 30, ViewWidth*0.7, 326);
+        _editAnnotationsView.frame = CGRectMake((ViewWidth-414)/2, 30, 414, ViewHight-30);
         _editAnnotationsView.delegate = self;
     }
     return _editAnnotationsView;
@@ -168,7 +168,7 @@
 {
     if (!_editPolygonJWView) {
         _editPolygonJWView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditPolygonJWPopupView class]) owner:self options:nil][0];
-        _editPolygonJWView.frame = CGRectMake(ViewWidth*0.15, 30, ViewWidth*0.7, 326);
+        _editPolygonJWView.frame = CGRectMake((ViewWidth-414)/2, 30, 414, 270);
         _editPolygonJWView.delegate = self;
     }
     return _editPolygonJWView;
@@ -177,7 +177,7 @@
 {
     if (!_editPolygonView) {
         _editPolygonView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditPolygonPopupView class]) owner:self options:nil][0];
-        _editPolygonView.frame = CGRectMake(ViewWidth*0.15, 30, ViewWidth*0.7, 326);
+        _editPolygonView.frame = CGRectMake((ViewWidth-414)/2, 30, 414, ViewHight-30);
         _editPolygonView.delegate = self;
     }
     return _editPolygonView;
@@ -253,50 +253,75 @@
             [_delegate MMMapViewPreviewClick:self];
         }
     }else{
-        //清除
-        [_gdMapView clear];
         switch ([MMMapManager manager].mapFunction) {
             case MAP_pointTypePointingFlight:
             {
-                //加点
+                //清除
+                [_gdMapView clear];
+                //点信息
                 MMAnnotation *annotation = [[MMAnnotation alloc] init];
                 annotation.coordinate = coordinate;
                 annotation.index = [MMMapManager manager].annotations.count+1;
+                //加点
+                [[MMMapManager manager].annotations removeAllObjects];
                 [[MMMapManager manager].annotations addObject:annotation];
                 [_gdMapView addAnnotations:[MMMapManager manager].annotations];
                 [TheNotificationCenter postNotificationName:@"MMSingleTapAnnotationViewCoordinate" object:nil userInfo:@{@"lat":[NSString stringWithFormat:@"%.7f",coordinate.latitude],@"log":[NSString stringWithFormat:@"%.7f",coordinate.longitude]}];
-                //划线
-                [_gdMapView addPolyLines:@[mapView.userAnnotation,annotation] lineColor:MAPLineBlueColor];
+                BOOL isOver = [[MMMapManager manager] isOverFlightAtFlyCoordinate:coordinate userCoordinate:_gdMapView.userAnnotation.coordinate];
+                if (isOver) {
+                    //超出范围不划线
+                    [[MMMapManager manager].annotations removeLastObject];
+                }else{
+                    //划线
+                    [_gdMapView addPolyLines:@[mapView.userAnnotation,annotation] lineColor:MAPLineBlueColor];
+                }
             }
                 break;
             case MAP_pointTypeRoutePlanning:
             {
-                //加点
+                //清除
+                [_gdMapView clear];
+                //点信息
                 MMAnnotation *annotation = [[MMAnnotation alloc] init];
                 annotation.coordinate = coordinate;
                 annotation.index = [MMMapManager manager].annotations.count+1;
+                //加点
                 [[MMMapManager manager].annotations addObject:annotation];
                 [_gdMapView addAnnotations:[MMMapManager manager].annotations];
-                _polyLineEditView.markArr = [MMMapManager manager].annotations;
+                BOOL isOver = [[MMMapManager manager] isOverFlightAtFlyCoordinate:coordinate userCoordinate:_gdMapView.userAnnotation.coordinate];
+                if (isOver) {
+                    //超出范围不划线
+                    [[MMMapManager manager].annotations removeLastObject];
+                }
                 //划线
-                [_gdMapView removePolyLines];
                 [_gdMapView addPolyLines:[MMMapManager manager].annotations lineColor:MAPLineBlueColor];
+                _polyLineEditView.markArr = [MMMapManager manager].annotations;
             }
                 break;
                 case MAP_pointTypeRegionalRoute:
                 {
-                    //清除
-                    [_gdMapView clear];
-                    //加点
+                    //点信息
                     MMAnnotation *annotation = [[MMAnnotation alloc] init];
                     annotation.coordinate = coordinate;
                     annotation.index = [MMMapManager manager].annotations.count+1;
+                    BOOL isOver = [[MMMapManager manager] isOverFlightAtFlyCoordinate:coordinate userCoordinate:_gdMapView.userAnnotation.coordinate];
+                    if (isOver) {
+                        //超出范围没啥变化
+                        [_gdMapView addAnnotation:annotation];
+                        return;
+                    }
                     [[MMMapManager manager].annotations addObject:annotation];
-                    [_gdMapView addAnnotation:annotation];
+                    [[MMMapManager manager] changeConvexPolygon:[MMMapManager manager].annotations];
                     _polyLineEditView.markArr = [MMMapManager manager].annotations;
-                    //划线
-                    [_gdMapView removePolyLines];
-                    [_gdMapView addPolyLines:[MMMapManager manager].annotations lineColor:MAPLineBlueColor];
+                    if ([MMMapManager manager].annotations.count < 3) {
+                        [_gdMapView addAnnotation:annotation];
+                        return;
+                    }
+                    //清除
+                    [_gdMapView clear];
+                    [_gdMapView addAnnotations:[MMMapManager manager].annotations];
+                    //划区域
+                    [_gdMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeSolid];
                 }
                     break;
             default:
@@ -364,6 +389,10 @@
 //index:若为一个时显示选中第几个
 - (void)selctedMarkOnMapDuodianEditView:(MMMapPolyLineEditView *)editView selectedMarkArr:(NSArray *)markArr oneIndex:(NSInteger)index
 {
+    if (markArr.count == 0) {
+        _selectedEditView.hidden = YES;
+        return;
+    }
     if (!_selectedEditView) {
         [self addSubview:self.selectedEditView];
     }else{
@@ -452,8 +481,10 @@
             [[MMMapManager manager] addPopopView:self.editAnnotationsView];
             if (count == 1) {
                 self.editAnnotationsView.model = [MMMapManager manager].selectedAnnotations[0];
+                self.editAnnotationsView.tittleText = [NSString stringWithFormat:@"%@%ld",Localized(@"EditPoints"),(long)self.editAnnotationsView.model.index];
             }else{
                 self.editAnnotationsView.model = nil;
+                self.editAnnotationsView.tittleText = Localized(@"EditERoutePlanning");
             }
         }else{
             //区域航线
@@ -572,7 +603,7 @@
         //1.清除
         [self.gdMapView clear];
         //2.绘制区域
-        [self.gdMapView addPolygon:[MMMapManager manager].waiAnnotations lineType:MAPLineTypeDashed];
+        [self.gdMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeDashed];
         //3.绘制选中边为黄色
         [self.gdMapView addPolyLines:points lineColor:MAPLineYellowColor];
         //4.绘制选中边的两端
@@ -583,7 +614,7 @@
         //1.清除
         [self.googleMapView clear];
         //2.绘制区域
-        [self.googleMapView addPolygon:[MMMapManager manager].waiAnnotations lineType:MAPLineTypeDashed];
+        [self.googleMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeDashed];
         //3.绘制选中边为黄色
         [self.googleMapView addPolyLines:points lineColor:MAPLineYellowColor lineType:MAPLineTypeSolid];
         //4.绘制选中边的两端
@@ -604,6 +635,7 @@
     }else{
         [self.googleMapView clear];
     }
+    editView.markArr = nil;
 }
 #pragma mark - MMMapSelectedAnnotationEditViewDelegate
 - (void)deleteOnMMMapSelectedAnnotationEditView:(MMMapSelectedAnnotationEditView *)view
@@ -628,7 +660,7 @@
         }else{
             //区域航线
             [self.gdMapView addAnnotations:[MMMapManager manager].annotations];
-            [self.gdMapView addPolygon:[MMMapManager manager].waiAnnotations lineType:MAPLineTypeSolid];
+            [self.gdMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeSolid];
         }
     }else{
         [self.googleMapView clear];

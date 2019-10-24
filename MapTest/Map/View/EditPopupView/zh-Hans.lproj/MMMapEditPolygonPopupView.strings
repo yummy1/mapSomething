@@ -1,0 +1,42 @@
+
+/* Class = "UILabel"; text = "航线间距"; ObjectID = "2ab-6x-oTz"; */
+"2ab-6x-oTz.text" = "航线间距";
+
+/* Class = "UITextField"; text = "10"; ObjectID = "65I-ID-ghp"; */
+"65I-ID-ghp.text" = "10";
+
+/* Class = "UITextField"; text = "5"; ObjectID = "9az-s2-vSO"; */
+"9az-s2-vSO.text" = "5";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "C05-Th-D47"; */
+"C05-Th-D47.normalTitle" = "取消";
+
+/* Class = "UIButton"; normalTitle = "确定"; ObjectID = "En8-fb-OXc"; */
+"En8-fb-OXc.normalTitle" = "确定";
+
+/* Class = "UILabel"; text = "飞行高度"; ObjectID = "KW4-uQ-w1f"; */
+"KW4-uQ-w1f.text" = "飞行高度";
+
+/* Class = "UILabel"; text = "米/秒          (2~10米/秒)"; ObjectID = "Khz-pb-lqD"; */
+"Khz-pb-lqD.text" = "米/秒          (2~10米/秒)";
+
+/* Class = "UILabel"; text = "区域航线"; ObjectID = "L4v-uh-yct"; */
+"L4v-uh-yct.text" = "区域航线";
+
+/* Class = "UITextField"; text = "默认"; ObjectID = "MVJ-wy-aPw"; */
+"MVJ-wy-aPw.text" = "默认";
+
+/* Class = "UILabel"; text = "米          (1~100米)"; ObjectID = "Q70-RZ-F9z"; */
+"Q70-RZ-F9z.text" = "米          (1~100米)";
+
+/* Class = "UITextField"; text = "20"; ObjectID = "Rhh-sC-W08"; */
+"Rhh-sC-W08.text" = "20";
+
+/* Class = "UILabel"; text = "生成规则"; ObjectID = "Ss0-1B-e9X"; */
+"Ss0-1B-e9X.text" = "生成规则";
+
+/* Class = "UILabel"; text = "米          (10~500米)"; ObjectID = "aff-v6-jLk"; */
+"aff-v6-jLk.text" = "米          (10~500米)";
+
+/* Class = "UILabel"; text = "飞行速度"; ObjectID = "eoU-VF-yuZ"; */
+"eoU-VF-yuZ.text" = "飞行速度";

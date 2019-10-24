@@ -125,6 +125,8 @@
 "EditCollectedWaypointName" = "请您编辑航线名字";
 "EditERegionalPlanning" = "区域规划";
 "EditERoutePlanning" = "航线规划";
+"EditSingleFlight" = "指点飞行";
+"EditEnterReasonableRange" = "请您输入合理范围";
 //设置页面
 //飞控参数设置
 "SETFEIKONGTittle" = "飞控参数设置";

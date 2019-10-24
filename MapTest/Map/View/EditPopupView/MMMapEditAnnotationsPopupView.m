@@ -33,6 +33,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *meter_sec;
 @property (weak, nonatomic) IBOutlet UILabel *sec;
 
+@property (weak, nonatomic) IBOutlet UIButton *cancelBtn;
+@property (weak, nonatomic) IBOutlet UIButton *sureBtn;
+
+@property (weak, nonatomic) IBOutlet UILabel *tittleLabel;
+
+
 
 ///** 绕圈 */
 //@property (weak, nonatomic) IBOutlet UILabel *windTittle;
@@ -72,21 +78,29 @@
     _orientationTextField.text = _model.parameter.FK_headOrientation;
     
 }
+- (void)setTittleText:(NSString *)tittleText
+{
+    _tittleText = tittleText;
+    _tittleLabel.text = tittleText;
+}
 - (void)setupUI {
     self.layer.cornerRadius = 5;
     self.clipsToBounds = YES;
-    //为了键盘弹出输入框不跟随问题
-    self.scrollView.contentSize = CGSizeMake(ViewWidth*0.7, 326);
+    
+    _sureBtn.layer.cornerRadius = 3;
+    _sureBtn.clipsToBounds = YES;
+    _cancelBtn.layer.cornerRadius = 3;
+    _cancelBtn.clipsToBounds = YES;
     //中英文
-    _heightTittle.text = Localized(@"AroundHeight");
-    _speedTittle.text = Localized(@"AroundSpeed");
-    _standingTimeTittle.text = Localized(@"EditResidenceTime");
-    _orientationTittle.text = Localized(@"EditNoseOrientation");
-    _latitudeTittle.text = Localized(@"MineWeidu");
-    _longitudeTittle.text = Localized(@"MineJingdu");
-    _meter.text = Localized(@"AroundMeter");
-    _meter_sec.text = Localized(@"AroundMeter/sec");
-    _sec.text = Localized(@"EditSec");
+//    _heightTittle.text = Localized(@"AroundHeight");
+//    _speedTittle.text = Localized(@"AroundSpeed");
+//    _standingTimeTittle.text = Localized(@"EditResidenceTime");
+//    _orientationTittle.text = Localized(@"EditNoseOrientation");
+//    _latitudeTittle.text = Localized(@"MineWeidu");
+//    _longitudeTittle.text = Localized(@"MineJingdu");
+//    _meter.text = Localized(@"AroundMeter");
+//    _meter_sec.text = Localized(@"AroundMeter/sec");
+//    _sec.text = Localized(@"EditSec");
 }
 - (IBAction)backAction:(UIButton *)sender {
     if ([_delegate respondsToSelector:@selector(cancelOnMMMapEditAnnotationsPopupView:)]) {
@@ -94,6 +108,14 @@
     }
 }
 - (IBAction)saveAction:(UIButton *)sender {
+    BOOL height = [self validationRange:_heightTextField.text sim:10 max:500];
+    BOOL speed = [self validationRange:_speedTextField.text sim:2 max:10];
+    BOOL standingTime = [self validationRange:_standingTimeTextField.text sim:0 max:300];
+    if (!(height && speed && standingTime)) {
+        [SVProgressHUD showInfoWithStatus:Localized(@"EditEnterReasonableRange")];
+        [SVProgressHUD dismissWithDelay:1.5];
+        return;
+    }
     if ([_delegate respondsToSelector:@selector(editEndOnMMMapEditAnnotationsPopupView:editModel:)]) {
 //        CLLocationCoordinate2D addCoordinate;
 //        addCoordinate.latitude = [self.latitudeTextField.text doubleValue];
@@ -102,7 +124,15 @@
         [_delegate editEndOnMMMapEditAnnotationsPopupView:self editModel:self.model];
     }
 }
-
+- (BOOL)validationRange:(NSString *)text sim:(NSInteger)sim max:(NSInteger)max
+{
+    int willStr = [text intValue];
+    if (abs(willStr) >= sim && abs(willStr) <= max) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
 #pragma mark - UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
@@ -138,12 +168,32 @@
         }else{
             return NO;
         }
-    }else{
-        if ([string isNumberStr] || [string isEqualToString:@""]) {
+    }else if (textField == _heightTextField){
+        //10~500米
+        int willStr = [[NSString stringWithFormat:@"%@%@",textField.text,string] intValue];
+        if (abs(willStr) <= 500) {
             return YES;
         }else{
             return NO;
         }
+    }else if (textField == _speedTextField){
+        //2~10米/秒
+        int willStr = [[NSString stringWithFormat:@"%@%@",textField.text,string] intValue];
+        if (abs(willStr) <= 10) {
+            return YES;
+        }else{
+            return NO;
+        }
+    }else if (textField == _standingTimeTextField){
+        //0~300米/秒
+        int willStr = [[NSString stringWithFormat:@"%@%@",textField.text,string] intValue];
+        if (abs(willStr) <= 300) {
+            return YES;
+        }else{
+            return NO;
+        }
+    }else{
+        return YES;
     }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -161,5 +211,22 @@
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([_latitudeTextField.text doubleValue], [_longitudeTextField.text doubleValue]);
     _model.coordinate = coordinate;
 }
-
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    int willStr = [textField.text intValue];
+    if (textField == _heightTextField) {
+        if (abs(willStr) < 10) {
+            [SVProgressHUD showInfoWithStatus:Localized(@"EditEnterReasonableRange")];
+            [SVProgressHUD dismissWithDelay:1.5];
+            return NO;
+        }
+    }else if(textField == _speedTextField){
+        if (abs(willStr) < 2) {
+            [SVProgressHUD showInfoWithStatus:Localized(@"EditEnterReasonableRange")];
+            [SVProgressHUD dismissWithDelay:1.5];
+            return NO;
+        }
+    }
+    return YES;
+}
 @end

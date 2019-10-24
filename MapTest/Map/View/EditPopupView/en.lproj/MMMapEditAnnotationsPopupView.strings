@@ -1,0 +1,75 @@
+
+/* Class = "UILabel"; text = "经度"; ObjectID = "2Gi-v0-fh4"; */
+"2Gi-v0-fh4.text" = "Longitude";
+
+/* Class = "UILabel"; text = "高度"; ObjectID = "2k4-or-9kx"; */
+"2k4-or-9kx.text" = "Height";
+
+/* Class = "UILabel"; text = "机头朝向"; ObjectID = "5rb-KW-gXC"; */
+"5rb-KW-gXC.text" = "Nose orientation";
+
+/* Class = "UILabel"; text = "停留时间"; ObjectID = "67P-Es-Nsv"; */
+"67P-Es-Nsv.text" = "Residence time";
+
+/* Class = "UITextField"; placeholder = "0"; ObjectID = "99U-OV-u6b"; */
+"99U-OV-u6b.placeholder" = "0";
+
+/* Class = "UITextField"; text = "0"; ObjectID = "99U-OV-u6b"; */
+"99U-OV-u6b.text" = "0";
+
+/* Class = "UILabel"; text = "米/秒     （2~10米/秒）"; ObjectID = "B3U-48-bAk"; */
+"B3U-48-bAk.text" = "m/s     （2~10 m/s）";
+
+/* Class = "UITextField"; placeholder = "0"; ObjectID = "Btb-nC-jHk"; */
+"Btb-nC-jHk.placeholder" = "0";
+
+/* Class = "UITextField"; text = "0"; ObjectID = "Btb-nC-jHk"; */
+"Btb-nC-jHk.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "Dsk-rm-BLt"; */
+"Dsk-rm-BLt.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "HGJ-OF-oEl"; */
+"HGJ-OF-oEl.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "0"; ObjectID = "HU6-2B-bCK"; */
+"HU6-2B-bCK.placeholder" = "0";
+
+/* Class = "UITextField"; text = "0"; ObjectID = "HU6-2B-bCK"; */
+"HU6-2B-bCK.text" = "0";
+
+/* Class = "UILabel"; text = "速度"; ObjectID = "Lhg-Oz-7H0"; */
+"Lhg-Oz-7H0.text" = "Speed";
+
+/* Class = "UILabel"; text = "°"; ObjectID = "PUJ-Ob-SgL"; */
+"PUJ-Ob-SgL.text" = "°";
+
+/* Class = "UILabel"; text = "纬度"; ObjectID = "Qnc-Si-y5X"; */
+"Qnc-Si-y5X.text" = "Latitude";
+
+/* Class = "UIButton"; normalTitle = "确定"; ObjectID = "SrP-qm-8Rm"; */
+"SrP-qm-8Rm.normalTitle" = "Sure";
+
+/* Class = "UITextField"; placeholder = "0"; ObjectID = "Uk2-0y-OQO"; */
+"Uk2-0y-OQO.placeholder" = "0";
+
+/* Class = "UITextField"; text = "0"; ObjectID = "Uk2-0y-OQO"; */
+"Uk2-0y-OQO.text" = "0";
+
+/* Class = "UILabel"; text = "米            (10~500米)"; ObjectID = "ZlO-C1-EKc"; */
+"ZlO-C1-EKc.text" = "m            (10~500m)";
+
+/* Class = "UILabel"; text = "秒             (0~300秒)"; ObjectID = "uKI-pI-BDY"; */
+"uKI-pI-BDY.text" = "s             (0~300s)";
+
+/* Class = "UITextField"; placeholder = "5"; ObjectID = "usU-jM-pKU"; */
+"usU-jM-pKU.placeholder" = "5";
+
+/* Class = "UITextField"; text = "5"; ObjectID = "usU-jM-pKU"; */
+"usU-jM-pKU.text" = "5";
+
+/* Class = "UITextField"; placeholder = "20"; ObjectID = "yoi-qc-jnl"; */
+"yoi-qc-jnl.placeholder" = "20";
+
+/* Class = "UITextField"; text = "20"; ObjectID = "yoi-qc-jnl"; */
+"yoi-qc-jnl.text" = "20";
