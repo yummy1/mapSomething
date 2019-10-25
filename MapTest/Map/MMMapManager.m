@@ -229,6 +229,9 @@
 #pragma mark 凹多边形边凸多边形
 - (void)changeConvexPolygon:(NSArray *)points
 {
+    if (points.count < 3) {
+        return;
+    }
     //去除区域内的点
     NSArray *shengArr = [self paixuX:points];
     //分两组排序

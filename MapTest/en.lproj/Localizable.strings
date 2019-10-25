@@ -1,10 +1,10 @@
 /*
- Localizable.strings
- SwellPro
- 
- Created by LCHK on 17/6/21.
- Copyright © 2017年 MM. All rights reserved.
- */
+  Localizable.strings
+  SwellPro
+
+  Created by LCHK on 17/6/21.
+  Copyright © 2017年 MM. All rights reserved.
+*/
 
 //首页
 "HOMEShebeiweilianjie" = "Disconnected";
@@ -155,6 +155,14 @@
 "SETFEIKONGJiaozhunzhinan" = "Compass Calibration";
 "SETFEIKONGGaoji" = "Advanced";
 "SETFEIKONGGaojishezhi" = "Advanced Settings";
+//飞控socket
+"FLY_STATUS_NO_CONNECTION" = "No device connection";
+"FLY_STATUS_GPS" = "GPS model";
+"FLY_STATUS_POSE" = "Pose mode";
+"FLY_STATUS_SURROUND" = "Surround model";
+"FLY_STATUS_TURN_BACK" = "Turn back model";
+"factory_reset_success" = "Factory reset successfully";
+"FLY_Go" = "PERFORM";
 //高级设置
 "GAOJISHEZHIShougan" = "Radio sensitivity settings";
 "GAOJISHEZHIJichugandu" = "Basic Sensitivity";
@@ -364,6 +372,7 @@
 "Share_Info" = "Info";
 "Share_Date" = "Date";
 "Share_Size" = "Size";
+
 
 
 

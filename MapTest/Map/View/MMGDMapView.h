@@ -14,10 +14,10 @@
     在地图上单击之后
  */
 - (void)GDMapView:(MMGDMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate;
-/**
-    指点飞行，点击GO
- */
-- (void)GDMapViewSingleClickGO:(MMGDMapView *)mapView;
+///**
+//    指点飞行，点击GO
+// */
+//- (void)GDMapViewSingleClickGO:(MMGDMapView *)mapView;
 @end
 
 @interface MMGDMapView : UIView

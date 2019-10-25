@@ -21,9 +21,10 @@
 #import "MMMapMyCollectViewController.h"
 #import "MMPolygonChooseStartView.h"
 #import "MMSingleTapAnnotationView.h"
+#import "MMSingleTapIconView.h"
 
 
-@interface MMMapView()<MMGDMapViewDelegate,MMGoogleMapViewDelegate,MMMapRightViewDelegate,MMMapPolyLineEditViewDelegate,MMMapPolygonEditViewDelegate,MMMapSelectedAnnotationEditViewDelegate,MMMapEditAnnotationsPopupViewDelegate,MMMapEditPolygonJWPopupViewDelegate,MMMapEditPolygonPopupViewDelegate,MMPolygonChooseStartViewDelegate,UITextFieldDelegate>
+@interface MMMapView()<MMGDMapViewDelegate,MMGoogleMapViewDelegate,MMMapRightViewDelegate,MMMapPolyLineEditViewDelegate,MMMapPolygonEditViewDelegate,MMMapSelectedAnnotationEditViewDelegate,MMMapEditAnnotationsPopupViewDelegate,MMMapEditPolygonJWPopupViewDelegate,MMMapEditPolygonPopupViewDelegate,MMPolygonChooseStartViewDelegate,MMSingleTapIconViewDelegate,UITextFieldDelegate>
 /** 高德地图 */
 @property (nonatomic,strong) MMGDMapView *gdMapView;
 /** 谷歌地图 */
@@ -49,6 +50,8 @@
 //手动输入点的经纬度输入框
 @property (nonatomic,strong) UITextField *latitudeTextField;
 @property (nonatomic,strong) UITextField *longitudeTextField;
+/** 指点飞行时的显示框 */
+@property (nonatomic,strong) MMSingleTapIconView *singleView;
 @end
 
 @implementation MMMapView
@@ -87,6 +90,70 @@
     }
     [self mapChangeSmall:YES];
 }
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    
+    [self.googleMapView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
+    [self.gdMapView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
+    [self.mapRightView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.right.mas_equalTo(self);
+        make.width.mas_equalTo(50);
+        make.height.mas_equalTo(ViewHight-25);
+    }];
+    __weak typeof(self) weakSelf = self;
+    [self.mapTopView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self);
+        make.right.mas_equalTo(weakSelf.mapRightView.mas_left);
+        make.width.mas_equalTo(200);
+        make.height.mas_equalTo(74);
+    }];
+    if (_polyLineEditView) {
+        [self.polyLineEditView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.right.mas_equalTo(self);
+            make.width.mas_equalTo(ViewWidth*0.67);
+            make.height.mas_equalTo(71);
+        }];
+    }
+    if (_polygonEditView) {
+        [self.polygonEditView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.right.mas_equalTo(self);
+            make.width.mas_equalTo(ViewWidth*0.67);
+            make.height.mas_equalTo(71);
+        }];
+    }
+    if (_selectedEditView) {
+        [self.selectedEditView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(self.polyLineEditView).with.offset(8);
+            make.right.mas_equalTo(self.polyLineEditView).with.offset(-90);
+            make.bottom.mas_equalTo(self.polyLineEditView.mas_top).with.offset(2);
+            make.height.mas_equalTo(73);
+        }];
+    }
+    if (_chooseStartView) {
+        [self.chooseStartView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(@(-70.5-68.5-3));
+            make.centerX.mas_equalTo(self);
+            make.width.mas_equalTo(@(156));
+            make.height.mas_equalTo(68.5);
+        }];
+    }
+    
+}
+- (void)mapChangeSmall:(BOOL)isSmall
+{
+    if (isSmall) {
+        self.mapRightView.hidden = YES;
+        self.mapTopView.hidden = YES;
+    }else{
+        self.mapRightView.hidden = NO;
+        self.mapTopView.hidden = NO;
+    }
+}
+#pragma mark - 懒加载
 - (MMGDMapView *)gdMapView
 {
     if (!_gdMapView) {
@@ -182,68 +249,13 @@
     }
     return _editPolygonView;
 }
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    
-    [self.googleMapView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
-    }];
-    [self.gdMapView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
-    }];
-    [self.mapRightView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.right.mas_equalTo(self);
-        make.width.mas_equalTo(50);
-        make.height.mas_equalTo(ViewHight-25);
-    }];
-    __weak typeof(self) weakSelf = self;
-    [self.mapTopView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self);
-        make.right.mas_equalTo(weakSelf.mapRightView.mas_left);
-        make.width.mas_equalTo(200);
-        make.height.mas_equalTo(74);
-    }];
-    if (_polyLineEditView) {
-        [self.polyLineEditView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.right.mas_equalTo(self);
-            make.width.mas_equalTo(ViewWidth*0.67);
-            make.height.mas_equalTo(71);
-        }];
-    }
-    if (_polygonEditView) {
-        [self.polygonEditView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.right.mas_equalTo(self);
-            make.width.mas_equalTo(ViewWidth*0.67);
-            make.height.mas_equalTo(71);
-        }];
-    }
-    if (_selectedEditView) {
-        [self.selectedEditView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self.polyLineEditView).with.offset(8);
-            make.right.mas_equalTo(self.polyLineEditView).with.offset(-90);
-            make.bottom.mas_equalTo(self.polyLineEditView.mas_top).with.offset(2);
-            make.height.mas_equalTo(73);
-        }];
-    }
-    if (_chooseStartView) {
-        [self.chooseStartView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.mas_equalTo(@(-70.5-68.5-3));
-            make.centerX.mas_equalTo(self);
-            make.width.mas_equalTo(@(156));
-            make.height.mas_equalTo(68.5);
-        }];
-    }
-    
-}
-- (void)mapChangeSmall:(BOOL)isSmall
+- (MMSingleTapIconView *)singleView
 {
-    if (isSmall) {
-        self.mapRightView.hidden = YES;
-        self.mapTopView.hidden = YES;
-    }else{
-        self.mapRightView.hidden = NO;
-        self.mapTopView.hidden = NO;
+    if (!_singleView) {
+        _singleView = [[MMSingleTapIconView alloc] initWithFrame:CGRectMake((ViewWidth-340)/2+ViewWidth*0.16, ViewHight-52, 340, 52)];
+        _singleView.delegate = self;
     }
+    return _singleView;
 }
 #pragma mark - MMGDMapViewDelegate
 - (void)GDMapView:(MMGDMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate
@@ -256,17 +268,25 @@
         switch ([MMMapManager manager].mapFunction) {
             case MAP_pointTypePointingFlight:
             {
+                //指点飞行
+                if (_singleView) {
+                    _singleView.hidden = NO;
+                    [self bringSubviewToFront:_singleView];
+                }else{
+                    [self addSubview:self.singleView];
+                }
                 //清除
                 [_gdMapView clear];
                 //点信息
                 MMAnnotation *annotation = [[MMAnnotation alloc] init];
                 annotation.coordinate = coordinate;
                 annotation.index = [MMMapManager manager].annotations.count+1;
+                self.singleView.model = annotation;
                 //加点
                 [[MMMapManager manager].annotations removeAllObjects];
                 [[MMMapManager manager].annotations addObject:annotation];
                 [_gdMapView addAnnotations:[MMMapManager manager].annotations];
-                [TheNotificationCenter postNotificationName:@"MMSingleTapAnnotationViewCoordinate" object:nil userInfo:@{@"lat":[NSString stringWithFormat:@"%.7f",coordinate.latitude],@"log":[NSString stringWithFormat:@"%.7f",coordinate.longitude]}];
+                _singleView.model = annotation;
                 BOOL isOver = [[MMMapManager manager] isOverFlightAtFlyCoordinate:coordinate userCoordinate:_gdMapView.userAnnotation.coordinate];
                 if (isOver) {
                     //超出范围不划线
@@ -329,10 +349,6 @@
         }
     }
 }
-- (void)GDMapViewSingleClickGO:(MMGDMapView *)mapView
-{
-    DLog(@"高德起飞了");
-}
 #pragma mark - MMGoogleMapViewDelegate
 - (void)googleMapView:(MMGoogleMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
@@ -352,6 +368,9 @@
     }
     if (_selectedEditView) {
         _selectedEditView.hidden = YES;
+    }
+    if (_singleView) {
+        _singleView.hidden = YES;
     }
     CGFloat width = 20;
     if (index == MAP_pointTypeHidden) {
@@ -796,5 +815,16 @@
             return NO;
         }
     }
+}
+#pragma mark - MMSingleTapIconViewDelegate
+- (void)MMSingleTapIconViewClickEdit:(MMSingleTapIconView *)iconView
+{
+    [[MMMapManager manager] addPopopView:self.editAnnotationsView];
+    self.editAnnotationsView.model = [MMMapManager manager].annotations[0];
+    self.editAnnotationsView.tittleText = Localized(@"EditSingleFlight");
+}
+- (void)MMSingleTapIconViewClickGo:(MMSingleTapIconView *)iconView
+{
+    
 }
 @end

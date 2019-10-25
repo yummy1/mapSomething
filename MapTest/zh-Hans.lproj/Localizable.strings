@@ -1,10 +1,10 @@
 /*
- Localizable.strings
- SwellPro
- 
- Created by LCHK on 17/6/21.
- Copyright © 2017年 MM. All rights reserved.
- */
+  Localizable.strings
+  SwellPro
+
+  Created by LCHK on 17/6/21.
+  Copyright © 2017年 MM. All rights reserved.
+*/
 //首页
 "HOMEShebeiweilianjie" = "设备未连接";
 "HOMEShebeiyilianjie" = "设备已连接";
@@ -127,6 +127,7 @@
 "EditERoutePlanning" = "航线规划";
 "EditSingleFlight" = "指点飞行";
 "EditEnterReasonableRange" = "请您输入合理范围";
+
 //设置页面
 //飞控参数设置
 "SETFEIKONGTittle" = "飞控参数设置";
@@ -151,6 +152,14 @@
 "SETFEIKONGJiaozhunzhinan" = "校准指南针";
 "SETFEIKONGGaoji" = "高级";
 "SETFEIKONGGaojishezhi" = "高级设置";
+//飞控socket
+"FLY_STATUS_NO_CONNECTION" = "无设备连接";
+"FLY_STATUS_GPS" = "GPS模式";
+"FLY_STATUS_POSE" = "姿态模式";
+"FLY_STATUS_SURROUND" = "环绕模式";
+"FLY_STATUS_TURN_BACK" = "返航模式";
+"factory_reset_success" = "恢复出厂设置成功!";
+"FLY_Go" = "执行";
 //高级设置
 "GAOJISHEZHIShougan" = "遥控手感设置";
 "GAOJISHEZHIJichugandu" = "基础感度";
@@ -361,6 +370,7 @@
 "Share_Info" = "信息";
 "Share_Date" = "时间";
 "Share_Size" = "尺寸";
+
 
 
 

@@ -18,7 +18,7 @@
 @interface MMGDMapView()<MAMapViewDelegate,MMSingleTapAnnotationViewDelegate,MMMapEditAnnotationsPopupViewDelegate>
 @property (strong, nonatomic)MAMapView *mapView;
 /** 编辑点的弹出框 */
-@property (nonatomic,strong) MMMapEditAnnotationsPopupView *editAnnotationsView;
+//@property (nonatomic,strong) MMMapEditAnnotationsPopupView *editAnnotationsView;
 @end
 @implementation MMGDMapView
 + (instancetype)mapView{
@@ -58,15 +58,15 @@
     //缩放等级
     [_mapView setZoomLevel:17 animated:YES];
 }
-- (MMMapEditAnnotationsPopupView *)editAnnotationsView
-{
-    if (!_editAnnotationsView) {
-        _editAnnotationsView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditAnnotationsPopupView class]) owner:self options:nil][0];
-        _editAnnotationsView.frame = CGRectMake(ViewWidth*0.15, 30, ViewWidth*0.7, 326);
-        _editAnnotationsView.delegate = self;
-    }
-    return _editAnnotationsView;
-}
+//- (MMMapEditAnnotationsPopupView *)editAnnotationsView
+//{
+//    if (!_editAnnotationsView) {
+//        _editAnnotationsView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditAnnotationsPopupView class]) owner:self options:nil][0];
+//        _editAnnotationsView.frame = CGRectMake(ViewWidth*0.15, 30, ViewWidth*0.7, 326);
+//        _editAnnotationsView.delegate = self;
+//    }
+//    return _editAnnotationsView;
+//}
 
 - (void)setMapFunction:(MAP_function)mapFunction
 {
@@ -211,15 +211,27 @@
             case MAP_pointTypePointingFlight:
             {
                 //指点飞行
-                static NSString *reusedID = @"DDPointAnnotation_reusedID";
-                MMSingleTapAnnotationView *annotationView = (MMSingleTapAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:reusedID];
-                if (!annotationView) {
-                    annotationView = [[MMSingleTapAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reusedID];
-                    annotationView.canShowCallout = NO;//设置此属性为NO，防止点击的时候高德自带的气泡弹出
-                    annotationView.delegate = self;
+//                static NSString *reusedID = @"DDPointAnnotation_reusedID";
+//                MMSingleTapAnnotationView *annotationView = (MMSingleTapAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:reusedID];
+//                if (!annotationView) {
+//                    annotationView = [[MMSingleTapAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reusedID];
+//                    annotationView.canShowCallout = NO;//设置此属性为NO，防止点击的时候高德自带的气泡弹出
+//                    annotationView.delegate = self;
+//                }
+//                annotationView.centerOffset = CGPointMake(0, 0.5*annotationView.image.size.height);
+//                //给气泡赋值
+//                return annotationView;
+                static NSString *customReuseIndetifier = @"customReuseIndetifier";
+                MMCustomAnnotationView *annotationView = (MMCustomAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:customReuseIndetifier];
+                if (annotationView == nil)
+                {
+                    annotationView = [[MMCustomAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:customReuseIndetifier];
+                    annotationView.canShowCallout = NO;
+                    annotationView.draggable = YES;
                 }
-                annotationView.centerOffset = CGPointMake(0, 0.5*annotationView.image.size.height);
-                //给气泡赋值
+//                annotationView.name= point.name?point.name:[NSString stringWithFormat:@"%ld",(long)point.index];
+                annotationView.portrait = [UIImage imageNamed:@"location_blue"];
+                annotationView.centerOffset = CGPointMake(0, -0.5*annotationView.portrait.size.height);
                 return annotationView;
             }
                 break;
@@ -345,21 +357,21 @@
     }
     return nil;
 }
-#pragma mark - DDCustomAnnotationViewDelegate
-- (void)MMSingleTapAnnotationViewSingleTapEdit:(MMSingleTapAnnotationView *)annotationView
-{
-    [[MMMapManager manager] addPopopView:self.editAnnotationsView];
-    self.editAnnotationsView.model = [MMMapManager manager].annotations[0];
-    self.editAnnotationsView.tittleText = Localized(@"EditSingleFlight");
-
-}
-- (void)MMSingleTapAnnotationViewSingleTapGo:(MMSingleTapAnnotationView *)annotationView
-{
-    
-    if ([_delegate respondsToSelector:@selector(GDMapViewSingleClickGO:)]) {
-        [_delegate GDMapViewSingleClickGO:self];
-    }
-}
+//#pragma mark - DDCustomAnnotationViewDelegate
+//- (void)MMSingleTapAnnotationViewSingleTapEdit:(MMSingleTapAnnotationView *)annotationView
+//{
+//    [[MMMapManager manager] addPopopView:self.editAnnotationsView];
+//    self.editAnnotationsView.model = [MMMapManager manager].annotations[0];
+//    self.editAnnotationsView.tittleText = Localized(@"EditSingleFlight");
+//
+//}
+//- (void)MMSingleTapAnnotationViewSingleTapGo:(MMSingleTapAnnotationView *)annotationView
+//{
+//
+//    if ([_delegate respondsToSelector:@selector(GDMapViewSingleClickGO:)]) {
+//        [_delegate GDMapViewSingleClickGO:self];
+//    }
+//}
 #pragma mark - MMMapEditAnnotationsPopupViewDelegate
 - (void)editEndOnMMMapEditAnnotationsPopupView:(MMMapEditAnnotationsPopupView *)view editModel:(MMAnnotation *)model
 {

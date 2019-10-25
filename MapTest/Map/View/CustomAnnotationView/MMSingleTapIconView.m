@@ -21,8 +21,8 @@
 //上边
 @property (nonatomic,strong) UIView *topView;
 //下边
-@property (nonatomic,strong) UIView *bottom;
-@property (nonatomic,strong) UIImageView *btIcon;
+//@property (nonatomic,strong) UIView *bottom;
+//@property (nonatomic,strong) UIImageView *btIcon;
 @end
 @implementation MMSingleTapIconView
 
@@ -108,36 +108,36 @@
     //go按钮
     _goBtn = [[UIButton alloc] init];
     [_goBtn setBackgroundColor:ThemeColor];
-    [_goBtn setTitle:@"GO" forState:UIControlStateNormal];
+    [_goBtn setTitle:Localized(@"FLY_Go") forState:UIControlStateNormal];
     [_goBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_goBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
     [_goBtn addTarget:self action:@selector(goAction) forControlEvents:UIControlEventTouchUpInside];
     [_topView addSubview:_goBtn];
     //下边
-    _bottom = [[UIView alloc] init];
-    [self addSubview:_bottom];
-    _btIcon = [[UIImageView alloc] init];
-    _btIcon.image = [UIImage imageNamed:@"location_blue"];
-    [_bottom addSubview:_btIcon];
+//    _bottom = [[UIView alloc] init];
+//    [self addSubview:_bottom];
+//    _btIcon = [[UIImageView alloc] init];
+//    _btIcon.image = [UIImage imageNamed:@"location_blue"];
+//    [_bottom addSubview:_btIcon];
     
-    [TheNotificationCenter addObserver:self selector:@selector(addNotification:) name:@"MMSingleTapAnnotationViewCoordinate" object:nil];
+//    [TheNotificationCenter addObserver:self selector:@selector(addNotification:) name:@"MMSingleTapAnnotationViewCoordinate" object:nil];
 }
-- (void)addNotification:(NSNotification *)notification
-{
-    NSDictionary *userInfo = notification.userInfo;
-    self.jwLabel.text = [NSString stringWithFormat:@"%@：%@   %@：%@",Localized(@"MineJingdu"),userInfo[@"lat"],Localized(@"MineWeidu"),userInfo[@"log"]];
-}
+//- (void)addNotification:(NSNotification *)notification
+//{
+//    NSDictionary *userInfo = notification.userInfo;
+//    self.jwLabel.text = [NSString stringWithFormat:@"%@：%@   %@：%@",Localized(@"MineJingdu"),userInfo[@"lat"],Localized(@"MineWeidu"),userInfo[@"log"]];
+//}
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     //上部
     [_topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.right.mas_equalTo(self);
-        make.bottom.mas_equalTo(self).with.offset(-33);
+        make.left.top.right.bottom.mas_equalTo(self);
     }];
     //左边
     [_leftView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.bottom.mas_equalTo(_topView);
-        make.right.mas_equalTo(_topView).with.offset(-40);
+        make.right.mas_equalTo(_topView).with.offset(-60);
     }];
     //高度
     [_heightLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -155,9 +155,9 @@
     }];
     //编辑
     [_editBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(_leftView).with.offset(-10);
-        make.top.mas_equalTo(_topView).with.offset(0);
-        make.size.mas_equalTo(CGSizeMake(30, 30));
+        make.right.mas_equalTo(_leftView).with.offset(0);
+        make.top.mas_equalTo(_topView).with.offset(6);
+        make.size.mas_equalTo(CGSizeMake(40, 40));
     }];
     //go按钮
     [_goBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -165,15 +165,15 @@
         make.left.mas_equalTo(_leftView.mas_right);
     }];
     //底部
-    [_bottom mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.mas_equalTo(self);
-        make.top.mas_equalTo(_topView.mas_bottom);
-    }];
-    [_btIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.mas_equalTo(_bottom);
-        //        make.size.mas_equalTo(CGSizeMake(23, 28));
-        make.size.mas_equalTo(CGSizeMake(21.5, 32.5));
-    }];
+//    [_bottom mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.right.bottom.mas_equalTo(self);
+//        make.top.mas_equalTo(_topView.mas_bottom);
+//    }];
+//    [_btIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.center.mas_equalTo(_bottom);
+//        //        make.size.mas_equalTo(CGSizeMake(23, 28));
+//        make.size.mas_equalTo(CGSizeMake(21.5, 32.5));
+//    }];
 }
 
 @end
