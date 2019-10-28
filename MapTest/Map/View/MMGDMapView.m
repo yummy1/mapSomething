@@ -246,7 +246,7 @@
                     annotationView.canShowCallout = NO;
                     annotationView.draggable = YES;
                 }
-                annotationView.name= point.name?point.name:[NSString stringWithFormat:@"%ld",(long)point.index];
+                annotationView.name= point.name;
                 if (point.iconType == MAP_iconTypeCommonRed) {
                     annotationView.portrait = [UIImage imageNamed:@"location_red"];
                 }else{
@@ -267,7 +267,7 @@
                         annotationView.canShowCallout = NO;
                         annotationView.draggable = YES;
                     }
-                    annotationView.name=[NSString stringWithFormat:@"%ld",(long)point.index];
+                    annotationView.name = point.name;
                     if (point.iconType == MAP_iconTypeCommonRed) {
                         annotationView.portrait = [UIImage imageNamed:@"location_red"];
                     }else{

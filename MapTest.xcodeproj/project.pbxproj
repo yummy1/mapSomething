@@ -119,6 +119,9 @@
 		04ABA06F235FFADE00A3D01C /* MMMapEditPolygonPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04ABA071235FFADE00A3D01C /* MMMapEditPolygonPopupView.xib */; };
 		04ABA076235FFAEC00A3D01C /* MMMapEditPolygonJWPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04ABA078235FFAEC00A3D01C /* MMMapEditPolygonJWPopupView.xib */; };
 		04ACA4C7233CA85D00ECBC07 /* MMPolygonChooseStartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACA4C6233CA85C00ECBC07 /* MMPolygonChooseStartView.m */; };
+		04E17B5C2366CCCA0074CDD9 /* QuyuMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E17B582366CCC80074CDD9 /* QuyuMethods.m */; };
+		04E17B5D2366CCCA0074CDD9 /* QuyuRoutesCalculateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E17B5A2366CCC90074CDD9 /* QuyuRoutesCalculateModel.m */; };
+		04E17B602366CCDD0074CDD9 /* LandPointArrayList.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E17B5F2366CCDD0074CDD9 /* LandPointArrayList.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -360,6 +363,12 @@
 		04ABA077235FFAEC00A3D01C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MMMapEditPolygonJWPopupView.xib; sourceTree = "<group>"; };
 		04ACA4C5233CA85C00ECBC07 /* MMPolygonChooseStartView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMPolygonChooseStartView.h; sourceTree = "<group>"; };
 		04ACA4C6233CA85C00ECBC07 /* MMPolygonChooseStartView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMPolygonChooseStartView.m; sourceTree = "<group>"; };
+		04E17B582366CCC80074CDD9 /* QuyuMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuyuMethods.m; sourceTree = "<group>"; };
+		04E17B592366CCC90074CDD9 /* QuyuRoutesCalculateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuyuRoutesCalculateModel.h; sourceTree = "<group>"; };
+		04E17B5A2366CCC90074CDD9 /* QuyuRoutesCalculateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuyuRoutesCalculateModel.m; sourceTree = "<group>"; };
+		04E17B5B2366CCCA0074CDD9 /* QuyuMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuyuMethods.h; sourceTree = "<group>"; };
+		04E17B5E2366CCDC0074CDD9 /* LandPointArrayList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandPointArrayList.h; sourceTree = "<group>"; };
+		04E17B5F2366CCDD0074CDD9 /* LandPointArrayList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandPointArrayList.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -695,6 +704,12 @@
 		048B915C232799E900268A07 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				04E17B5E2366CCDC0074CDD9 /* LandPointArrayList.h */,
+				04E17B5F2366CCDD0074CDD9 /* LandPointArrayList.m */,
+				04E17B5B2366CCCA0074CDD9 /* QuyuMethods.h */,
+				04E17B582366CCC80074CDD9 /* QuyuMethods.m */,
+				04E17B592366CCC90074CDD9 /* QuyuRoutesCalculateModel.h */,
+				04E17B5A2366CCC90074CDD9 /* QuyuRoutesCalculateModel.m */,
 				048B915F232799E900268A07 /* MMGDPolyLine.h */,
 				048B9161232799E900268A07 /* MMGDPolyLine.m */,
 				048B915E232799E900268A07 /* MMFlyControlPointParameter.h */,
@@ -980,6 +995,7 @@
 				04A3571D234F0AB10066F6D3 /* IQUIViewController+Additions.m in Sources */,
 				04A35711234F0AB10066F6D3 /* IQTextView.m in Sources */,
 				042A15E12332106C0039E56B /* UITableViewCell+MMExtension.m in Sources */,
+				04E17B602366CCDD0074CDD9 /* LandPointArrayList.m in Sources */,
 				04652BC32329DEA7002C1ECF /* MMSingleTapIconView.m in Sources */,
 				042A15DB2332106C0039E56B /* NSString+MMEncrypt.m in Sources */,
 				048B9170232799E900268A07 /* MMAnnotation.m in Sources */,
@@ -997,6 +1013,7 @@
 				042A15E32332106C0039E56B /* NSString+Path.m in Sources */,
 				042A16052332111F0039E56B /* NSObject+MJProperty.m in Sources */,
 				042A15DE2332106C0039E56B /* NSDictionary+MMExtension.m in Sources */,
+				04E17B5C2366CCCA0074CDD9 /* QuyuMethods.m in Sources */,
 				04652BEF2329E9A5002C1ECF /* MMCustomAnnotationView.m in Sources */,
 				042A15D92332106C0039E56B /* MBProgressHUD+MMExtension.m in Sources */,
 				048B9171232799E900268A07 /* MMGDPolygon.m in Sources */,
@@ -1018,6 +1035,7 @@
 				042A16082332111F0039E56B /* MJPropertyKey.m in Sources */,
 				048B9172232799E900268A07 /* MMMapView.m in Sources */,
 				04ACA4C7233CA85D00ECBC07 /* MMPolygonChooseStartView.m in Sources */,
+				04E17B5D2366CCCA0074CDD9 /* QuyuRoutesCalculateModel.m in Sources */,
 				04652BE32329DFF8002C1ECF /* ViewController+MASAdditions.m in Sources */,
 				04652BE42329DFF8002C1ECF /* MASCompositeConstraint.m in Sources */,
 				04652BC02329DDC0002C1ECF /* MMSingleTapAnnotationView.m in Sources */,

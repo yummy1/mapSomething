@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "LandPointArrayList.h"
 
 @interface MMMapManager : NSObject
 /** 地图的可交互模式 默认为正常可交互的模式 */
@@ -27,12 +27,17 @@
 @property (nonatomic,strong) NSMutableArray<MMAnnotation *> * annotations;
 /** 选中编辑的点 */
 @property (nonatomic,strong) NSMutableArray<MMAnnotation *> *selectedAnnotations;
-/** 区域航线时,计算区域边上的点（出掉区域内的点） */
-//@property (nonatomic,strong) NSMutableArray<MMAnnotation *> *waiAnnotations;
 /** 区域边点（两点为一条边进行分组） */
 @property (nonatomic,strong) NSMutableArray *groupArray;
 /** 区域所有边的中点数组 */
 @property (nonatomic,strong) NSMutableArray <MMAnnotation *> *middleArray;
+/** 区域航点选边时,默认A边端点1 */
+@property(nonatomic, assign) NSInteger bianIndex;
+@property (nonatomic,assign) NSInteger startIndex;
+/** 区域最后的来回航线 */
+@property(nonatomic, assign) NSInteger spacing;//间距
+@property (nonatomic,strong) NSArray <LandPointArrayList *> *parallelLines;
+@property (nonatomic,strong) NSArray *jiaoArr;//交点
 /** 弹出视图的遮罩 */
 @property (nonatomic,strong) UIView *shadeView;
 

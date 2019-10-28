@@ -29,8 +29,6 @@
 @property (nonatomic,weak) id<MMMapPolygonEditViewDelegate> delegate;
 //对所有的标记外圈点进行两两分组
 @property (nonatomic,strong) NSArray *fenzuArr;
-//当前选中的组
-@property (nonatomic,assign) NSInteger selectedIndex;
 //中点数组
 @property (nonatomic,strong) NSArray *middleArr;
 //显示收藏和重新规划按钮

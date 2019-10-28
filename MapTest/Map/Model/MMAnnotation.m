@@ -24,6 +24,5 @@
 - (void)setIndex:(NSInteger)index
 {
     _index = index;
-    _name = [NSString stringWithFormat:@"%ld",index];
 }
 @end

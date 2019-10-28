@@ -73,7 +73,7 @@
     [self addSubview:_fenge];
     
     _oneBtn = [[UIButton alloc] init];
-    _oneBtn.tag = 1;
+    _oneBtn.tag = 0;
     [_oneBtn setTitle:@"1" forState:UIControlStateNormal];
     [_oneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_oneBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
@@ -86,7 +86,7 @@
     [self addSubview:_oneBtn];
     
     _twoBtn = [[UIButton alloc] init];
-    _twoBtn.tag = 2;
+    _twoBtn.tag = 1;
     [_twoBtn setTitle:@"2" forState:UIControlStateNormal];
     [_twoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_twoBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];

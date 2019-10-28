@@ -26,13 +26,10 @@
 
 @end
 @implementation MMMapEditPolygonPopupView
-- (instancetype)init
+- (void)awakeFromNib
 {
-    self = [super init];
-    if (self) {
-        [self setupUI];
-    }
-    return self;
+    [super awakeFromNib];
+    [self setupUI];
 }
 - (void)setupUI {
     _sureBtn.layer.cornerRadius = 3;

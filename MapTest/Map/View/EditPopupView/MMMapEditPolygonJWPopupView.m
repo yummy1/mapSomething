@@ -27,13 +27,10 @@
     _latTextField.text = [NSString stringWithFormat:@"%.7f",model.coordinate.latitude];
     _logTextField.text = [NSString stringWithFormat:@"%.7f",model.coordinate.longitude];
 }
-- (instancetype)init
+- (void)awakeFromNib
 {
-    self = [super init];
-    if (self) {
-        [self setupUI];
-    }
-    return self;
+    [super awakeFromNib];
+    [self setupUI];
 }
 - (void)setupUI {
     _sureBtn.layer.cornerRadius = 3;

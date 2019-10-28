@@ -260,6 +260,9 @@
 #pragma mark - MMGDMapViewDelegate
 - (void)GDMapView:(MMGDMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
+    if (![MMMapManager manager].tapEnable) {
+        return;
+    }
     if ([MMMapManager manager].showType == MapShowTypePreview) {
         if ([_delegate respondsToSelector:@selector(MMMapViewPreviewClick:)]) {
             [_delegate MMMapViewPreviewClick:self];
@@ -331,12 +334,12 @@
                         return;
                     }
                     [[MMMapManager manager].annotations addObject:annotation];
-                    [[MMMapManager manager] changeConvexPolygon:[MMMapManager manager].annotations];
                     _polyLineEditView.markArr = [MMMapManager manager].annotations;
                     if ([MMMapManager manager].annotations.count < 3) {
                         [_gdMapView addAnnotation:annotation];
                         return;
                     }
+                    [[MMMapManager manager] changeConvexPolygon:[MMMapManager manager].annotations];
                     //清除
                     [_gdMapView clear];
                     [_gdMapView addAnnotations:[MMMapManager manager].annotations];
@@ -352,6 +355,9 @@
 #pragma mark - MMGoogleMapViewDelegate
 - (void)googleMapView:(MMGoogleMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
+    if (![MMMapManager manager].tapEnable) {
+        return;
+    }
     if ([MMMapManager manager].showType == MapShowTypePreview) {
         if ([_delegate respondsToSelector:@selector(MMMapViewPreviewClick:)]) {
             [_delegate MMMapViewPreviewClick:self];
@@ -366,6 +372,7 @@
     if (index != MAP_pointTypeHidden) {
         [MMMapManager manager].mapFunction = index;
     }
+    [MMMapManager manager].tapEnable = YES;
     if (_selectedEditView) {
         _selectedEditView.hidden = YES;
     }
@@ -575,6 +582,9 @@
         [SVProgressHUD dismissWithDelay:1.0];
         return;
     }
+    
+    [MMMapManager manager].tapEnable = NO;
+    
     if (_selectedEditView) {
         _selectedEditView.hidden = YES;
     }
@@ -584,9 +594,6 @@
     }else{
         [self addSubview:self.polygonEditView];
     }
-//    [UIView animateWithDuration:0.5 animations:^{
-//        self.polygonEditView.frame = CGRectMake(150, ViewHight-70.5, ViewWidth-150, 70.5);
-//    }];
     self.polygonEditView.type = 1;
     [self.polygonEditView showCollectAndReplaning:NO];
 
@@ -599,31 +606,17 @@
     }
 
     //开始重新绘制
-    [self redrawBian:0 start:0];
+    [self redrawBian];
 }
-- (void)redrawBian:(NSInteger)bianIndex start:(NSInteger)startIndex
+- (void)redrawBian
 {
-    NSArray *points = [MMMapManager manager].groupArray[bianIndex];
-    [points enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.index = idx+1;
-        obj.title = [NSString stringWithFormat:@"%lu",idx+1];
-        if (startIndex == idx) {
-            obj.iconType = MAP_iconTypeRoundedRedNumbers;
-        }else{
-            obj.iconType = MAP_iconTypeRoundedBlueNumbers;
-        }
-    }];
-    [[MMMapManager manager].middleArray enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (bianIndex == idx) {
-            obj.iconType = MAP_iconTypeRoundedRedAlphabet;
-        }
-    }];
     if ([MMMapManager manager].type == MapTypeGaoDe) {
         //1.清除
         [self.gdMapView clear];
         //2.绘制区域
         [self.gdMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeDashed];
         //3.绘制选中边为黄色
+        NSArray *points = [NSArray arrayWithArray:[MMMapManager manager].groupArray[[MMMapManager manager].bianIndex]];
         [self.gdMapView addPolyLines:points lineColor:MAPLineYellowColor];
         //4.绘制选中边的两端
         [self.gdMapView addAnnotations:points];
@@ -635,17 +628,20 @@
         //2.绘制区域
         [self.googleMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeDashed];
         //3.绘制选中边为黄色
+        NSArray *points = [NSArray arrayWithArray:[MMMapManager manager].groupArray[[MMMapManager manager].bianIndex]];
         [self.googleMapView addPolyLines:points lineColor:MAPLineYellowColor lineType:MAPLineTypeSolid];
         //4.绘制选中边的两端
         [self.googleMapView addAnnotations:points];
         //5.绘制各边中点，选中边为红色，其余为灰色
         [self.gdMapView addAnnotations:[MMMapManager manager].middleArray];
     }
+    _polygonEditView.middleArr = [MMMapManager manager].middleArray;
 }
 - (void)clickCuoOnMapDuodianEditView:(MMMapPolyLineEditView *)editView
 {
     DLog(@"错");
     [[MMMapManager manager] clearDataArray];
+    [MMMapManager manager].tapEnable = YES;
     if (_selectedEditView) {
         _selectedEditView.hidden = YES;
     }
@@ -655,6 +651,7 @@
         [self.googleMapView clear];
     }
     editView.markArr = nil;
+    
 }
 #pragma mark - MMMapSelectedAnnotationEditViewDelegate
 - (void)deleteOnMMMapSelectedAnnotationEditView:(MMMapSelectedAnnotationEditView *)view
@@ -696,22 +693,37 @@
 //重新规划
 - (void)clickReplanningOnQuyuChooseView:(MMMapPolygonEditView *)quyuView
 {
-    
+    [MMMapManager manager].tapEnable = YES;
+    [[MMMapManager manager] clearDataArray];
+    if ([MMMapManager manager].type == MapTypeGaoDe) {
+        [_gdMapView clear];
+    }else{
+        [_googleMapView clear];
+    }
+    self.polygonEditView.hidden = YES;
+    self.polyLineEditView.markArr = nil;
 }
 //对
 - (void)clickDuiOnQuyuChooseView:(MMMapPolygonEditView *)quyuView
 {
-    
+    [[MMMapManager manager] addPopopView:self.editPolygonView];
 }
 //错
 - (void)clickCuoOnQuyuChooseView:(MMMapPolygonEditView *)quyuView
 {
-    
+    self.polygonEditView.hidden = YES;
 }
 //选中某个
 - (void)selctedOnQuyuChooseView:(MMMapPolygonEditView *)quyuView index:(NSInteger)index
 {
-    
+    [MMMapManager manager].bianIndex = index;
+    [self redrawBian];
+}
+#pragma mark - MMPolygonChooseStartViewDelegate
+- (void)selectedOnMMPolygonChooseStartView:(MMPolygonChooseStartView *)view index:(NSInteger)index
+{
+    [MMMapManager manager].startIndex = index;
+    [self redrawBian];
 }
 #pragma mark - MMMapEditAnnotationsPopupViewDelegate
 - (void)editEndOnMMMapEditAnnotationsPopupView:(MMMapEditAnnotationsPopupView *)view editModel:(MMAnnotation *)model
@@ -744,7 +756,51 @@
 #pragma mark - MMMapEditPolygonPopupViewDelegate
 - (void)editEndOnMMMapEditPolygonPopupView:(MMMapEditPolygonPopupView *)view regulation:(NSInteger)regulation spacing:(NSInteger)spacing speed:(NSString *)speed height:(NSString *)height
 {
+    [MMMapManager manager].spacing = spacing;
+    if ([MMMapManager manager].parallelLines == nil) {
+        return;
+    }
+    NSMutableArray *jiaoArr = [NSMutableArray array];
+    [[MMMapManager manager].parallelLines enumerateObjectsUsingBlock:^(LandPointArrayList * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        MMAnnotation *start = [[MMAnnotation alloc] init];
+        start.coordinate = CLLocationCoordinate2DMake(obj.landPointStart.x, obj.landPointStart.y);
+        start.parameter.FK_height = height;
+        start.parameter.FK_speed = speed;
+        start.index = idx*2+0;
+        start.name = [NSString stringWithFormat:@"%ld",idx*2+1];
+        [jiaoArr addObject:start];
+        MMAnnotation *end = [[MMAnnotation alloc] init];
+        end.coordinate = CLLocationCoordinate2DMake(obj.landPointEnd.x, obj.landPointEnd.y);
+        end.parameter.FK_height = height;
+        end.parameter.FK_speed = speed;
+        end.index = idx*2+1;
+        end.name = [NSString stringWithFormat:@"%ld",idx*2+2];
+        [jiaoArr addObject:end];
+    }];
+    [MMMapManager manager].jiaoArr = jiaoArr;
+    [_polygonEditView quyuRoundtripFlightPoint:jiaoArr];
     
+    if ([MMMapManager manager].type == MapTypeGaoDe) {
+        [_gdMapView clear];
+        //1.先绘制一个虚线区域
+        [_gdMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeDashed];
+        //2.加点
+        [_gdMapView addAnnotations:jiaoArr];
+        //3.划线
+        [_gdMapView addPolyLines:jiaoArr lineColor:MAPLineBlueColor];
+    }else{
+        //虚线区域及划线
+        
+    }
+    
+    //编辑结束
+    [self.polygonEditView showCollectAndReplaning:YES];
+    //全部编辑结束
+    self.polygonEditView.type = 2;
+    
+    self.chooseStartView.hidden = YES;
+    
+    [[MMMapManager manager] clearShadeView];
 }
 - (void)cancelOnMMMapEditPolygonPopupView:(MMMapEditPolygonPopupView *)view
 {

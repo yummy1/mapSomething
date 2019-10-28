@@ -59,8 +59,7 @@
         button.layer.borderWidth = 2;
         button.layer.cornerRadius = 17.5;
         button.clipsToBounds = YES;
-        if (idx == 0) {
-            _selectedIndex = 0;
+        if (idx == [MMMapManager manager].bianIndex) {
             [button setBackgroundColor:ThemeColor];
         }else{
             [button setBackgroundColor:ThemeBlueColor];
@@ -209,7 +208,6 @@
     }
     if ([_delegate respondsToSelector:@selector(selctedOnQuyuChooseView:index:)]) {
         [_delegate selctedOnQuyuChooseView:self index:button.tag];
-        _selectedIndex = button.tag;
         //更改背景色
         [self.buttonArr enumerateObjectsUsingBlock:^(UIButton *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if (obj.tag == button.tag) {

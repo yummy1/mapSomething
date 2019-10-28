@@ -7,6 +7,8 @@
 //
 
 #import "MMMapManager.h"
+#import "QuyuMethods.h"
+#import "LandPointArrayList.h"
 
 @interface MMMapManager()
 /** 地图 */
@@ -43,6 +45,9 @@
     
     self.annotations = [NSMutableArray array];
     
+    self.startIndex = 0;
+    self.bianIndex = 0;
+    
 }
 - (NSArray *)alphabetArr
 {
@@ -55,7 +60,7 @@
 {
     [_annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.index = idx+1;
-        obj.title = [NSString stringWithFormat:@"%lu",(unsigned long)idx+1];
+        obj.name = [NSString stringWithFormat:@"%lu",(unsigned long)idx+1];
     }];
     return _annotations;
 }
@@ -70,24 +75,24 @@
     _selectedAnnotations = [NSMutableArray arrayWithArray:array];
     return _selectedAnnotations;
 }
-//- (NSMutableArray<MMAnnotation *> *)waiAnnotations
-//{
-//    //去除区域内的点
-//    NSArray *shengArr = [self paixuX:self.annotations];
-//    //分两组排序
-//    NSArray *paixuArr = [self fenZu:shengArr];
-//    _waiAnnotations = [NSMutableArray arrayWithArray:[self changeConvexPolygon:paixuArr]];
-//    return _waiAnnotations;
-//}
 - (NSArray *)groupArray
 {
     NSMutableArray *fenzuArr = [NSMutableArray array];
     [self.annotations enumerateObjectsUsingBlock:^(MMAnnotation *point, NSUInteger idx, BOOL * _Nonnull stop) {
-        
         if (idx != self.annotations.count-1) {
             [fenzuArr addObject:@[point,_annotations[idx+1]]];
         }else{
             [fenzuArr addObject:@[point,_annotations[0]]];
+        }
+    }];
+    NSArray *points = fenzuArr[_bianIndex];
+    [points enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.index = idx+1;
+        obj.name = [NSString stringWithFormat:@"%lu",(unsigned long)idx+1];
+        if (_startIndex == idx) {
+            obj.iconType = MAP_iconTypeRoundedRedNumbers;
+        }else{
+            obj.iconType = MAP_iconTypeRoundedBlueNumbers;
         }
     }];
     return [fenzuArr copy];
@@ -110,12 +115,124 @@
         //加入数组
         MMAnnotation *middlePoint = [[MMAnnotation alloc] init];
         middlePoint.coordinate = CLLocationCoordinate2DMake(middleLat, middleLog);
-        middlePoint.iconType = MAP_iconTypeRoundedGreyAlphabet;
         middlePoint.index = idx+1;
-        middlePoint.title = self.alphabetArr[idx];
+        middlePoint.name = self.alphabetArr[idx];
+        middlePoint.iconType = MAP_iconTypeRoundedGreyAlphabet;
+        if (_bianIndex == idx) {
+            middlePoint.iconType = MAP_iconTypeRoundedRedAlphabet;
+        }
         [middleArr addObject:middlePoint];
     }];
     return [middleArr copy];
+}
+- (NSArray *)parallelLines
+{
+    //1、所有边上的所有点坐标转墨卡托坐标
+    NSMutableArray *mapwaiArr = [NSMutableArray array];
+    [self.annotations enumerateObjectsUsingBlock:^(MMAnnotation *point, NSUInteger idx, BOOL * _Nonnull stop) {
+         float X = point.coordinate.latitude;
+         float Y = point.coordinate.longitude;
+        
+         CGPoint jwd = CGPointMake(Y,X);
+         CGPoint mkt = [QuyuMethods lonLat2Mercator:jwd];
+         MMAnnotation *model = [[MMAnnotation alloc] init];
+         model.coordinate = CLLocationCoordinate2DMake(mkt.x, mkt.y);
+         [mapwaiArr addObject:model];
+    }];
+    NSMutableArray *fenzuArr = [NSMutableArray array];
+    [mapwaiArr enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx != mapwaiArr.count-1) {
+            [fenzuArr addObject:@[obj,mapwaiArr[idx+1]]];
+        }else{
+            [fenzuArr addObject:@[obj,mapwaiArr[0]]];
+        }
+    }];
+    //2、所有边转模型
+    NSMutableArray *modelArr = [NSMutableArray array];
+    [self.groupArray enumerateObjectsUsingBlock:^(NSArray * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        MMAnnotation *zero = obj[0];
+        MMAnnotation *one = obj[1];
+        double ax = zero.coordinate.latitude;
+        double ay = zero.coordinate.longitude;
+        double bx = one.coordinate.latitude;
+        double by = one.coordinate.longitude;
+        QuyuRoutesCalculateModel *bianModel = [QuyuMethods calculateSignleSlopeOne:CGPointMake(ax, ay) two:CGPointMake(bx, by)];
+        [modelArr addObject:bianModel];
+    }];
+    //3、获取平行线与边相交的所有点
+    int selectedEdge = (int)_bianIndex;
+    NSArray *jiaoDianArr = [QuyuMethods getAllLinePoints:selectedEdge array:modelArr distance:_spacing];
+    
+    //判断点的个数，不能多于126个
+    if (jiaoDianArr.count*2 > 126) {
+        [SVProgressHUD showInfoWithStatus:Localized(@"TIP_mapMaxPoints")];
+        [SVProgressHUD dismissWithDelay:2.0];
+        return nil;
+    }
+    if (jiaoDianArr.count == 0) {
+        return jiaoDianArr;
+    }
+    //找寻第一个点还是之前的第一个点吗
+    MMAnnotation *qianOne = self.groupArray[selectedEdge][0];
+    NSInteger yuanOne = qianOne.coordinate.latitude;
+    LandPointArrayList *houModel = jiaoDianArr[0];
+    NSInteger houOne = houModel.landPointStart.x;
+    DLog(@"yuanOne:%ld、houOne:%ld、houTwo:%f",(long)yuanOne,(long)houOne,houModel.landPointEnd.x);
+    //墨卡托转经纬度
+    [jiaoDianArr enumerateObjectsUsingBlock:^(LandPointArrayList * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.landPointStart = [QuyuMethods Mercator2lonLat:obj.landPointStart];
+        obj.landPointEnd = [QuyuMethods Mercator2lonLat:obj.landPointEnd];
+    }];
+    
+    //交点分组划线,xy和经纬度
+    
+    BOOL shuanghuan = YES;
+    if (houOne == yuanOne) {
+        if (self.startIndex == 1) {
+            //双不换，单换
+            shuanghuan = NO;
+        }else{
+            //双换，单不换
+            shuanghuan = YES;
+        }
+    }else{
+        if (self.startIndex == 1) {
+            //双换，单不换
+            shuanghuan = YES;
+        }else{
+            //双不换，单换
+            shuanghuan = NO;
+        }
+    }
+    
+    [jiaoDianArr enumerateObjectsUsingBlock:^(LandPointArrayList * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (shuanghuan) {
+                //双数换，单数不换
+                if (idx%2 == 0) {
+                    CGPoint start = obj.landPointStart;
+                    obj.landPointStart = CGPointMake(obj.landPointEnd.y, obj.landPointEnd.x);
+                    obj.landPointEnd = CGPointMake(start.y, start.x);
+                }else{
+                    CGPoint start = obj.landPointStart;
+                    CGPoint end = obj.landPointEnd;
+                    obj.landPointStart = CGPointMake(start.y, start.x);
+                    obj.landPointEnd = CGPointMake(end.y, end.x);
+                }
+            }else{
+                //单数换，双数不换
+                if (idx%2 == 1) {
+                    CGPoint start = obj.landPointStart;
+                    obj.landPointStart = CGPointMake(obj.landPointEnd.y, obj.landPointEnd.x);
+                    obj.landPointEnd = CGPointMake(start.y, start.x);
+                }else{
+                    CGPoint start = obj.landPointStart;
+                    CGPoint end = obj.landPointEnd;
+                    obj.landPointStart = CGPointMake(start.y, start.x);
+                    obj.landPointEnd = CGPointMake(end.y, end.x);
+                }
+            }
+    }];
+    return jiaoDianArr;
 }
 - (UIView *)shadeView
 {
@@ -207,7 +324,7 @@
     MMAnnotation *firstMark = array.firstObject;
     MMAnnotation *lastMark = array.lastObject;
     [array enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        double ji = (firstMark.coordinate.latitude-obj.coordinate.latitude)*(lastMark.coordinate.longitude-obj.coordinate.longitude)-(firstMark.coordinate.longitude-obj.coordinate.longitude)*(lastMark.coordinate.longitude-obj.coordinate.longitude);
+        double ji = (firstMark.coordinate.latitude-obj.coordinate.latitude)*(lastMark.coordinate.longitude-obj.coordinate.longitude)-(firstMark.coordinate.longitude-obj.coordinate.longitude)*(lastMark.coordinate.latitude-obj.coordinate.latitude);
         if (ji>0) {
             [topArr addObject:obj];
         }else if (ji<0){
@@ -232,10 +349,19 @@
     if (points.count < 3) {
         return;
     }
+    //新加入的点在区域内，则去除不显示
+    NSMutableArray *beforeQuyu = [points mutableCopy];
+    [beforeQuyu removeLastObject];
+    if ([self isInRange:beforeQuyu annotation:points.lastObject]) {
+        //在区域内
+        [_annotations removeLastObject];
+        return;
+    }
     //去除区域内的点
     NSArray *shengArr = [self paixuX:points];
     //分两组排序
     NSArray *paixuArr = [self fenZu:shengArr];
+    
     NSMutableArray *totalArr = [NSMutableArray arrayWithArray:paixuArr];
     __block NSArray *resultArr;
     [paixuArr enumerateObjectsUsingBlock:^(MMAnnotation * obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -250,10 +376,10 @@
                 [self changeConvexPolygon:totalArr];
             }else{
                 resultArr = [self reorder:totalArr];
+                _annotations = [resultArr mutableCopy];
             }
         }
     }];
-    _annotations = [resultArr mutableCopy];
 }
 - (NSArray *)reorder:(NSArray *)annotations
 {
@@ -311,6 +437,8 @@
     [_annotations removeAllObjects];
     [_groupArray removeAllObjects];
     [_middleArray removeAllObjects];
+    _bianIndex = 0;
+    _startIndex = 0;
 }
 - (void)updateAnnotations:(MMAnnotation *)model
 {
