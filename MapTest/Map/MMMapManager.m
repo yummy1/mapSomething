@@ -138,41 +138,48 @@
 - (NSArray *)parallelLines
 {
     //1、所有边上的所有点坐标转墨卡托坐标
-    NSMutableArray *mapwaiArr = [NSMutableArray array];
-    [self.annotations enumerateObjectsUsingBlock:^(MMAnnotation *point, NSUInteger idx, BOOL * _Nonnull stop) {
-         float X = point.coordinate.latitude;
-         float Y = point.coordinate.longitude;
+        NSMutableArray *mapwaiArr = [NSMutableArray array];
+        [self.annotations enumerateObjectsUsingBlock:^(MMAnnotation *point, NSUInteger idx, BOOL * _Nonnull stop) {
+            float X = point.coordinate.latitude;
+            float Y = point.coordinate.longitude;
+           
+            CGPoint jwd = CGPointMake(Y,X);
+            CGPoint mkt = [QuyuMethods lonLat2Mercator:jwd];
+            MMAnnotation *model = [[MMAnnotation alloc] init];
+            model.lat = [NSString stringWithFormat:@"%.7f",mkt.x];
+            model.log = [NSString stringWithFormat:@"%.7f",mkt.y];
+            [mapwaiArr addObject:model];
+        }];
         
-         CGPoint jwd = CGPointMake(Y,X);
-         CGPoint mkt = [QuyuMethods lonLat2Mercator:jwd];
-         MMAnnotation *model = [[MMAnnotation alloc] init];
-         model.coordinate = CLLocationCoordinate2DMake(mkt.x, mkt.y);
-         [mapwaiArr addObject:model];
-    }];
-    NSMutableArray *fenzuArr = [NSMutableArray array];
-    [mapwaiArr enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (idx != mapwaiArr.count-1) {
-            [fenzuArr addObject:@[obj,mapwaiArr[idx+1]]];
-        }else{
-            [fenzuArr addObject:@[obj,mapwaiArr[0]]];
-        }
-    }];
-    //2、所有边转模型
-    NSMutableArray *modelArr = [NSMutableArray array];
-    [self.groupArray enumerateObjectsUsingBlock:^(NSArray * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        MMAnnotation *zero = obj[0];
-        MMAnnotation *one = obj[1];
-        double ax = zero.coordinate.latitude;
-        double ay = zero.coordinate.longitude;
-        double bx = one.coordinate.latitude;
-        double by = one.coordinate.longitude;
-        QuyuRoutesCalculateModel *bianModel = [QuyuMethods calculateSignleSlopeOne:CGPointMake(ax, ay) two:CGPointMake(bx, by)];
-        [modelArr addObject:bianModel];
-    }];
-    //3、获取平行线与边相交的所有点
-    int selectedEdge = (int)_bianIndex;
-    NSArray *jiaoDianArr = [QuyuMethods getAllLinePoints:selectedEdge array:modelArr distance:_spacing];
-    
+        NSMutableArray *fenzuArr = [NSMutableArray array];
+        [mapwaiArr enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (idx != mapwaiArr.count-1) {
+                [fenzuArr addObject:@[obj,mapwaiArr[idx+1]]];
+            }else{
+                [fenzuArr addObject:@[obj,mapwaiArr[0]]];
+            }
+        }];
+        //2、所有边转模型
+        NSMutableArray *modelArr = [NSMutableArray array];
+        [fenzuArr enumerateObjectsUsingBlock:^(NSArray * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            MMAnnotation *zero = obj[0];
+            MMAnnotation *one = obj[1];
+//            double ax = zero.coordinate.latitude;
+//            double ay = zero.coordinate.longitude;
+//            double bx = one.coordinate.latitude;
+//            double by = one.coordinate.longitude;
+            double ax = [zero.lat floatValue];
+            double ay = [zero.log floatValue];
+            double bx = [one.lat floatValue];
+            double by = [one.log floatValue];
+            QuyuRoutesCalculateModel *bianModel = [QuyuMethods calculateSignleSlopeOne:CGPointMake(ax, ay) two:CGPointMake(bx, by)];
+            [modelArr addObject:bianModel];
+        }];
+        //3、获取平行线与边相交的所有点
+        int selectedEdge = (int)_bianIndex;
+    //    NSArray *jiaoDianArr = [QuyuMethods getArrow:[QuyuMethods getAllLinePoints:selectedEdge array:modelArr distance:spacing] lineLong:2];
+        NSArray *jiaoDianArr = [QuyuMethods getAllLinePoints:selectedEdge array:modelArr distance:_spacing];
+        
     //判断点的个数，不能多于126个
     if (jiaoDianArr.count*2 > 126) {
         [SVProgressHUD showInfoWithStatus:Localized(@"TIP_mapMaxPoints")];
@@ -472,14 +479,14 @@
         MAMapPoint point1 = MAMapPointForCoordinate(userCoordinate);
         MAMapPoint point2 = MAMapPointForCoordinate(flyCoordinate);
         CLLocationDistance distance = MAMetersBetweenMapPoints(point1, point2);
-        if (distance > 500) {
+        if (distance > 800) {
             return YES;
         }else{
             return NO;
         }
     }else{
         double distance = GMSGeometryDistance(userCoordinate, flyCoordinate);
-        if (distance > 500) {
+        if (distance > 800) {
             return YES;
         }else{
             return NO;

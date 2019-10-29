@@ -19,6 +19,11 @@
 ///经纬度
 //@property (nonatomic, assign) CLLocationCoordinate2D coor;
 
+//经度
+@property (nonatomic,strong) NSString *lat;
+//纬度
+@property (nonatomic,strong) NSString *log;
+
 @property (nonatomic,strong) MMFlyControlPointParameter *parameter;
 
 @property(nonatomic, assign) BOOL isSelected;

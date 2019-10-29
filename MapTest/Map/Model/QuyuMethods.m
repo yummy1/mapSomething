@@ -115,7 +115,7 @@
 + (NSArray *)getAllLinePoints:(int)position array:(NSArray *)xielvssss distance:(double)distance
 {
     NSMutableArray *landPointArrayLists = [NSMutableArray array];
-    NSMutableArray *yuanArr = xielvssss;
+    NSMutableArray *yuanArr = [xielvssss mutableCopy];
     int direction;
     QuyuRoutesCalculateModel *model = yuanArr[position];
     double D = model.C;
@@ -355,3 +355,4 @@
     return arrowList;
 }
 @end
+

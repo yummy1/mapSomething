@@ -668,7 +668,8 @@
 - (void)deleteOnMMMapSelectedAnnotationEditView:(MMMapSelectedAnnotationEditView *)view
 {
     //1.重新整理数据
-    [[[MMMapManager manager].annotations copy] enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    DLog(@"%@",[MMMapManager manager].selectedAnnotations);
+    [[MMMapManager manager].annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj.isSelected == YES) {
             [[MMMapManager manager].annotations removeObject:obj];
         }
@@ -857,7 +858,7 @@
 }
 - (void)cancelOnMMMapEditPolygonPopupView:(MMMapEditPolygonPopupView *)view
 {
-    self.editPolygonView.hidden = YES;
+    [[MMMapManager manager] clearShadeView];
 }
 
 #pragma mark - MMMapEditPolygonJWPopupViewDelegate
