@@ -48,6 +48,8 @@
 		042A161F233216F60039E56B /* MMMapMyCollectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042A1619233216F50039E56B /* MMMapMyCollectViewController.xib */; };
 		042A1622233216F60039E56B /* MMMapMyCollectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042A161E233216F60039E56B /* MMMapMyCollectViewController.m */; };
 		042A163223321F7E0039E56B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 042A163423321F7E0039E56B /* Localizable.strings */; };
+		0431533C2367F3E200E4AB0D /* MMMapEditSingleTapPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431533B2367F3E200E4AB0D /* MMMapEditSingleTapPopupView.m */; };
+		0431533F2368072F00E4AB0D /* MMMapEditSingleTapPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043153412368072F00E4AB0D /* MMMapEditSingleTapPopupView.xib */; };
 		04652BC02329DDC0002C1ECF /* MMSingleTapAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04652BBF2329DDC0002C1ECF /* MMSingleTapAnnotationView.m */; };
 		04652BC32329DEA7002C1ECF /* MMSingleTapIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04652BC22329DEA7002C1ECF /* MMSingleTapIconView.m */; };
 		04652BE22329DFF8002C1ECF /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 04652BC82329DFF8002C1ECF /* NSLayoutConstraint+MASDebugAdditions.m */; };
@@ -227,6 +229,11 @@
 		042A162F23321F390039E56B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		042A163323321F7E0039E56B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		042A163523321F8D0039E56B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		0431533A2367F3E200E4AB0D /* MMMapEditSingleTapPopupView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMMapEditSingleTapPopupView.h; sourceTree = "<group>"; };
+		0431533B2367F3E200E4AB0D /* MMMapEditSingleTapPopupView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMMapEditSingleTapPopupView.m; sourceTree = "<group>"; };
+		043153402368072F00E4AB0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MMMapEditSingleTapPopupView.xib; sourceTree = "<group>"; };
+		043153432368073400E4AB0D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MMMapEditSingleTapPopupView.strings; sourceTree = "<group>"; };
+		043153452368073700E4AB0D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MMMapEditSingleTapPopupView.strings"; sourceTree = "<group>"; };
 		044F7F95235FFB28001C6379 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MMMapEditPolygonJWPopupView.strings"; sourceTree = "<group>"; };
 		044F7F97235FFFEE001C6379 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MMMapEditPolygonJWPopupView.strings; sourceTree = "<group>"; };
 		04652BBA2329DB63002C1ECF /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -524,6 +531,9 @@
 				049881DA2338BC75009FFA75 /* MMMapEditPolygonJWPopupView.h */,
 				049881DB2338BC75009FFA75 /* MMMapEditPolygonJWPopupView.m */,
 				04ABA078235FFAEC00A3D01C /* MMMapEditPolygonJWPopupView.xib */,
+				0431533A2367F3E200E4AB0D /* MMMapEditSingleTapPopupView.h */,
+				0431533B2367F3E200E4AB0D /* MMMapEditSingleTapPopupView.m */,
+				043153412368072F00E4AB0D /* MMMapEditSingleTapPopupView.xib */,
 			);
 			path = EditPopupView;
 			sourceTree = "<group>";
@@ -942,6 +952,7 @@
 			files = (
 				04ABA06F235FFADE00A3D01C /* MMMapEditPolygonPopupView.xib in Resources */,
 				04ABA068235FFACB00A3D01C /* MMMapEditAnnotationsPopupView.xib in Resources */,
+				0431533F2368072F00E4AB0D /* MMMapEditSingleTapPopupView.xib in Resources */,
 				04A35717234F0AB10066F6D3 /* IQKeyboardManager.bundle in Resources */,
 				048B9134232799B700268A07 /* LaunchScreen.storyboard in Resources */,
 				04ABA076235FFAEC00A3D01C /* MMMapEditPolygonJWPopupView.xib in Resources */,
@@ -1050,6 +1061,7 @@
 				042A16012332111F0039E56B /* NSObject+MJKeyValue.m in Sources */,
 				042A15D52332106C0039E56B /* NSString+MMJSON.m in Sources */,
 				042A16042332111F0039E56B /* MJExtensionConst.m in Sources */,
+				0431533C2367F3E200E4AB0D /* MMMapEditSingleTapPopupView.m in Sources */,
 				04652BF22329E9D9002C1ECF /* MMDistanceLimitAnnotationView.m in Sources */,
 				049881CF2338B253009FFA75 /* HomeViewController.m in Sources */,
 				042A16022332111F0039E56B /* MJProperty.m in Sources */,
@@ -1103,6 +1115,16 @@
 				042A163523321F8D0039E56B /* zh-Hans */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		043153412368072F00E4AB0D /* MMMapEditSingleTapPopupView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				043153402368072F00E4AB0D /* Base */,
+				043153432368073400E4AB0D /* en */,
+				043153452368073700E4AB0D /* zh-Hans */,
+			);
+			name = MMMapEditSingleTapPopupView.xib;
 			sourceTree = "<group>";
 		};
 		048B912D232799B500268A07 /* Main.storyboard */ = {

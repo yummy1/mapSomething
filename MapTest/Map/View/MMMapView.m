@@ -22,9 +22,10 @@
 #import "MMPolygonChooseStartView.h"
 #import "MMSingleTapAnnotationView.h"
 #import "MMSingleTapIconView.h"
+#import "MMMapEditSingleTapPopupView.h"
 
 
-@interface MMMapView()<MMGDMapViewDelegate,MMGoogleMapViewDelegate,MMMapRightViewDelegate,MMMapPolyLineEditViewDelegate,MMMapPolygonEditViewDelegate,MMMapSelectedAnnotationEditViewDelegate,MMMapEditAnnotationsPopupViewDelegate,MMMapEditPolygonJWPopupViewDelegate,MMMapEditPolygonPopupViewDelegate,MMPolygonChooseStartViewDelegate,MMSingleTapIconViewDelegate,UITextFieldDelegate>
+@interface MMMapView()<MMGDMapViewDelegate,MMGoogleMapViewDelegate,MMMapRightViewDelegate,MMMapPolyLineEditViewDelegate,MMMapPolygonEditViewDelegate,MMMapSelectedAnnotationEditViewDelegate,MMMapEditAnnotationsPopupViewDelegate,MMMapEditSingleTapPopupViewDelegate,MMMapEditPolygonJWPopupViewDelegate,MMMapEditPolygonPopupViewDelegate,MMPolygonChooseStartViewDelegate,MMSingleTapIconViewDelegate,UITextFieldDelegate>
 /** 高德地图 */
 @property (nonatomic,strong) MMGDMapView *gdMapView;
 /** 谷歌地图 */
@@ -39,6 +40,8 @@
 @property (nonatomic,strong) MMMapSelectedAnnotationEditView *selectedEditView;
 /** 区域编辑 */
 @property (nonatomic,strong) MMMapPolygonEditView *polygonEditView;
+/** 指点飞行编辑弹出框 */
+@property (nonatomic,strong) MMMapEditSingleTapPopupView *editSingleTapView;
 /** 编辑点的弹出框 */
 @property (nonatomic,strong) MMMapEditAnnotationsPopupView *editAnnotationsView;
 /** 编辑经纬度的弹出框 */
@@ -51,7 +54,7 @@
 @property (nonatomic,strong) UITextField *latitudeTextField;
 @property (nonatomic,strong) UITextField *longitudeTextField;
 /** 指点飞行时的显示框 */
-@property (nonatomic,strong) MMSingleTapIconView *singleView;
+@property (nonatomic,strong) MMSingleTapIconView *singleInfoView;
 @end
 
 @implementation MMMapView
@@ -127,9 +130,9 @@
     }
     if (_selectedEditView) {
         [self.selectedEditView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self.polyLineEditView).with.offset(8);
-            make.right.mas_equalTo(self.polyLineEditView).with.offset(-90);
-            make.bottom.mas_equalTo(self.polyLineEditView.mas_top).with.offset(2);
+            make.width.mas_equalTo(330);
+            make.right.mas_equalTo(self).with.offset(-90);
+            make.bottom.mas_equalTo(self).with.offset(-73);
             make.height.mas_equalTo(73);
         }];
     }
@@ -231,6 +234,15 @@
     }
     return _editAnnotationsView;
 }
+- (MMMapEditSingleTapPopupView *)editSingleTapView
+{
+    if (!_editSingleTapView) {
+        _editSingleTapView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapEditSingleTapPopupView class]) owner:self options:nil][0];
+        _editSingleTapView.frame = CGRectMake((ViewWidth-414)/2, 30, 414, ViewHight-30);
+        _editSingleTapView.delegate = self;
+    }
+    return _editSingleTapView;
+}
 - (MMMapEditPolygonJWPopupView *)editPolygonJWView
 {
     if (!_editPolygonJWView) {
@@ -249,13 +261,13 @@
     }
     return _editPolygonView;
 }
-- (MMSingleTapIconView *)singleView
+- (MMSingleTapIconView *)singleInfoView
 {
-    if (!_singleView) {
-        _singleView = [[MMSingleTapIconView alloc] initWithFrame:CGRectMake((ViewWidth-340)/2+ViewWidth*0.16, ViewHight-52, 340, 52)];
-        _singleView.delegate = self;
+    if (!_singleInfoView) {
+        _singleInfoView = [[MMSingleTapIconView alloc] initWithFrame:CGRectMake((ViewWidth-340)/2+ViewWidth*0.16, ViewHight-52, 340, 52)];
+        _singleInfoView.delegate = self;
     }
-    return _singleView;
+    return _singleInfoView;
 }
 #pragma mark - MMGDMapViewDelegate
 - (void)GDMapView:(MMGDMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate
@@ -272,11 +284,11 @@
             case MAP_pointTypePointingFlight:
             {
                 //指点飞行
-                if (_singleView) {
-                    _singleView.hidden = NO;
-                    [self bringSubviewToFront:_singleView];
+                if (_singleInfoView) {
+                    _singleInfoView.hidden = NO;
+                    [self bringSubviewToFront:_singleInfoView];
                 }else{
-                    [self addSubview:self.singleView];
+                    [self addSubview:self.singleInfoView];
                 }
                 //清除
                 [_gdMapView clear];
@@ -284,12 +296,12 @@
                 MMAnnotation *annotation = [[MMAnnotation alloc] init];
                 annotation.coordinate = coordinate;
                 annotation.index = [MMMapManager manager].annotations.count+1;
-                self.singleView.model = annotation;
+                annotation.isSelected = YES;
+                self.singleInfoView.model = annotation;
                 //加点
                 [[MMMapManager manager].annotations removeAllObjects];
                 [[MMMapManager manager].annotations addObject:annotation];
                 [_gdMapView addAnnotations:[MMMapManager manager].annotations];
-                _singleView.model = annotation;
                 BOOL isOver = [[MMMapManager manager] isOverFlightAtFlyCoordinate:coordinate userCoordinate:_gdMapView.userAnnotation.coordinate];
                 if (isOver) {
                     //超出范围不划线
@@ -376,8 +388,8 @@
     if (_selectedEditView) {
         _selectedEditView.hidden = YES;
     }
-    if (_singleView) {
-        _singleView.hidden = YES;
+    if (_singleInfoView) {
+        _singleInfoView.hidden = YES;
     }
     CGFloat width = 20;
     if (index == MAP_pointTypeHidden) {
@@ -425,7 +437,7 @@
         _selectedEditView.hidden = NO;
         [self bringSubviewToFront:_selectedEditView];
     }
-    _selectedEditView.selectedArr = [markArr copy];
+    _selectedEditView.selectedArr = [markArr mutableCopy];
 }
 //全选
 - (void)clickAllOnMapDuodianEditView:(MMMapPolyLineEditView *)editView isYes:(BOOL)yes
@@ -437,7 +449,7 @@
             _selectedEditView.hidden = NO;
             [self bringSubviewToFront:_selectedEditView];
         }
-        _selectedEditView.selectedArr = [[MMMapManager manager].annotations copy];
+        _selectedEditView.selectedArr = [MMMapManager manager].annotations;
     }else{
         _selectedEditView.hidden = YES;
     }
@@ -610,13 +622,13 @@
 }
 - (void)redrawBian
 {
+    NSArray *points = [NSArray arrayWithArray:[MMMapManager manager].groupArray[[MMMapManager manager].bianIndex]];
     if ([MMMapManager manager].type == MapTypeGaoDe) {
         //1.清除
         [self.gdMapView clear];
         //2.绘制区域
         [self.gdMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeDashed];
         //3.绘制选中边为黄色
-        NSArray *points = [NSArray arrayWithArray:[MMMapManager manager].groupArray[[MMMapManager manager].bianIndex]];
         [self.gdMapView addPolyLines:points lineColor:MAPLineYellowColor];
         //4.绘制选中边的两端
         [self.gdMapView addAnnotations:points];
@@ -628,7 +640,6 @@
         //2.绘制区域
         [self.googleMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeDashed];
         //3.绘制选中边为黄色
-        NSArray *points = [NSArray arrayWithArray:[MMMapManager manager].groupArray[[MMMapManager manager].bianIndex]];
         [self.googleMapView addPolyLines:points lineColor:MAPLineYellowColor lineType:MAPLineTypeSolid];
         //4.绘制选中边的两端
         [self.googleMapView addAnnotations:points];
@@ -712,6 +723,21 @@
 - (void)clickCuoOnQuyuChooseView:(MMMapPolygonEditView *)quyuView
 {
     self.polygonEditView.hidden = YES;
+    self.chooseStartView.hidden = YES;
+    if ([MMMapManager manager].type == MapTypeGaoDe) {
+        //1.清空
+        [_gdMapView clear];
+        //2.加点
+        [_gdMapView addAnnotations:[MMMapManager manager].annotations];
+        //3.划区域
+        [_gdMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeSolid];
+    }else{
+        //1.清空
+        [_gdMapView clear];
+        //2.加点
+        
+        //3.划区域
+    }
 }
 //选中某个
 - (void)selctedOnQuyuChooseView:(MMMapPolygonEditView *)quyuView index:(NSInteger)index
@@ -753,6 +779,33 @@
     [[MMMapManager manager] clearShadeView];
 }
 
+#pragma mark - MMMapEditSingleTapPopupViewDelegate
+- (void)editEndOnMMMapEditSingleTapPopupView:(MMMapEditSingleTapPopupView *)view editModel:(MMAnnotation *)model
+{
+    //更新model(3个视图)
+    [[MMMapManager manager] updateAnnotations:model];
+    //用setter方法更新数据
+    self.singleInfoView.model = model;
+    //鉴于修改数据之后地图会变化
+    if ([MMMapManager manager].type == MapTypeGaoDe) {
+        [self.gdMapView clear];
+        [self.gdMapView addAnnotations:[MMMapManager manager].annotations];
+        //划线
+        [self.gdMapView addPolyLines:@[_gdMapView.userAnnotation,[MMMapManager manager].annotations[0]] lineColor:MAPLineBlueColor];
+    }else{
+        [self.googleMapView clear];
+        [self.googleMapView addAnnotations:[MMMapManager manager].annotations];
+        //划线
+        [self.googleMapView addPolyLines:@[_gdMapView.userAnnotation,[MMMapManager manager].annotations[0]] lineColor:MAPLineBlueColor lineType:MAPLineTypeSolid];
+    }
+    //清除弹框
+    [[MMMapManager manager] clearShadeView];
+}
+- (void)cancelOnMMMapEditSingleTapPopupView:(MMMapEditSingleTapPopupView *)view
+{
+    //清除弹框
+    [[MMMapManager manager] clearShadeView];
+}
 #pragma mark - MMMapEditPolygonPopupViewDelegate
 - (void)editEndOnMMMapEditPolygonPopupView:(MMMapEditPolygonPopupView *)view regulation:(NSInteger)regulation spacing:(NSInteger)spacing speed:(NSString *)speed height:(NSString *)height
 {
@@ -875,9 +928,8 @@
 #pragma mark - MMSingleTapIconViewDelegate
 - (void)MMSingleTapIconViewClickEdit:(MMSingleTapIconView *)iconView
 {
-    [[MMMapManager manager] addPopopView:self.editAnnotationsView];
-    self.editAnnotationsView.model = [MMMapManager manager].annotations[0];
-    self.editAnnotationsView.tittleText = Localized(@"EditSingleFlight");
+    [[MMMapManager manager] addPopopView:self.editSingleTapView];
+    self.editSingleTapView.model = [MMMapManager manager].annotations[0];
 }
 - (void)MMSingleTapIconViewClickGo:(MMSingleTapIconView *)iconView
 {

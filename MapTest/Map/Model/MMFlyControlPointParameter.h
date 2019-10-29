@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-
-@interface MMFlyControlPointParameter : NSObject
+@interface MMFlyControlPointParameter : NSObject<NSCopying,NSMutableCopying>
 //飞控相关参数
 @property (nonatomic,strong) NSString *FK_height;//高度
 @property (nonatomic,strong) NSString *FK_speed;//速度

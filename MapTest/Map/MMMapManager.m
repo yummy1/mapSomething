@@ -78,11 +78,21 @@
 - (NSArray *)groupArray
 {
     NSMutableArray *fenzuArr = [NSMutableArray array];
-    [self.annotations enumerateObjectsUsingBlock:^(MMAnnotation *point, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (idx != self.annotations.count-1) {
-            [fenzuArr addObject:@[point,_annotations[idx+1]]];
+    NSMutableArray *totalArr = [NSMutableArray array];
+    [self.annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        MMAnnotation *a = [[MMAnnotation alloc] init];
+        a.coordinate = obj.coordinate;
+        a.name = [obj.name copy];
+        a.index = obj.index;
+        a.parameter = [obj.parameter copy];
+        a.isSelected = obj.isSelected;
+        [totalArr addObject:a];
+    }];
+    [totalArr enumerateObjectsUsingBlock:^(MMAnnotation *point, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx != totalArr.count-1) {
+            [fenzuArr addObject:@[point,totalArr[idx+1]]];
         }else{
-            [fenzuArr addObject:@[point,_annotations[0]]];
+            [fenzuArr addObject:@[point,totalArr[0]]];
         }
     }];
     NSArray *points = fenzuArr[_bianIndex];
@@ -95,7 +105,7 @@
             obj.iconType = MAP_iconTypeRoundedBlueNumbers;
         }
     }];
-    return [fenzuArr copy];
+    return fenzuArr;
 }
 - (NSArray *)middleArray
 {
@@ -123,7 +133,7 @@
         }
         [middleArr addObject:middlePoint];
     }];
-    return [middleArr copy];
+    return middleArr;
 }
 - (NSArray *)parallelLines
 {
@@ -248,7 +258,7 @@
 #pragma mark 判断某点是否在一个区域内
 - (BOOL)isInRange:(NSArray *)totalArr annotation:(MMAnnotation *)annotation
 {
-    NSMutableArray *xinRet = [totalArr mutableCopy];
+    NSMutableArray *xinRet = [NSMutableArray arrayWithArray:totalArr];
     [xinRet removeObject:annotation];
     if (self.type == MapTypeGaoDe) {
         //除了此点以外的点绘制区域
@@ -292,7 +302,7 @@
 {
     NSLog(@"排序前%@",array);
     //升序
-    NSMutableArray *paixuArr = [array mutableCopy];
+    NSMutableArray *paixuArr = [NSMutableArray arrayWithArray:array];
     for (int i = 0; i < paixuArr.count; ++i) {
         //遍历数组的每一个`索引`（不包括最后一个,因为比较的是j+1）
         for (int j = 0; j < paixuArr.count-1; ++j) {
@@ -307,7 +317,7 @@
         }
     }
     NSLog(@"%@",paixuArr);
-    return [paixuArr copy];
+    return paixuArr;
 }
 - (NSArray *)fenZu:(NSArray *)array
 {
@@ -341,7 +351,7 @@
     [paixuTotalArr addObjectsFromArray:paixuTopArr];
     [paixuTotalArr addObject:lastMark];
     [paixuTotalArr addObjectsFromArray:paixuBottomArr];
-    return [paixuTotalArr copy];
+    return paixuTotalArr;
 }
 #pragma mark 凹多边形边凸多边形
 - (void)changeConvexPolygon:(NSArray *)points
@@ -350,7 +360,7 @@
         return;
     }
     //新加入的点在区域内，则去除不显示
-    NSMutableArray *beforeQuyu = [points mutableCopy];
+    NSMutableArray *beforeQuyu = [NSMutableArray arrayWithArray:points];
     [beforeQuyu removeLastObject];
     if ([self isInRange:beforeQuyu annotation:points.lastObject]) {
         //在区域内
@@ -376,7 +386,7 @@
                 [self changeConvexPolygon:totalArr];
             }else{
                 resultArr = [self reorder:totalArr];
-                _annotations = [resultArr mutableCopy];
+                _annotations = [NSMutableArray arrayWithArray:resultArr];
             }
         }
     }];
@@ -404,7 +414,7 @@
         NSInteger oneDao = one + annotations.count - two;
         if (cha > oneDao) {
             //开始倒序排
-            NSMutableArray *daoArr = [[[annotations reverseObjectEnumerator] allObjects] mutableCopy];
+            NSMutableArray *daoArr = [NSMutableArray arrayWithArray:[[annotations reverseObjectEnumerator] allObjects]];
             //倒序之后1的位置变化
             NSInteger oneChange = daoArr.count-one-1;
             [chongPaiArr addObjectsFromArray:[daoArr subarrayWithRange:NSMakeRange(oneChange, annotations.count-oneChange)]];
@@ -423,7 +433,7 @@
             [chongPaiArr addObjectsFromArray:[annotations subarrayWithRange:NSMakeRange(0, one)]];
         }else{
             //开始倒序排
-            NSMutableArray *daoArr = [[[annotations reverseObjectEnumerator] allObjects] mutableCopy];
+            NSMutableArray *daoArr = [NSMutableArray arrayWithArray:[[annotations reverseObjectEnumerator] allObjects]];
             NSInteger oneChange = daoArr.count-one-1;
             [chongPaiArr addObjectsFromArray:[daoArr subarrayWithRange:NSMakeRange(oneChange, annotations.count-oneChange)]];
             [chongPaiArr addObjectsFromArray:[daoArr subarrayWithRange:NSMakeRange(0, oneChange)]];
@@ -444,7 +454,7 @@
 {
     [self.annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj1, NSUInteger idx1, BOOL * _Nonnull stop1) {
         [self.selectedAnnotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj2, NSUInteger idx2, BOOL * _Nonnull stop2) {
-            if ([obj1 isEqual:obj2]) {
+            if (obj1.index == obj2.index) {
                 obj1.parameter.FK_height = model.parameter.FK_height;
                 obj1.parameter.FK_speed = model.parameter.FK_speed;
                 obj1.parameter.FK_standingTime = model.parameter.FK_standingTime;

@@ -1,0 +1,51 @@
+
+/* Class = "UITextField"; placeholder = "0"; ObjectID = "BPr-bO-CEn"; */
+"BPr-bO-CEn.placeholder" = "0";
+
+/* Class = "UITextField"; text = "0"; ObjectID = "BPr-bO-CEn"; */
+"BPr-bO-CEn.text" = "0";
+
+/* Class = "UITextField"; placeholder = "5"; ObjectID = "I60-95-DXI"; */
+"I60-95-DXI.placeholder" = "5";
+
+/* Class = "UITextField"; text = "5"; ObjectID = "I60-95-DXI"; */
+"I60-95-DXI.text" = "5";
+
+/* Class = "UILabel"; text = "纬度"; ObjectID = "JXH-gO-M7o"; */
+"JXH-gO-M7o.text" = "Latitude";
+
+/* Class = "UILabel"; text = "速度"; ObjectID = "Slg-vj-4UQ"; */
+"Slg-vj-4UQ.text" = "Speed";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "bj5-Q6-cMy"; */
+"bj5-Q6-cMy.normalTitle" = "Cancel";
+
+/* Class = "UILabel"; text = "经度"; ObjectID = "cx2-x4-2DR"; */
+"cx2-x4-2DR.text" = "Longitude";
+
+/* Class = "UITextField"; placeholder = "20"; ObjectID = "gIb-Am-SXP"; */
+"gIb-Am-SXP.placeholder" = "20";
+
+/* Class = "UITextField"; text = "20"; ObjectID = "gIb-Am-SXP"; */
+"gIb-Am-SXP.text" = "20";
+
+/* Class = "UILabel"; text = "米            (10~500米)"; ObjectID = "jc2-7G-nLq"; */
+"jc2-7G-nLq.text" = "m            (10~500m)";
+
+/* Class = "UILabel"; text = "指点飞行"; ObjectID = "kvL-k3-ZhY"; */
+"kvL-k3-ZhY.text" = "Single Flight";
+
+/* Class = "UILabel"; text = "高度"; ObjectID = "pLq-Lw-0sa"; */
+"pLq-Lw-0sa.text" = "Height";
+
+/* Class = "UIButton"; normalTitle = "确定"; ObjectID = "ugL-zJ-HmM"; */
+"ugL-zJ-HmM.normalTitle" = "Sure";
+
+/* Class = "UILabel"; text = "米/秒     （2~10米/秒）"; ObjectID = "vFh-Sx-3xq"; */
+"vFh-Sx-3xq.text" = "m/s     （2~10m/s）";
+
+/* Class = "UITextField"; placeholder = "0"; ObjectID = "wBc-P9-SmI"; */
+"wBc-P9-SmI.placeholder" = "0";
+
+/* Class = "UITextField"; text = "0"; ObjectID = "wBc-P9-SmI"; */
+"wBc-P9-SmI.text" = "0";

@@ -9,14 +9,15 @@
 #import <MAMapKit/MAMapKit.h>
 #import "MMFlyControlPointParameter.h"
 
-
-@interface MMAnnotation : MAPointAnnotation
+@interface MMAnnotation : MAPointAnnotation//<NSCopying, NSMutableCopying>
 //点的样式显示：1普通红色，2普通蓝色，3圆形红色数字，4圆形蓝色数字，5圆形红色字母，6圆形灰色字母
 @property (nonatomic,assign) MAP_iconType iconType;
 //序号
 @property (nonatomic,assign) NSInteger index;
 //tittle
 @property (nonatomic,strong) NSString *name;
+///经纬度
+//@property (nonatomic, assign) CLLocationCoordinate2D coor;
 
 @property (nonatomic,strong) MMFlyControlPointParameter *parameter;
 
