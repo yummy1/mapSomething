@@ -90,13 +90,14 @@
             [button.titleLabel setFont:[UIFont systemFontOfSize:10]];
             [button addTarget:self action:@selector(addAction) forControlEvents:UIControlEventTouchUpInside];
             [self.scrollView addSubview:button];
-            if (idx > 3) {
+            CGFloat offsetX = X+(MarginX+w)*(idx+1)-self.scrollView.width+w;
+            if (offsetX > 0) {
                 [_scrollView setContentOffset:CGPointMake(X+(MarginX+w)*(idx+1)-self.scrollView.width+w, 0) animated:NO];
             }else{
                 [_scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
             }
+            [self.scrollView setContentSize:CGSizeMake(X+(MarginX+w)*(idx+2), 70.5)];
         }
-        [self.scrollView setContentSize:CGSizeMake(X+(MarginX+w)*(idx+2), 70.5)];
     }];
 }
 #pragma mark - 点击事件
@@ -143,6 +144,9 @@
             button.selected = NO;
             button.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
             _beforeBtn = nil;
+            [[MMMapManager manager].selectedAnnotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                obj.isSelected = NO;
+            }];
             if ([_delegate respondsToSelector:@selector(selctedMarkOnMapDuodianEditView:selectedMarkArr:oneIndex:)]) {
                 [_delegate selctedMarkOnMapDuodianEditView:self selectedMarkArr:[NSArray array] oneIndex:0];
             }
@@ -155,6 +159,11 @@
                 _beforeBtn.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
             }
             _beforeBtn = button;
+            [[MMMapManager manager].selectedAnnotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                obj.isSelected = NO;
+            }];
+            MMAnnotation *annotation = [MMMapManager manager].annotations[button.tag];
+            annotation.isSelected = button.selected;
             //所有选中点
             __block NSInteger index;
             __block NSMutableArray *selctedArr = [NSMutableArray array];

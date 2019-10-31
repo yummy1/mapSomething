@@ -146,8 +146,7 @@
             CGPoint jwd = CGPointMake(Y,X);
             CGPoint mkt = [QuyuMethods lonLat2Mercator:jwd];
             MMAnnotation *model = [[MMAnnotation alloc] init];
-            model.lat = [NSString stringWithFormat:@"%.7f",mkt.x];
-            model.log = [NSString stringWithFormat:@"%.7f",mkt.y];
+            model.coordinate = CLLocationCoordinate2DMake(mkt.x, mkt.y);
             [mapwaiArr addObject:model];
         }];
         
@@ -164,14 +163,10 @@
         [fenzuArr enumerateObjectsUsingBlock:^(NSArray * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             MMAnnotation *zero = obj[0];
             MMAnnotation *one = obj[1];
-//            double ax = zero.coordinate.latitude;
-//            double ay = zero.coordinate.longitude;
-//            double bx = one.coordinate.latitude;
-//            double by = one.coordinate.longitude;
-            double ax = [zero.lat floatValue];
-            double ay = [zero.log floatValue];
-            double bx = [one.lat floatValue];
-            double by = [one.log floatValue];
+            float ax = zero.coordinate.latitude;
+            float ay = zero.coordinate.longitude;
+            float bx = one.coordinate.latitude;
+            float by = one.coordinate.longitude;
             QuyuRoutesCalculateModel *bianModel = [QuyuMethods calculateSignleSlopeOne:CGPointMake(ax, ay) two:CGPointMake(bx, by)];
             [modelArr addObject:bianModel];
         }];

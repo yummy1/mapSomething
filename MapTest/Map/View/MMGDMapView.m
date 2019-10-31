@@ -55,7 +55,6 @@
     [_mapView setUserTrackingMode:MAUserTrackingModeFollow animated:YES];
     //设置成NO表示关闭指南针；YES表示显示指南针
     _mapView.showsCompass= NO;
-    _mapView.rotateEnabled = NO;
     //缩放等级
     [_mapView setZoomLevel:17 animated:YES];
 }

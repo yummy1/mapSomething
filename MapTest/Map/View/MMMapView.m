@@ -669,11 +669,12 @@
 {
     //1.重新整理数据
     DLog(@"%@",[MMMapManager manager].selectedAnnotations);
-    [[MMMapManager manager].annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj.isSelected == YES) {
-            [[MMMapManager manager].annotations removeObject:obj];
-        }
-    }];
+//    [[MMMapManager manager].annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        if (obj.isSelected == YES) {
+//            [[MMMapManager manager].annotations removeObject:obj];
+//        }
+//    }];
+    [[MMMapManager manager].annotations removeObjectsInArray:[MMMapManager manager].selectedAnnotations];
     //2.隐藏选中弹框
     if (_selectedEditView) {
         _selectedEditView.hidden = YES;
@@ -725,6 +726,7 @@
 {
     self.polygonEditView.hidden = YES;
     self.chooseStartView.hidden = YES;
+    [MMMapManager manager].tapEnable = YES;
     if ([MMMapManager manager].type == MapTypeGaoDe) {
         //1.清空
         [_gdMapView clear];
@@ -734,10 +736,11 @@
         [_gdMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeSolid];
     }else{
         //1.清空
-        [_gdMapView clear];
+        [_googleMapView clear];
         //2.加点
-        
+        [_googleMapView addAnnotations:[MMMapManager manager].annotations];
         //3.划区域
+        [_googleMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeSolid];
     }
 }
 //选中某个
