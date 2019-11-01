@@ -15,7 +15,12 @@
  *   dic：存储的路线(2:航线规划，3区域航线)
  */
 +(BOOL)saveHangxianWith:(NSDictionary *)dic;
+/** 获取航线 */
 +(NSArray *)getHangxian;
+/** 删除航线 */
++(NSArray *)deleteHangxian:(NSInteger)index;
+/** 修改航线名字 */
++(NSArray *)editHangxian:(NSInteger)index name:(NSString *)name;
 /** 打印汉字 */
 - (NSString *)descriptionWithLocale:(id)locale;
 @end

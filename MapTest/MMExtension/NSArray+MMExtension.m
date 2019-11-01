@@ -34,6 +34,24 @@
     }
     return array;
 }
++(NSArray *)deleteHangxian:(NSInteger)index
+{
+    NSString *filename=[NSString hd_filePathAtDocumentsWithFileName:@"hangxian.plist"];
+    NSMutableArray *array=[[NSMutableArray alloc] initWithContentsOfFile:filename];
+    [array removeObjectAtIndex:index];
+    [array writeToFile:filename atomically:YES];
+    return array;
+}
++(NSArray *)editHangxian:(NSInteger)index name:(NSString *)name
+{
+    NSString *filename=[NSString hd_filePathAtDocumentsWithFileName:@"hangxian.plist"];
+    NSMutableArray *array=[[NSMutableArray alloc] initWithContentsOfFile:filename];
+    NSMutableDictionary *dic = [array[index] mutableCopy];
+    dic[@"name"] = name;
+    [array replaceObjectAtIndex:index withObject:dic];
+    [array writeToFile:filename atomically:YES];
+    return array;
+}
 - (NSString *)descriptionWithLocale:(id)locale
 {
     NSMutableString *str = [NSMutableString stringWithFormat:@"%lu (\n", (unsigned long)self.count];

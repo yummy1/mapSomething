@@ -34,10 +34,14 @@
 }
 - (void)commonInit
 {
+    self.backgroundColor = [UIColor redColor];
     /*
      地图初始化
      **/
-    _mapView = [[GMSMapView alloc] initWithFrame:self.bounds];
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:39.952047
+    longitude:116.408669
+         zoom:17];
+    _mapView = [GMSMapView mapWithFrame:self.bounds camera:camera];
     _mapView.delegate = self;
     _mapView.indoorEnabled = YES;//设置室内地图是否显示在哪里。默认值为YES
     _mapView.settings.rotateGestures = YES;//控制是否启用了旋转手势(默认)或禁用。如果启用后，用户可以使用一个双手指旋转手势来旋转相机。这不限制对相机轴承的编程式控制。
@@ -49,12 +53,12 @@
     [self addSubview:_mapView];
     
 }
-//- (void)layoutSubviews{
-//    [super layoutSubviews];
-//    [self.mapView mas_remakeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
-//    }];
-//}
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    [self.mapView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
+}
 
 - (MMAnnotation *)userAnnotation
 {

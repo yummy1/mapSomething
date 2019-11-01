@@ -45,8 +45,6 @@
 		042A16072332111F0039E56B /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 042A15F82332111F0039E56B /* NSString+MJExtension.m */; };
 		042A16082332111F0039E56B /* MJPropertyKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 042A15F92332111F0039E56B /* MJPropertyKey.m */; };
 		042A16092332111F0039E56B /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 042A15FD2332111F0039E56B /* MJFoundation.m */; };
-		042A161F233216F60039E56B /* MMMapMyCollectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042A1619233216F50039E56B /* MMMapMyCollectViewController.xib */; };
-		042A1622233216F60039E56B /* MMMapMyCollectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042A161E233216F60039E56B /* MMMapMyCollectViewController.m */; };
 		042A163223321F7E0039E56B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 042A163423321F7E0039E56B /* Localizable.strings */; };
 		0431533C2367F3E200E4AB0D /* MMMapEditSingleTapPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0431533B2367F3E200E4AB0D /* MMMapEditSingleTapPopupView.m */; };
 		0431533F2368072F00E4AB0D /* MMMapEditSingleTapPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043153412368072F00E4AB0D /* MMMapEditSingleTapPopupView.xib */; };
@@ -124,6 +122,10 @@
 		04E17B5C2366CCCA0074CDD9 /* QuyuMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E17B582366CCC80074CDD9 /* QuyuMethods.m */; };
 		04E17B5D2366CCCA0074CDD9 /* QuyuRoutesCalculateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E17B5A2366CCC90074CDD9 /* QuyuRoutesCalculateModel.m */; };
 		04E17B602366CCDD0074CDD9 /* LandPointArrayList.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E17B5F2366CCDD0074CDD9 /* LandPointArrayList.m */; };
+		04F5B7C6236BFD7C003D4784 /* MMMapMyCollectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F5B7C5236BFD7C003D4784 /* MMMapMyCollectView.m */; };
+		04F5B7CA236BFF09003D4784 /* MapMyCollectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04F5B7C7236BFF09003D4784 /* MapMyCollectTableViewCell.xib */; };
+		04F5B7CB236BFF09003D4784 /* MapMyCollectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F5B7C8236BFF09003D4784 /* MapMyCollectTableViewCell.m */; };
+		04F5B7CE236C01BD003D4784 /* MMMapMyCollectView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04F5B7D0236C01BD003D4784 /* MMMapMyCollectView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -222,9 +224,6 @@
 		042A15FB2332111F0039E56B /* NSObject+MJKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJKeyValue.h"; sourceTree = "<group>"; };
 		042A15FC2332111F0039E56B /* NSObject+MJCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJCoding.h"; sourceTree = "<group>"; };
 		042A15FD2332111F0039E56B /* MJFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
-		042A1619233216F50039E56B /* MMMapMyCollectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMMapMyCollectViewController.xib; sourceTree = "<group>"; };
-		042A161C233216F50039E56B /* MMMapMyCollectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMMapMyCollectViewController.h; sourceTree = "<group>"; };
-		042A161E233216F60039E56B /* MMMapMyCollectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMMapMyCollectViewController.m; sourceTree = "<group>"; };
 		042A162E23321F380039E56B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		042A162F23321F390039E56B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		042A163323321F7E0039E56B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -376,6 +375,14 @@
 		04E17B5B2366CCCA0074CDD9 /* QuyuMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuyuMethods.h; sourceTree = "<group>"; };
 		04E17B5E2366CCDC0074CDD9 /* LandPointArrayList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandPointArrayList.h; sourceTree = "<group>"; };
 		04E17B5F2366CCDD0074CDD9 /* LandPointArrayList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandPointArrayList.m; sourceTree = "<group>"; };
+		04F5B7C4236BFD7C003D4784 /* MMMapMyCollectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMMapMyCollectView.h; sourceTree = "<group>"; };
+		04F5B7C5236BFD7C003D4784 /* MMMapMyCollectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMMapMyCollectView.m; sourceTree = "<group>"; };
+		04F5B7C7236BFF09003D4784 /* MapMyCollectTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapMyCollectTableViewCell.xib; sourceTree = "<group>"; };
+		04F5B7C8236BFF09003D4784 /* MapMyCollectTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapMyCollectTableViewCell.m; sourceTree = "<group>"; };
+		04F5B7C9236BFF09003D4784 /* MapMyCollectTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapMyCollectTableViewCell.h; sourceTree = "<group>"; };
+		04F5B7CF236C01BD003D4784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MMMapMyCollectView.xib; sourceTree = "<group>"; };
+		04F5B7D2236C01C0003D4784 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MMMapMyCollectView.strings; sourceTree = "<group>"; };
+		04F5B7D4236C01C2003D4784 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MMMapMyCollectView.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -519,9 +526,6 @@
 		042A160C2332120F0039E56B /* EditPopupView */ = {
 			isa = PBXGroup;
 			children = (
-				042A161C233216F50039E56B /* MMMapMyCollectViewController.h */,
-				042A161E233216F60039E56B /* MMMapMyCollectViewController.m */,
-				042A1619233216F50039E56B /* MMMapMyCollectViewController.xib */,
 				049881D02338B860009FFA75 /* MMMapEditAnnotationsPopupView.h */,
 				049881D12338B860009FFA75 /* MMMapEditAnnotationsPopupView.m */,
 				04ABA06A235FFACB00A3D01C /* MMMapEditAnnotationsPopupView.xib */,
@@ -534,6 +538,12 @@
 				0431533A2367F3E200E4AB0D /* MMMapEditSingleTapPopupView.h */,
 				0431533B2367F3E200E4AB0D /* MMMapEditSingleTapPopupView.m */,
 				043153412368072F00E4AB0D /* MMMapEditSingleTapPopupView.xib */,
+				04F5B7C4236BFD7C003D4784 /* MMMapMyCollectView.h */,
+				04F5B7C5236BFD7C003D4784 /* MMMapMyCollectView.m */,
+				04F5B7D0236C01BD003D4784 /* MMMapMyCollectView.xib */,
+				04F5B7C9236BFF09003D4784 /* MapMyCollectTableViewCell.h */,
+				04F5B7C8236BFF09003D4784 /* MapMyCollectTableViewCell.m */,
+				04F5B7C7236BFF09003D4784 /* MapMyCollectTableViewCell.xib */,
 			);
 			path = EditPopupView;
 			sourceTree = "<group>";
@@ -952,15 +962,16 @@
 			files = (
 				04ABA06F235FFADE00A3D01C /* MMMapEditPolygonPopupView.xib in Resources */,
 				04ABA068235FFACB00A3D01C /* MMMapEditAnnotationsPopupView.xib in Resources */,
+				04F5B7CE236C01BD003D4784 /* MMMapMyCollectView.xib in Resources */,
 				0431533F2368072F00E4AB0D /* MMMapEditSingleTapPopupView.xib in Resources */,
 				04A35717234F0AB10066F6D3 /* IQKeyboardManager.bundle in Resources */,
 				048B9134232799B700268A07 /* LaunchScreen.storyboard in Resources */,
 				04ABA076235FFAEC00A3D01C /* MMMapEditPolygonJWPopupView.xib in Resources */,
 				048B9131232799B700268A07 /* Assets.xcassets in Resources */,
+				04F5B7CA236BFF09003D4784 /* MapMyCollectTableViewCell.xib in Resources */,
 				042A163223321F7E0039E56B /* Localizable.strings in Resources */,
 				042A15AB2331E3D30039E56B /* SVProgressHUD.bundle in Resources */,
 				04652C0C232A25B8002C1ECF /* GoogleMaps.bundle in Resources */,
-				042A161F233216F60039E56B /* MMMapMyCollectViewController.xib in Resources */,
 				04652C0E232A26A7002C1ECF /* AMap.bundle in Resources */,
 				048B912F232799B500268A07 /* Main.storyboard in Resources */,
 			);
@@ -988,6 +999,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				048B9173232799E900268A07 /* MMGDMapView.m in Sources */,
+				04F5B7C6236BFD7C003D4784 /* MMMapMyCollectView.m in Sources */,
 				042A15E62332106C0039E56B /* NSArray+MMExtension.m in Sources */,
 				042A15AE233209820039E56B /* MMMapSelectedAnnotationEditView.m in Sources */,
 				04A3571B234F0AB10066F6D3 /* IQUIScrollView+Additions.m in Sources */,
@@ -1015,7 +1027,6 @@
 				042A15812330BCE30039E56B /* MMMapRightView.m in Sources */,
 				04652BE82329DFF8002C1ECF /* View+MASAdditions.m in Sources */,
 				042A15DF2332106C0039E56B /* UIImageView+MMExtension.m in Sources */,
-				042A1622233216F60039E56B /* MMMapMyCollectViewController.m in Sources */,
 				04652BE52329DFF8002C1ECF /* MASConstraintMaker.m in Sources */,
 				042A15A82331E3D30039E56B /* SVProgressAnimatedView.m in Sources */,
 				048B9129232799B500268A07 /* AppDelegate.m in Sources */,
@@ -1069,6 +1080,7 @@
 				049881DC2338BC75009FFA75 /* MMMapEditPolygonJWPopupView.m in Sources */,
 				042A15E52332106C0039E56B /* NSString+size.m in Sources */,
 				042A16032332111F0039E56B /* NSObject+MJCoding.m in Sources */,
+				04F5B7CB236BFF09003D4784 /* MapMyCollectTableViewCell.m in Sources */,
 				042A15A72331E3D30039E56B /* SVRadialGradientLayer.m in Sources */,
 				04652BE62329DFF8002C1ECF /* MASLayoutConstraint.m in Sources */,
 				049881D72338BB3A009FFA75 /* MMMapEditPolygonPopupView.m in Sources */,
@@ -1173,6 +1185,16 @@
 				044F7F97235FFFEE001C6379 /* en */,
 			);
 			name = MMMapEditPolygonJWPopupView.xib;
+			sourceTree = "<group>";
+		};
+		04F5B7D0236C01BD003D4784 /* MMMapMyCollectView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04F5B7CF236C01BD003D4784 /* Base */,
+				04F5B7D2236C01C0003D4784 /* en */,
+				04F5B7D4236C01C2003D4784 /* zh-Hans */,
+			);
+			name = MMMapMyCollectView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

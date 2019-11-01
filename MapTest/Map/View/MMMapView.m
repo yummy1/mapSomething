@@ -18,14 +18,14 @@
 #import "MMMapEditAnnotationsPopupView.h"
 #import "MMMapEditPolygonPopupView.h"
 #import "MMMapEditPolygonJWPopupView.h"
-#import "MMMapMyCollectViewController.h"
+#import "MMMapMyCollectView.h"
 #import "MMPolygonChooseStartView.h"
 #import "MMSingleTapAnnotationView.h"
 #import "MMSingleTapIconView.h"
 #import "MMMapEditSingleTapPopupView.h"
 
 
-@interface MMMapView()<MMGDMapViewDelegate,MMGoogleMapViewDelegate,MMMapRightViewDelegate,MMMapPolyLineEditViewDelegate,MMMapPolygonEditViewDelegate,MMMapSelectedAnnotationEditViewDelegate,MMMapEditAnnotationsPopupViewDelegate,MMMapEditSingleTapPopupViewDelegate,MMMapEditPolygonJWPopupViewDelegate,MMMapEditPolygonPopupViewDelegate,MMPolygonChooseStartViewDelegate,MMSingleTapIconViewDelegate,UITextFieldDelegate>
+@interface MMMapView()<MMGDMapViewDelegate,MMGoogleMapViewDelegate,MMMapRightViewDelegate,MMMapPolyLineEditViewDelegate,MMMapPolygonEditViewDelegate,MMMapSelectedAnnotationEditViewDelegate,MMMapEditAnnotationsPopupViewDelegate,MMMapEditSingleTapPopupViewDelegate,MMMapEditPolygonJWPopupViewDelegate,MMMapEditPolygonPopupViewDelegate,MMPolygonChooseStartViewDelegate,MMSingleTapIconViewDelegate,MMMapMyCollectViewDelegate,UITextFieldDelegate>
 /** 高德地图 */
 @property (nonatomic,strong) MMGDMapView *gdMapView;
 /** 谷歌地图 */
@@ -48,6 +48,8 @@
 @property (nonatomic,strong) MMMapEditPolygonJWPopupView *editPolygonJWView;
 /** 编辑区域生成规则的弹出框 */
 @property (nonatomic,strong) MMMapEditPolygonPopupView *editPolygonView;
+/** 收藏弹出框 */
+@property (nonatomic,strong) MMMapMyCollectView *collectPopupView;
 /** 编辑区域开始边的起始点 */
 @property (nonatomic,strong) MMPolygonChooseStartView *chooseStartView;
 //手动输入点的经纬度输入框
@@ -81,8 +83,6 @@
 {
     [self addSubview:self.gdMapView];
     [self addSubview:self.googleMapView];
-    [self addSubview:self.mapRightView];
-    [self addSubview:self.mapTopView];
     
     if ([MMMapManager manager].type == MapTypeGaoDe) {
         self.gdMapView.hidden = NO;
@@ -91,6 +91,8 @@
         self.gdMapView.hidden = YES;
         self.googleMapView.hidden = NO;
     }
+    [self addSubview:self.mapRightView];
+    [self addSubview:self.mapTopView];
     [self mapChangeSmall:YES];
 }
 - (void)layoutSubviews{
@@ -252,6 +254,15 @@
     }
     return _editPolygonJWView;
 }
+- (MMMapMyCollectView *)collectPopupView
+{
+    if (!_collectPopupView) {
+        _collectPopupView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([MMMapMyCollectView class]) owner:self options:nil][0];
+        _collectPopupView.frame = CGRectMake((ViewWidth-414)/2, 30, 414, ViewHight-30);
+        _collectPopupView.delegate = self;
+    }
+    return _collectPopupView;
+}
 - (MMMapEditPolygonPopupView *)editPolygonView
 {
     if (!_editPolygonView) {
@@ -394,6 +405,8 @@
     CGFloat width = 20;
     if (index == MAP_pointTypeHidden) {
         width = 50;
+    }else if (index == MAP_pointTypeCollectionRoute) {
+        [[MMMapManager manager] addPopopView:self.collectPopupView];
     }else{
         if ([MMMapManager manager].type == MapTypeGaoDe) {
             [_gdMapView clear];
@@ -479,10 +492,10 @@
         UITextField *textField = alertController.textFields[0];
         if ([MMMapManager manager].mapFunction == MAP_pointTypeRoutePlanning) {
             //航线规划
-            ret = [NSArray saveHangxianWith:@{@"type":@2,@"name":textField.text,@"isChina":@"1",@"models":[MMAnnotation mj_keyValuesArrayWithObjectArray:[MMMapManager manager].annotations]}];
+            ret = [NSArray saveHangxianWith:@{@"type":@2,@"name":textField.text,@"isChina":@([MMMapManager manager].type),@"models":[MMAnnotation mj_keyValuesArrayWithObjectArray:[MMMapManager manager].annotations]}];
         }else{
             //区域航线
-            ret = [NSArray saveHangxianWith:@{@"type":@3,@"name":textField.text,@"isChina":@"1",@"models":[MMAnnotation mj_keyValuesArrayWithObjectArray:[MMMapManager manager].annotations]}];
+            ret = [NSArray saveHangxianWith:@{@"type":@3,@"name":textField.text,@"isChina":@([MMMapManager manager].type),@"models":[MMAnnotation mj_keyValuesArrayWithObjectArray:[MMMapManager manager].annotations]}];
         }
         if (ret) {
             [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
@@ -701,7 +714,7 @@
 //收藏
 - (void)clickCollectOnQuyuChooseView:(MMMapPolygonEditView *)quyuView
 {
-    
+    //暂时没用
 }
 //重新规划
 - (void)clickReplanningOnQuyuChooseView:(MMMapPolygonEditView *)quyuView
@@ -719,7 +732,14 @@
 //对
 - (void)clickDuiOnQuyuChooseView:(MMMapPolygonEditView *)quyuView
 {
-    [[MMMapManager manager] addPopopView:self.editPolygonView];
+    if (quyuView.type == 1) {
+        //显示ABCD
+        [[MMMapManager manager] addPopopView:self.editPolygonView];
+    }else{
+        //显示来回航线
+        
+    }
+    
 }
 //错
 - (void)clickCuoOnQuyuChooseView:(MMMapPolygonEditView *)quyuView
@@ -881,12 +901,46 @@
         [self.googleMapView addAnnotations:[MMMapManager manager].annotations];
         [self.googleMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeSolid];
     }
+    [[MMMapManager manager] clearShadeView];
 }
 - (void)cancelOnMMMapEditPolygonJWView:(MMMapEditPolygonJWPopupView *)view
 {
-    self.editPolygonJWView.hidden = YES;
+    [[MMMapManager manager] clearShadeView];
 }
-
+#pragma mark - MMMapMyCollectViewDelegate
+- (void)MMMapMyCollectViewClickIndex:(NSDictionary *)dic
+{
+    //
+    [MMMapManager manager].mapFunction = (MAP_pointType)[dic[@"type"] integerValue];
+    //不一样的切换地图
+    MapType mapType = (MapType)dic[@"isChina"];
+    if ([MMMapManager manager].type != mapType) {
+//        [self changeMapView];
+    }
+    NSMutableArray *points = [MMAnnotation mj_objectArrayWithKeyValuesArray:dic[@"models"]];
+    [points enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        float lat = [obj.lat floatValue];
+//        float lng = [obj.log floatValue];
+//        obj.coordinate = CLLocationCoordinate2DMake(lat, lng);
+    }];
+    [MMMapManager manager].annotations = points;
+    //
+    if ([MMMapManager manager].type == MapTypeGaoDe) {
+        if ([MMMapManager manager].mapFunction == MAP_pointTypeRoutePlanning) {
+            
+        }else{
+            
+        }
+    }else{
+        
+    }
+    
+    [[MMMapManager manager] clearShadeView];
+}
+- (void)MMMapMyCollectViewCancel
+{
+    [[MMMapManager manager] clearShadeView];
+}
 #pragma mark - UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
