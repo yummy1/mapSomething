@@ -16,24 +16,25 @@
 @property (nonatomic,strong) MapMyCollectTableViewCell *selectedCell;
 @end
 @implementation MMMapMyCollectView
+
 - (NSArray *)collectedArr
 {
     if (!_collectedArr) {
-        _collectedArr = [NSArray arrayWithArray:[NSArray getHangxian]];
+        NSArray *total = [NSArray arrayWithArray:[NSArray getHangxian]];
+        NSMutableArray *currentMap = [NSMutableArray array];
+        DLog(@"%@",total);
+        [total enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ((MapType)obj[@"isChina"] == [MMMapManager manager].type) {
+                [currentMap addObject:obj];
+            }
+        }];
+        _collectedArr = [NSMutableArray arrayWithArray:currentMap];
     }
     return _collectedArr;
 }
-- (instancetype)init
+- (void)loadData
 {
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-- (void)setupUI
-{
-    
+    [self.tableView reloadData];
 }
 - (IBAction)sureAction:(id)sender {
     if (_selectedCell == nil) {
@@ -52,7 +53,6 @@
     }
 }
 #pragma mark - UITableViewDataSource delegate
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -96,10 +96,11 @@
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:Localized(@"EditCollectedWaypointName") message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:Localized(@"YUNTAICancel") style:UIAlertActionStyleCancel handler:nil];
+    __weak typeof(self) weakSelf = self;
     UIAlertAction *ok = [UIAlertAction actionWithTitle:Localized(@"YUNTAISure") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         UITextField *textField = alertController.textFields[0];
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        _collectedArr = [NSArray arrayWithArray:[NSArray editHangxian:indexPath.row name:textField.text]];
+        weakSelf.collectedArr = [NSArray arrayWithArray:[NSArray editHangxian:indexPath.row name:textField.text]];
         [self.tableView reloadData];
     }];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {

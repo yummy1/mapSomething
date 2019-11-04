@@ -490,13 +490,7 @@
     UIAlertAction *ok = [UIAlertAction actionWithTitle:Localized(@"YUNTAISure") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         BOOL ret;
         UITextField *textField = alertController.textFields[0];
-        if ([MMMapManager manager].mapFunction == MAP_pointTypeRoutePlanning) {
-            //航线规划
-            ret = [NSArray saveHangxianWith:@{@"type":@2,@"name":textField.text,@"isChina":@([MMMapManager manager].type),@"models":[MMAnnotation mj_keyValuesArrayWithObjectArray:[MMMapManager manager].annotations]}];
-        }else{
-            //区域航线
-            ret = [NSArray saveHangxianWith:@{@"type":@3,@"name":textField.text,@"isChina":@([MMMapManager manager].type),@"models":[MMAnnotation mj_keyValuesArrayWithObjectArray:[MMMapManager manager].annotations]}];
-        }
+        ret = [NSArray saveHangxianWith:@{@"type":@([MMMapManager manager].mapFunction),@"name":textField.text,@"isChina":@([MMMapManager manager].type),@"models":[MMAnnotation mj_keyValuesArrayWithObjectArray:[MMMapManager manager].annotations]}];
         if (ret) {
             [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
             [SVProgressHUD dismissWithDelay:1.2];

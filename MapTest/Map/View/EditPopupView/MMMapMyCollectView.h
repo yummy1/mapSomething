@@ -16,6 +16,7 @@
 @end
 @interface MMMapMyCollectView : UIView
 @property(nonatomic, weak) id<MMMapMyCollectViewDelegate> delegate;
+- (void)loadData;
 @end
 
 
