@@ -17,7 +17,7 @@
 //tittle
 @property (nonatomic,strong) NSString *name;
 
-//@property (nonatomic,strong) MMFlyControlPointParameter *parameter;
+@property (nonatomic,strong) MMFlyControlPointParameter *parameter;
 
 @property(nonatomic, assign) BOOL isSelected;
 @end

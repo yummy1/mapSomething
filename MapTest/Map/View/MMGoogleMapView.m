@@ -10,7 +10,7 @@
 
 @interface MMGoogleMapView()<GMSMapViewDelegate>
 @property (nonatomic,strong) GMSMapView *mapView;
-
+@property (nonatomic,strong) NSMutableArray *annotations;
 @end
 @implementation MMGoogleMapView
 + (instancetype)mapView{
@@ -51,6 +51,8 @@
     _mapView.myLocationEnabled = YES;//控制是否启用了我的位置点和精度圆。默认为没有。
 
     [self addSubview:_mapView];
+    
+    _annotations = [NSMutableArray array];
     
 }
 - (void)layoutSubviews{
@@ -142,6 +144,7 @@
         }
     }
     marker.map = _mapView;
+    [self.annotations addObject:marker];
 }
 
 - (void)addAnnotations:(NSArray <MMAnnotation *> *)annotations
@@ -150,8 +153,18 @@
         [self addAnnotation:obj];
     }];
 }
-
-
+-(void)removeAnnotation:(MMAnnotation *)annotation
+{
+    GMSMarker *mark = self.annotations[annotation.index-1];
+    mark.map = nil;
+    [self.annotations removeObjectAtIndex:annotation.index-1];
+}
+-(void)removeAnnotations:(NSArray <MMAnnotation *>*)annotations
+{
+    [annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self removeAnnotation:obj];
+    }];
+}
 - (void)addPolyLines:(NSArray <MMAnnotation *>*)annotations lineColor:(MAPLineColor)lineColor lineType:(MAPLineType)lineType;
 {
     GMSMutablePath * gmspath=[GMSMutablePath path];
@@ -191,7 +204,7 @@
 -(void)clear
 {
     [_mapView clear];
-    
+    [self.annotations removeAllObjects];
 }
 
 #pragma  mark - GMSMapViewDelegate

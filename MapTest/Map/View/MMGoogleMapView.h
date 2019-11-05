@@ -47,6 +47,19 @@
  */
 - (void)addAnnotations:(NSArray <MMAnnotation *> *)annotations;
 
+/**
+ 移除一个点
+ 
+ @param annotation 点信息
+ */
+-(void)removeAnnotation:(MMAnnotation *)annotation;
+
+/**
+ 移除多个点
+ 
+ @param annotations 点信息数组
+ */
+-(void)removeAnnotations:(NSArray <MMAnnotation *>*)annotations;
 
 /**
  添加航线

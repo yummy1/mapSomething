@@ -55,6 +55,8 @@
 //手动输入点的经纬度输入框
 @property (nonatomic,strong) UITextField *latitudeTextField;
 @property (nonatomic,strong) UITextField *longitudeTextField;
+/** 区域航线时，超出范围的点 */
+@property (nonatomic,strong) MMAnnotation *overAnnotation;
 /** 指点飞行时的显示框 */
 @property (nonatomic,strong) MMSingleTapIconView *singleInfoView;
 @end
@@ -140,7 +142,7 @@
     }
     if (_chooseStartView) {
         [self.chooseStartView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.mas_equalTo(@(-70.5-68.5-3));
+            make.bottom.mas_equalTo(@(-71-3));
             make.centerX.mas_equalTo(self);
             make.width.mas_equalTo(@(156));
             make.height.mas_equalTo(68.5);
@@ -346,6 +348,10 @@
                 break;
                 case MAP_pointTypeRegionalRoute:
                 {
+                    if (_overAnnotation) {
+                        [_gdMapView removeAnnotation:_overAnnotation];
+                        _overAnnotation = nil;
+                    }
                     //点信息
                     MMAnnotation *annotation = [[MMAnnotation alloc] init];
                     annotation.coordinate = coordinate;
@@ -354,6 +360,7 @@
                     if (isOver) {
                         //超出范围没啥变化
                         [_gdMapView addAnnotation:annotation];
+                        _overAnnotation = annotation;
                         return;
                     }
                     [[MMMapManager manager].annotations addObject:annotation];
@@ -386,13 +393,99 @@
             [_delegate MMMapViewPreviewClick:self];
         }
     }else{
-        
+        switch ([MMMapManager manager].mapFunction) {
+            case MAP_pointTypePointingFlight:
+            {
+                //指点飞行
+                if (_singleInfoView) {
+                    _singleInfoView.hidden = NO;
+                    [self bringSubviewToFront:_singleInfoView];
+                }else{
+                    [self addSubview:self.singleInfoView];
+                }
+                //清除
+                [_googleMapView clear];
+                //点信息
+                MMAnnotation *annotation = [[MMAnnotation alloc] init];
+                annotation.coordinate = coordinate;
+                annotation.index = [MMMapManager manager].annotations.count+1;
+                annotation.isSelected = YES;
+                self.singleInfoView.model = annotation;
+                //加点
+                [[MMMapManager manager].annotations removeAllObjects];
+                [[MMMapManager manager].annotations addObject:annotation];
+                [_googleMapView addAnnotations:[MMMapManager manager].annotations];
+                BOOL isOver = [[MMMapManager manager] isOverFlightAtFlyCoordinate:coordinate userCoordinate:_googleMapView.userAnnotation.coordinate];
+                if (isOver) {
+                    //超出范围不划线
+                    [[MMMapManager manager].annotations removeLastObject];
+                }else{
+                    //划线
+                    [_googleMapView addPolyLines:@[mapView.userAnnotation,annotation] lineColor:MAPLineBlueColor lineType:MAPLineTypeSolid];
+                }
+            }
+                break;
+            case MAP_pointTypeRoutePlanning:
+            {
+                //清除
+                [_googleMapView clear];
+                //点信息
+                MMAnnotation *annotation = [[MMAnnotation alloc] init];
+                annotation.coordinate = coordinate;
+                annotation.index = [MMMapManager manager].annotations.count+1;
+                //加点
+                [[MMMapManager manager].annotations addObject:annotation];
+                [_googleMapView addAnnotations:[MMMapManager manager].annotations];
+                BOOL isOver = [[MMMapManager manager] isOverFlightAtFlyCoordinate:coordinate userCoordinate:_googleMapView.userAnnotation.coordinate];
+                if (isOver) {
+                    //超出范围不划线
+                    [[MMMapManager manager].annotations removeLastObject];
+                }
+                //划线
+                [_googleMapView addPolyLines:[MMMapManager manager].annotations lineColor:MAPLineBlueColor lineType:MAPLineTypeSolid];
+                _polyLineEditView.markArr = [MMMapManager manager].annotations;
+            }
+                break;
+                case MAP_pointTypeRegionalRoute:
+                {
+                    if (_overAnnotation) {
+                        [_googleMapView removeAnnotation:_overAnnotation];
+                        _overAnnotation = nil;
+                    }
+                    //点信息
+                    MMAnnotation *annotation = [[MMAnnotation alloc] init];
+                    annotation.coordinate = coordinate;
+                    annotation.index = [MMMapManager manager].annotations.count+1;
+                    BOOL isOver = [[MMMapManager manager] isOverFlightAtFlyCoordinate:coordinate userCoordinate:_googleMapView.userAnnotation.coordinate];
+                    if (isOver) {
+                        //超出范围没啥变化
+                        [_googleMapView addAnnotation:annotation];
+                        _overAnnotation = annotation;
+                        return;
+                    }
+                    [[MMMapManager manager].annotations addObject:annotation];
+                    _polyLineEditView.markArr = [MMMapManager manager].annotations;
+                    if ([MMMapManager manager].annotations.count < 3) {
+                        [_googleMapView addAnnotation:annotation];
+                        return;
+                    }
+                    [[MMMapManager manager] changeConvexPolygon:[MMMapManager manager].annotations];
+                    //清除
+                    [_googleMapView clear];
+                    [_googleMapView addAnnotations:[MMMapManager manager].annotations];
+                    //划区域
+                    [_googleMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeSolid];
+                }
+                    break;
+            default:
+                break;
+        }
     }
 }
 #pragma mark - MMMapRightViewDelegate
 - (void)mapRightView:(MMMapRightView *)rightView index:(MAP_pointType)index
 {
-    if (index != MAP_pointTypeHidden) {
+    if (index != MAP_pointTypeHidden && index != MAP_pointTypeCollectionRoute) {
         [MMMapManager manager].mapFunction = index;
     }
     [MMMapManager manager].tapEnable = YES;
@@ -490,17 +583,26 @@
     UIAlertAction *ok = [UIAlertAction actionWithTitle:Localized(@"YUNTAISure") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         BOOL ret;
         UITextField *textField = alertController.textFields[0];
-        ret = [NSArray saveHangxianWith:@{@"type":@([MMMapManager manager].mapFunction),@"name":textField.text,@"isChina":@([MMMapManager manager].type),@"models":[MMAnnotation mj_keyValuesArrayWithObjectArray:[MMMapManager manager].annotations]}];
+        NSMutableArray *models = [NSMutableArray array];
+        [[MMMapManager manager].annotations enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSDictionary *dic = [obj mj_keyValuesWithKeys:@[@"iconType",@"index",@"index",@"name",@"parameter",@"isSelected"]];
+            [dic setValue:@(obj.coordinate.latitude) forKey:@"lat"];
+            [dic setValue:@(obj.coordinate.longitude) forKey:@"log"];
+            DLog(@"%@",dic);
+            [models addObject:dic];
+        }];
+        ret = [NSArray saveHangxianWith:@{@"type":@([MMMapManager manager].mapFunction),@"name":textField.text,@"isChina":@([MMMapManager manager].type),@"models":models}];
         if (ret) {
             [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
             [SVProgressHUD dismissWithDelay:1.2];
+            [TheNotificationCenter postNotificationName:@"addCollectedRoutes" object:nil];
         }
     }];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         if ([MMMapManager manager].mapFunction == MAP_pointTypeRoutePlanning) {
-            textField.text = Localized(@"EditERoutePlanning");
+            textField.placeholder = Localized(@"EditERoutePlanning");
         }else{
-            textField.text = Localized(@"EditERegionalPlanning");
+            textField.placeholder = Localized(@"EditERegionalPlanning");
         }
     }];
     [alertController addAction:cancel];
@@ -570,7 +672,7 @@
         if ([MMMapManager manager].type == MapTypeGaoDe) {
             [weakSelf.gdMapView addAnnotation:model];
         }else{
-            [weakSelf.gdMapView addAnnotation:model];
+            [weakSelf.googleMapView addAnnotation:model];
         }
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:Localized(@"YUNTAICancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -585,7 +687,7 @@
 //航线规划时
 - (void)clickGoOnMapDuodianEditView:(MMMapPolyLineEditView *)editView
 {
-    DLog(@"Go");
+    DLog(@"发送航点");
 }
 //区域航线时
 - (void)clickDuiOnMapDuodianEditView:(MMMapPolyLineEditView *)editView
@@ -651,7 +753,7 @@
         //4.绘制选中边的两端
         [self.googleMapView addAnnotations:points];
         //5.绘制各边中点，选中边为红色，其余为灰色
-        [self.gdMapView addAnnotations:[MMMapManager manager].middleArray];
+        [self.googleMapView addAnnotations:[MMMapManager manager].middleArray];
     }
     _polygonEditView.middleArr = [MMMapManager manager].middleArray;
 }
@@ -700,6 +802,15 @@
         }
     }else{
         [self.googleMapView clear];
+        if ([MMMapManager manager].mapFunction == MAP_pointTypeRoutePlanning) {
+            //航线规划
+            [self.googleMapView addAnnotations:[MMMapManager manager].annotations];
+            [self.googleMapView addPolyLines:[MMMapManager manager].annotations lineColor:MAPLineBlueColor lineType:MAPLineTypeSolid];
+        }else{
+            //区域航线
+            [self.googleMapView addAnnotations:[MMMapManager manager].annotations];
+            [self.googleMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeSolid];
+        }
     }
     //4.重新绘制底部显示点
     self.polyLineEditView.markArr = [MMMapManager manager].annotations;
@@ -731,7 +842,7 @@
         [[MMMapManager manager] addPopopView:self.editPolygonView];
     }else{
         //显示来回航线
-        
+        DLog(@"发送航点");
     }
     
 }
@@ -861,7 +972,13 @@
         [_gdMapView addPolyLines:jiaoArr lineColor:MAPLineBlueColor];
     }else{
         //虚线区域及划线
-        
+        [_googleMapView clear];
+        //1.先绘制一个虚线区域
+        [_googleMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeDashed];
+        //2.加点
+        [_googleMapView addAnnotations:jiaoArr];
+        //3.划线
+        [_googleMapView addPolyLines:jiaoArr lineColor:MAPLineBlueColor lineType:MAPLineTypeSolid];
     }
     
     //编辑结束
@@ -906,29 +1023,62 @@
 {
     //
     [MMMapManager manager].mapFunction = (MAP_pointType)[dic[@"type"] integerValue];
+    _mapRightView.mapIndex = [MMMapManager manager].mapFunction;
     //不一样的切换地图
-    MapType mapType = (MapType)dic[@"isChina"];
-    if ([MMMapManager manager].type != mapType) {
+//    MapType mapType = (MapType)dic[@"isChina"];
+//    if ([MMMapManager manager].type != mapType) {
 //        [self changeMapView];
-    }
-    NSMutableArray *points = [MMAnnotation mj_objectArrayWithKeyValuesArray:dic[@"models"]];
-    [points enumerateObjectsUsingBlock:^(MMAnnotation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        float lat = [obj.lat floatValue];
-//        float lng = [obj.log floatValue];
-//        obj.coordinate = CLLocationCoordinate2DMake(lat, lng);
+//    }
+    NSArray *points = dic[@"models"];
+    NSMutableArray<MMAnnotation *> *models = [NSMutableArray array];
+    [points enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        MMAnnotation *annotation = [MMAnnotation mj_objectWithKeyValues:obj];
+        annotation.coordinate = CLLocationCoordinate2DMake([obj[@"lat"] doubleValue], [obj[@"log"] doubleValue]);
+        [models addObject:annotation];
     }];
-    [MMMapManager manager].annotations = points;
-    //
+    [MMMapManager manager].annotations = models;
+    //显示
     if ([MMMapManager manager].type == MapTypeGaoDe) {
+        [_gdMapView clear];
         if ([MMMapManager manager].mapFunction == MAP_pointTypeRoutePlanning) {
-            
+            [_gdMapView addAnnotations:[MMMapManager manager].annotations];
+            [_gdMapView addPolyLines:[MMMapManager manager].annotations lineColor:MAPLineBlueColor];
         }else{
-            
+            [_gdMapView addAnnotations:[MMMapManager manager].annotations];
+            [_gdMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeSolid];
         }
     }else{
-        
+        [_googleMapView clear];
+        if ([MMMapManager manager].mapFunction == MAP_pointTypeRoutePlanning) {
+            [_googleMapView addAnnotations:[MMMapManager manager].annotations];
+            [_googleMapView addPolyLines:[MMMapManager manager].annotations lineColor:MAPLineBlueColor lineType:MAPLineTypeSolid];
+        }else{
+            [_googleMapView addAnnotations:[MMMapManager manager].annotations];
+            [_googleMapView addPolygon:[MMMapManager manager].annotations lineType:MAPLineTypeSolid];
+        }
     }
-    
+    [MMMapManager manager].tapEnable = YES;
+    if (_selectedEditView) {
+        _selectedEditView.hidden = YES;
+    }
+    if (_singleInfoView) {
+        _singleInfoView.hidden = YES;
+    }
+    if (!_polyLineEditView) {
+        [self addSubview:self.polyLineEditView];
+    }else{
+        self.polyLineEditView.hidden = NO;
+        [self bringSubviewToFront:self.polyLineEditView];
+    }
+    self.polyLineEditView.markArr = [MMMapManager manager].annotations;
+    [self.polyLineEditView setUpButton];
+    [_mapRightView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(20);
+    }];
+    //更新约束
+    [UIView animateWithDuration:0.1 animations:^{
+        [self layoutIfNeeded];
+    }];
     [[MMMapManager manager] clearShadeView];
 }
 - (void)MMMapMyCollectViewCancel
@@ -985,6 +1135,6 @@
 }
 - (void)MMSingleTapIconViewClickGo:(MMSingleTapIconView *)iconView
 {
-    
+    DLog(@"发送航点");
 }
 @end

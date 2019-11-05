@@ -31,13 +31,13 @@
     NSString *lage = [[NSLocale currentLocale] objectForKey:NSLocaleIdentifier];
     
     NSLog(@"%@",lage);
-//    if ([lage isEqualToString:@"zh_CN"]) {
+    if ([lage isEqualToString:@"zh_CN"]) {
         self.type = MapTypeGaoDe;
         self.isEnglish = NO;
-//    }else{
-//        self.type = MapTypeGoogle;
-//        self.isEnglish = YES;
-//    }
+    }else{
+        self.type = MapTypeGoogle;
+        self.isEnglish = YES;
+    }
     self.mapFunction = MAP_pointTypePointingFlight;
     
     self.tapEnable = YES;

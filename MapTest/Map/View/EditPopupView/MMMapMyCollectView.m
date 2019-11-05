@@ -17,23 +17,40 @@
 @end
 @implementation MMMapMyCollectView
 
-- (NSArray *)collectedArr
+//- (NSArray *)collectedArr
+//{
+////    if (!_collectedArr) {
+//        NSArray *total = [NSArray arrayWithArray:[NSArray getHangxian]];
+//        NSMutableArray *currentMap = [NSMutableArray array];
+//        DLog(@"%@",total);
+//        [total enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//            MapType mapType = (MapType)[obj[@"isChina"] integerValue];
+//            if (mapType == [MMMapManager manager].type) {
+//                [currentMap addObject:obj];
+//            }
+//        }];
+//        _collectedArr = [NSMutableArray arrayWithArray:currentMap];
+////    }
+//    return _collectedArr;
+//}
+- (void)awakeFromNib
 {
-    if (!_collectedArr) {
-        NSArray *total = [NSArray arrayWithArray:[NSArray getHangxian]];
-        NSMutableArray *currentMap = [NSMutableArray array];
-        DLog(@"%@",total);
-        [total enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ((MapType)obj[@"isChina"] == [MMMapManager manager].type) {
-                [currentMap addObject:obj];
-            }
-        }];
-        _collectedArr = [NSMutableArray arrayWithArray:currentMap];
-    }
-    return _collectedArr;
+    [super awakeFromNib];
+    [self loadData];
+    [TheNotificationCenter addObserver:self selector:@selector(loadData) name:@"addCollectedRoutes" object:nil];
 }
 - (void)loadData
 {
+    NSArray *total = [NSArray arrayWithArray:[NSArray getHangxian]];
+    NSMutableArray *currentMap = [NSMutableArray array];
+    DLog(@"收藏航线%@",total);
+    [total enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        MapType mapType = (MapType)[obj[@"isChina"] integerValue];
+        if (mapType == [MMMapManager manager].type) {
+            [currentMap addObject:obj];
+        }
+    }];
+    _collectedArr = [NSMutableArray arrayWithArray:currentMap];
     [self.tableView reloadData];
 }
 - (IBAction)sureAction:(id)sender {
@@ -46,11 +63,15 @@
         NSIndexPath *indexPath = [self.tableView indexPathForCell:_selectedCell];
         [_delegate MMMapMyCollectViewClickIndex:self.collectedArr[indexPath.row]];
     }
+    [_selectedCell setSelected:NO animated:YES];
+    _selectedCell = nil;
 }
 - (IBAction)cancelAction:(id)sender {
     if ([_delegate respondsToSelector:@selector(MMMapMyCollectViewCancel)]) {
         [_delegate MMMapMyCollectViewCancel];
     }
+    [_selectedCell setSelected:NO animated:YES];
+    _selectedCell = nil;
 }
 #pragma mark - UITableViewDataSource delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
