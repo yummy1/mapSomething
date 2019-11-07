@@ -17,6 +17,7 @@
 #import "MMMapView.h"
 #import "MMAnnotation.h"
 #import "MMMapManager.h"
-
+#import "MMLocationManager.h"
+#import "CLLocation+MMAdd.h"
 
 #endif /* MMMap_h */

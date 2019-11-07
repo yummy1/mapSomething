@@ -54,6 +54,17 @@
     
     _annotations = [NSMutableArray array];
     
+       [TheNotificationCenter addObserver:self selector:@selector(setCenterCoordinateNotification:) name:@"kMMMapViewLocationUpdateNotification" object:nil];
+}
+- (void)setCenterCoordinateNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    CLLocation *location = userInfo[@"kMMMapViewLocationUpdateNotification"];
+    CLLocationCoordinate2D lc = location.coordinate;
+    //            CLLocationCoordinate2D lc = [CLLocation transformFromGCJToWGS:centerCoordinate];
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithTarget:lc
+                                                                           zoom:self.mapView.camera.zoom];
+    self.mapView.camera = camera;
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
@@ -137,10 +148,14 @@
             }
             
             [icon setTitle:annotation.name forState:UIControlStateNormal];
-            [icon setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [icon setTitleEdgeInsets:UIEdgeInsetsMake(-11, 0, 0, 0)];
-            [icon.titleLabel setFont:[UIFont systemFontOfSize:10 weight:UIFontWeightThin]];
+            [icon setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [icon.titleLabel setFont:[UIFont systemFontOfSize:13]];
+            icon.layer.borderColor = [UIColor whiteColor].CGColor;
+            icon.layer.borderWidth = 2;
+            icon.layer.cornerRadius = 13;
+            icon.clipsToBounds = YES;
             marker.iconView = icon;
+            marker.groundAnchor = CGPointMake(0.5, 0.5);
         }
     }
     marker.map = _mapView;

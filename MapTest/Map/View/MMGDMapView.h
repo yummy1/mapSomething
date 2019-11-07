@@ -27,6 +27,7 @@
 
 /** 我的位置 */
 @property (nonatomic,strong) MMAnnotation *userAnnotation;
+
 /**
  初始化地图
  */

@@ -119,6 +119,9 @@
 		04ABA06F235FFADE00A3D01C /* MMMapEditPolygonPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04ABA071235FFADE00A3D01C /* MMMapEditPolygonPopupView.xib */; };
 		04ABA076235FFAEC00A3D01C /* MMMapEditPolygonJWPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04ABA078235FFAEC00A3D01C /* MMMapEditPolygonJWPopupView.xib */; };
 		04ACA4C7233CA85D00ECBC07 /* MMPolygonChooseStartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ACA4C6233CA85C00ECBC07 /* MMPolygonChooseStartView.m */; };
+		04C3B4A52373AF59006CE42F /* MMLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C3B4A12373AF58006CE42F /* MMLocationManager.m */; };
+		04C3B4A62373AF59006CE42F /* CLLocation+MMAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C3B4A32373AF59006CE42F /* CLLocation+MMAdd.m */; };
+		04C3B4AA2373B039006CE42F /* HZLocationConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C3B4A82373B039006CE42F /* HZLocationConverter.m */; };
 		04E17B5C2366CCCA0074CDD9 /* QuyuMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E17B582366CCC80074CDD9 /* QuyuMethods.m */; };
 		04E17B5D2366CCCA0074CDD9 /* QuyuRoutesCalculateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E17B5A2366CCC90074CDD9 /* QuyuRoutesCalculateModel.m */; };
 		04E17B602366CCDD0074CDD9 /* LandPointArrayList.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E17B5F2366CCDD0074CDD9 /* LandPointArrayList.m */; };
@@ -369,6 +372,12 @@
 		04ABA077235FFAEC00A3D01C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MMMapEditPolygonJWPopupView.xib; sourceTree = "<group>"; };
 		04ACA4C5233CA85C00ECBC07 /* MMPolygonChooseStartView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMPolygonChooseStartView.h; sourceTree = "<group>"; };
 		04ACA4C6233CA85C00ECBC07 /* MMPolygonChooseStartView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMPolygonChooseStartView.m; sourceTree = "<group>"; };
+		04C3B4A12373AF58006CE42F /* MMLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMLocationManager.m; sourceTree = "<group>"; };
+		04C3B4A22373AF59006CE42F /* CLLocation+MMAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+MMAdd.h"; sourceTree = "<group>"; };
+		04C3B4A32373AF59006CE42F /* CLLocation+MMAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+MMAdd.m"; sourceTree = "<group>"; };
+		04C3B4A42373AF59006CE42F /* MMLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMLocationManager.h; sourceTree = "<group>"; };
+		04C3B4A82373B039006CE42F /* HZLocationConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZLocationConverter.m; sourceTree = "<group>"; };
+		04C3B4A92373B039006CE42F /* HZLocationConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZLocationConverter.h; sourceTree = "<group>"; };
 		04E17B582366CCC80074CDD9 /* QuyuMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuyuMethods.m; sourceTree = "<group>"; };
 		04E17B592366CCC90074CDD9 /* QuyuRoutesCalculateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuyuRoutesCalculateModel.h; sourceTree = "<group>"; };
 		04E17B5A2366CCC90074CDD9 /* QuyuRoutesCalculateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuyuRoutesCalculateModel.m; sourceTree = "<group>"; };
@@ -670,6 +679,7 @@
 				04652BC42329DFF8002C1ECF /* Masonry */,
 				048B917C23279A1300268A07 /* GoogleMap */,
 				048B917523279A0500268A07 /* 高德 */,
+				04C3B4A72373B039006CE42F /* HZLocationConverter */,
 				048B9159232799E900268A07 /* Map */,
 				048B9127232799B500268A07 /* AppDelegate.h */,
 				048B9128232799B500268A07 /* AppDelegate.m */,
@@ -711,6 +721,10 @@
 		048B9159232799E900268A07 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				04C3B4A22373AF59006CE42F /* CLLocation+MMAdd.h */,
+				04C3B4A32373AF59006CE42F /* CLLocation+MMAdd.m */,
+				04C3B4A42373AF59006CE42F /* MMLocationManager.h */,
+				04C3B4A12373AF58006CE42F /* MMLocationManager.m */,
 				048B916C232799E900268A07 /* MMMapManager.h */,
 				048B915A232799E900268A07 /* MMMapManager.m */,
 				048B915B232799E900268A07 /* MMMap.h */,
@@ -854,6 +868,15 @@
 				04A3570F234F0AB10066F6D3 /* IQUIView+Hierarchy.h */,
 			);
 			path = Categories;
+			sourceTree = "<group>";
+		};
+		04C3B4A72373B039006CE42F /* HZLocationConverter */ = {
+			isa = PBXGroup;
+			children = (
+				04C3B4A82373B039006CE42F /* HZLocationConverter.m */,
+				04C3B4A92373B039006CE42F /* HZLocationConverter.h */,
+			);
+			path = HZLocationConverter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1013,6 +1036,7 @@
 				04A35719234F0AB10066F6D3 /* IQNSArray+Sort.m in Sources */,
 				04652BEB2329DFF8002C1ECF /* MASViewAttribute.m in Sources */,
 				048B9137232799B700268A07 /* main.m in Sources */,
+				04C3B4A62373AF59006CE42F /* CLLocation+MMAdd.m in Sources */,
 				04652BE92329DFF8002C1ECF /* MASConstraint.m in Sources */,
 				04A35713234F0AB10066F6D3 /* IQTitleBarButtonItem.m in Sources */,
 				04A3571D234F0AB10066F6D3 /* IQUIViewController+Additions.m in Sources */,
@@ -1032,6 +1056,7 @@
 				048B9129232799B500268A07 /* AppDelegate.m in Sources */,
 				042A15872331E2000039E56B /* MMMapPolygonEditView.m in Sources */,
 				042A15D72332106C0039E56B /* UITextField+Extension.m in Sources */,
+				04C3B4AA2373B039006CE42F /* HZLocationConverter.m in Sources */,
 				042A15E32332106C0039E56B /* NSString+Path.m in Sources */,
 				042A16052332111F0039E56B /* NSObject+MJProperty.m in Sources */,
 				042A15DE2332106C0039E56B /* NSDictionary+MMExtension.m in Sources */,
@@ -1050,6 +1075,7 @@
 				042A15E22332106C0039E56B /* DeviceModel.m in Sources */,
 				04652BE22329DFF8002C1ECF /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				049881D22338B860009FFA75 /* MMMapEditAnnotationsPopupView.m in Sources */,
+				04C3B4A52373AF59006CE42F /* MMLocationManager.m in Sources */,
 				042A15842331E1EA0039E56B /* MMMapPolyLineEditView.m in Sources */,
 				042A15DC2332106C0039E56B /* UIAlertController+Rotation.m in Sources */,
 				042A15DD2332106C0039E56B /* InsertLabel.m in Sources */,

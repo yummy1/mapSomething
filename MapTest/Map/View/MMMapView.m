@@ -282,6 +282,15 @@
     }
     return _singleInfoView;
 }
+//- (void)setCenterCoordinate:(CLLocationCoordinate2D)centerCoordinate
+//{
+//    _centerCoordinate = centerCoordinate;
+//    if ([MMMapManager manager].type == MapTypeGaoDe) {
+//        _gdMapView.userAnnotation
+//    }else{
+//
+//    }
+//}
 #pragma mark - MMGDMapViewDelegate
 - (void)GDMapView:(MMGDMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate
 {

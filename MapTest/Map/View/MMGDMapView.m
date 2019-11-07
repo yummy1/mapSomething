@@ -52,11 +52,19 @@
     [self addSubview:_mapView];
     
     //地图跟着位置移动
-    [_mapView setUserTrackingMode:MAUserTrackingModeFollow animated:YES];
+//    [_mapView setUserTrackingMode:MAUserTrackingModeFollow animated:YES];
     //设置成NO表示关闭指南针；YES表示显示指南针
     _mapView.showsCompass= NO;
     //缩放等级
     [_mapView setZoomLevel:17 animated:YES];
+    
+    [TheNotificationCenter addObserver:self selector:@selector(setCenterCoordinateNotification:) name:@"kMMMapViewLocationUpdateNotification" object:nil];
+}
+- (void)setCenterCoordinateNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    CLLocation *location = userInfo[@"kMMMapViewLocationUpdateNotification"];
+    [self.mapView setCenterCoordinate:location.coordinate animated:YES];
 }
 //- (MMMapEditAnnotationsPopupView *)editAnnotationsView
 //{
